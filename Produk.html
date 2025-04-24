@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voucher Internet</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+    }
+
+    select {
+      margin-bottom: 20px;
+      padding: 8px;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: auto;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 14px;
+      word-wrap: break-word;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+
+    .btn {
+      background: #28a745;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        width: 100%;
+        display: block;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Daftar Produk Voucher Internet</h2>
+
+  <label for="operator">Filter Operator:</label>
+  <select id="operator" onchange="filterData(this.value)">
+    <option value="Semua">Semua</option>
+    <option value="INDOSAT">INDOSAT</option>
+    <option value="TRI">TRI</option>
+    <option value="XL">XL</option>
+    <option value="AXIS">AXIS</option>
+    <option value="TELKOMSEL">TELKOMSEL</option>
+    <option value="SMARTFREN">SMARTFREN</option>
+    <option value="BYU">BYU</option>
+  </select>
+
+  <div class="table-container" id="tabel">Memuat data...</div>
+
+  <script>
+    const url = "https://docs.google.com/spreadsheets/d/1h8G5S11u4Nr499ByzrKAChzKCPkLCiGS/gviz/tq?tqx=out:json&sheet=Sheet1";
+    let semuaData = [];
+
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+
+        semuaData = rows.map(row => {
+          return {
+            operator: row.c[1]?.v || "",
+            namaProduk: row.c[2]?.v || "",
+            paket: row.c[3]?.v || "",
+            harga: row.c[4]?.v || "",
+            link: row.c[5]?.v || "#"
+          };
+        });
+
+        renderTable(semuaData);
+      } catch (e) {
+        document.getElementById("tabel").innerText = "Gagal memuat data.";
+        console.error(e);
+      }
+    }
+
+    function formatRupiah(angka) {
+      if (!angka || isNaN(angka)) return "-";
+      return "Rp " + Number(angka).toLocaleString("id-ID");
+    }
+
+    function renderTable(data) {
+      let html = `<table>
+        <thead>
+          <tr>
+            <th>Produk</th>
+            <th>Paket</th>
+            <th>Harga</th>
+            <th>Order</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      data.forEach(item => {
+        html += `<tr>
+          <td>${item.namaProduk}</td>
+          <td>${item.paket}</td>
+          <td>${formatRupiah(item.harga)}</td>
+          <td><a class="btn" href="${item.link}" target="_blank">Order</a></td>
+        </tr>`;
+      });
+
+      html += `</tbody></table>`;
+      document.getElementById("tabel").innerHTML = html;
+    }
+
+    function filterData(operator) {
+      if (operator === "Semua") {
+        renderTable(semuaData);
+      } else {
+        const filtered = semuaData.filter(item => item.operator.toUpperCase() === operator.toUpperCase());
+        renderTable(filtered);
+      }
+    }
+
+    fetchData();
+  </script>
+
+</body>
+</html>

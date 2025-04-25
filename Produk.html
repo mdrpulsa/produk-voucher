@@ -23,7 +23,7 @@
 
     .table-container {
       width: 100%;
-      overflow-x: hidden;
+      overflow-x: auto;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
@@ -50,13 +50,17 @@
       padding: 10px;
       border: 1px solid #ccc;
       text-align: center;
-      font-size: 14px;
+      font-size: 12px;
       word-break: break-word;
     }
 
     th {
       background: #008ca7;
       color: white;
+    }
+
+    th:nth-child(3), td:nth-child(3) {
+      width: 60px;
     }
 
     .btn {
@@ -69,14 +73,14 @@
     }
 
     input.qty-input {
-      width: 50px;
+      width: 45px;
       padding: 4px;
       text-align: center;
     }
 
     @media (max-width: 768px) {
       .table-container {
-        overflow-x: hidden;
+        overflow-x: auto;
       }
     }
   </style>
@@ -149,11 +153,17 @@
       data.forEach((item, index) => {
         const idQty = `qty-${index}`;
         const nomorWa = "6282137444888";
-        const namaProdukGabung = `${item.namaProduk}: ${item.paket}`;
-        const pesan = `Halo kak MDR Pulsa,\nSaya mau order:\n- Produk: ${namaProdukGabung}\n- Harga: ${formatRupiah(item.harga)}\n- Jumlah: `;
+
+        const namaProduk = (item.namaProduk || "").trim();
+        const paket = (item.paket || "").trim();
+
+        const pesan = `Halo kak MDR Pulsa,\nSaya mau order:\n- Produk: ${namaProduk} – ${paket}\n- Harga: ${formatRupiah(item.harga)}\n- Jumlah: `;
 
         html += `<tr>
-          <td>${namaProdukGabung}</td>
+          <td>
+            <strong>${namaProduk}</strong><br/>
+            <small>${paket}</small>
+          </td>
           <td>${formatRupiah(item.harga)}</td>
           <td><input class="qty-input" type="number" id="${idQty}" min="1" value="1" /></td>
           <td><a class="btn" href="#" onclick="orderViaWa('${nomorWa}', \`${pesan}\`, '${idQty}')">Order</a></td>

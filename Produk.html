@@ -52,20 +52,20 @@
       color: white;
       padding: 6px 12px;
       border-radius: 5px;
-      text-decoration: none;
+      border: none;
+      cursor: pointer;
     }
 
     input.qty-input {
-      width: 40px;
+      width: 50px;
       padding: 4px;
       text-align: center;
-      font-size: 13px;
     }
 
     @media (max-width: 768px) {
       table {
-        display: block;
         width: 100%;
+        display: block;
       }
 
       .table-container {
@@ -137,13 +137,18 @@
         </thead>
         <tbody>`;
 
-      data.forEach(item => {
-        const namaGabung = `${item.namaProduk} ${item.paket}`.trim();
+      data.forEach((item, index) => {
+        const idQty = `qty-${index}`;
+        const nomorWa = "6282137444888"; // Ganti dengan nomor WA admin
+        const namaProdukGabung = `${item.namaProduk}: ${item.paket}`;
+
         html += `<tr>
-          <td>${namaGabung}</td>
+          <td>${namaProdukGabung}</td>
           <td>${formatRupiah(item.harga)}</td>
-          <td><input class="qty-input" type="number" min="1" value="1" /></td>
-          <td><a class="btn" href="${item.link}" target="_blank">Order</a></td>
+          <td><input class="qty-input" type="number" id="${idQty}" min="1" value="1" /></td>
+          <td>
+            <button class="btn" onclick="orderViaWa('${nomorWa}', '${namaProdukGabung}', '${item.harga}', '${idQty}')">Order</button>
+          </td>
         </tr>`;
       });
 
@@ -158,6 +163,13 @@
         const filtered = semuaData.filter(item => item.operator.toUpperCase() === operator.toUpperCase());
         renderTable(filtered);
       }
+    }
+
+    function orderViaWa(nomor, produk, harga, qtyId) {
+      const qty = document.getElementById(qtyId).value || "1";
+      const pesan = `Halo kak MDR Pulsa,%0ASaya mau order:%0A- Produk: ${produk}%0A- Harga: ${formatRupiah(harga)}%0A- Jumlah: ${qty}`;
+      const url = `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`;
+      window.location.href = url;
     }
 
     fetchData();

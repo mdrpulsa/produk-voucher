@@ -5,94 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Voucher Internet</title>
   <style>
-    :root {
-      --primary: #008ca7;
-      --light: #f9f9f9;
-      --white: #fff;
-      --gray: #e0e0e0;
-      --text: #333;
-    }
-
     body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
+      font-family: sans-serif;
       padding: 20px;
-      background: var(--light);
-      color: var(--text);
+      background: #f9f9f9;
     }
 
     h2 {
       text-align: center;
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-
-    .filter-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+      color: #008ca7;
     }
 
     select {
-      padding: 10px 12px;
-      font-size: 15px;
-      border: 1px solid var(--gray);
-      border-radius: 8px;
-      outline: none;
-      min-width: 200px;
+      margin-bottom: 20px;
+      padding: 8px;
     }
 
     .table-container {
       width: 100%;
       overflow-x: auto;
-      background: var(--white);
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed; /* Ensure the table fills the width */
+      table-layout: auto;
     }
 
     th, td {
-      padding: 14px 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
       text-align: center;
-      border-bottom: 1px solid var(--gray);
-      word-wrap: break-word; /* Allow long words to break into the next line */
-    }
-
-    th {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    td {
       font-size: 14px;
     }
 
-    .btn {
-      background: var(--primary);
-      color: var(--white);
-      padding: 6px 14px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 13px;
-      transition: background 0.2s;
+    th {
+      background: #008ca7;
+      color: white;
     }
 
-    .btn:hover {
-      background: #00768e;
+    .btn {
+      background: #28a745;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    input.qty-input {
+      width: 40px;
+      padding: 4px;
+      text-align: center;
+      font-size: 13px;
     }
 
     @media (max-width: 768px) {
-      body {
-        padding: 10px;
+      table {
+        display: block;
+        width: 100%;
       }
 
-      select {
-        width: 100%;
+      .table-container {
+        overflow-x: auto;
       }
     }
   </style>
@@ -101,18 +78,17 @@
 
   <h2>Daftar Produk Voucher Internet</h2>
 
-  <div class="filter-wrapper">
-    <select id="operator" onchange="filterData(this.value)">
-      <option value="Semua">Semua Operator</option>
-      <option value="INDOSAT">INDOSAT</option>
-      <option value="TRI">TRI</option>
-      <option value="XL">XL</option>
-      <option value="AXIS">AXIS</option>
-      <option value="TELKOMSEL">TELKOMSEL</option>
-      <option value="SMARTFREN">SMARTFREN</option>
-      <option value="BYU">BYU</option>
-    </select>
-  </div>
+  <label for="operator">Filter Operator:</label>
+  <select id="operator" onchange="filterData(this.value)">
+    <option value="Semua">Semua</option>
+    <option value="INDOSAT">INDOSAT</option>
+    <option value="TRI">TRI</option>
+    <option value="XL">XL</option>
+    <option value="AXIS">AXIS</option>
+    <option value="TELKOMSEL">TELKOMSEL</option>
+    <option value="SMARTFREN">SMARTFREN</option>
+    <option value="BYU">BYU</option>
+  </select>
 
   <div class="table-container" id="tabel">Memuat data...</div>
 
@@ -154,18 +130,19 @@
         <thead>
           <tr>
             <th>Produk</th>
-            <th>Paket</th>
             <th>Harga</th>
+            <th>Qty</th>
             <th>Order</th>
           </tr>
         </thead>
         <tbody>`;
 
       data.forEach(item => {
+        const namaGabung = `${item.namaProduk} ${item.paket}`.trim();
         html += `<tr>
-          <td>${item.namaProduk}</td>
-          <td>${item.paket}</td>
+          <td>${namaGabung}</td>
           <td>${formatRupiah(item.harga)}</td>
+          <td><input class="qty-input" type="number" min="1" value="1" /></td>
           <td><a class="btn" href="${item.link}" target="_blank">Order</a></td>
         </tr>`;
       });

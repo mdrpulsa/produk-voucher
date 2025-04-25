@@ -27,6 +27,17 @@
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      min-height: 100px;
+      position: relative;
+    }
+
+    .loading-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      color: #666;
     }
 
     table {
@@ -52,8 +63,7 @@
       color: white;
       padding: 6px 12px;
       border-radius: 5px;
-      border: none;
-      cursor: pointer;
+      text-decoration: none;
     }
 
     input.qty-input {
@@ -90,7 +100,9 @@
     <option value="BYU">BYU</option>
   </select>
 
-  <div class="table-container" id="tabel">Memuat data...</div>
+  <div class="table-container" id="tabel">
+    <div class="loading-spinner">Memuat data...</div>
+  </div>
 
   <script>
     const url = "https://docs.google.com/spreadsheets/d/1h8G5S11u4Nr499ByzrKAChzKCPkLCiGS/gviz/tq?tqx=out:json&sheet=Sheet1";
@@ -115,7 +127,7 @@
 
         renderTable(semuaData);
       } catch (e) {
-        document.getElementById("tabel").innerText = "Gagal memuat data.";
+        document.getElementById("tabel").innerHTML = `<div style="padding: 20px; color: red;">Gagal memuat data. Silakan refresh halaman atau cek koneksi internet Anda.</div>`;
         console.error(e);
       }
     }
@@ -139,16 +151,15 @@
 
       data.forEach((item, index) => {
         const idQty = `qty-${index}`;
-        const nomorWa = "6282137444888"; // Ganti dengan nomor WA admin
+        const nomorWa = "6282137444888";
         const namaProdukGabung = `${item.namaProduk}: ${item.paket}`;
+        const pesan = `Halo kak MDR Pulsa,\nSaya mau order:\n- Produk: ${namaProdukGabung}\n- Harga: ${formatRupiah(item.harga)}\n- Jumlah: `;
 
         html += `<tr>
           <td>${namaProdukGabung}</td>
           <td>${formatRupiah(item.harga)}</td>
           <td><input class="qty-input" type="number" id="${idQty}" min="1" value="1" /></td>
-          <td>
-            <button class="btn" onclick="orderViaWa('${nomorWa}', '${namaProdukGabung}', '${item.harga}', '${idQty}')">Order</button>
-          </td>
+          <td><a class="btn" href="#" onclick="orderViaWa('${nomorWa}', \`${pesan}\`, '${idQty}')">Order</a></td>
         </tr>`;
       });
 
@@ -165,11 +176,12 @@
       }
     }
 
-    function orderViaWa(nomor, produk, harga, qtyId) {
-      const qty = document.getElementById(qtyId).value || "1";
-      const pesan = `Halo kak MDR Pulsa,%0ASaya mau order:%0A- Produk: ${produk}%0A- Harga: ${formatRupiah(harga)}%0A- Jumlah: ${qty}`;
-      const url = `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`;
-      window.location.href = url;
+    function orderViaWa(nomor, pesan, qtyId) {
+      const qtyInput = document.getElementById(qtyId);
+      const qty = Math.max(1, parseInt(qtyInput.value) || 1);
+      const fullPesan = `${pesan}${qty}`;
+      const encodedPesan = encodeURIComponent(fullPesan);
+      window.open(`https://wa.me/${nomor}?text=${encodedPesan}`, "_blank");
     }
 
     fetchData();

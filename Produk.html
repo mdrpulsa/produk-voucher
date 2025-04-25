@@ -23,7 +23,7 @@
 
     .table-container {
       width: 100%;
-      overflow-x: auto;
+      overflow-x: hidden;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
@@ -43,7 +43,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: auto;
+      table-layout: fixed;
     }
 
     th, td {
@@ -51,6 +51,7 @@
       border: 1px solid #ccc;
       text-align: center;
       font-size: 14px;
+      word-break: break-word;
     }
 
     th {
@@ -64,6 +65,7 @@
       padding: 6px 12px;
       border-radius: 5px;
       text-decoration: none;
+      display: inline-block;
     }
 
     input.qty-input {
@@ -73,13 +75,8 @@
     }
 
     @media (max-width: 768px) {
-      table {
-        width: 100%;
-        display: block;
-      }
-
       .table-container {
-        overflow-x: auto;
+        overflow-x: hidden;
       }
     }
   </style>

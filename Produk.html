@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Voucher Internet</title>
+  <title>Voucher Internet MDR Pulsa</title>
   <style>
     body {
       font-family: sans-serif;
       padding: 20px;
       background: #f9f9f9;
+      box-sizing: border-box;
     }
 
     h2 {
@@ -16,72 +17,74 @@
       color: #008ca7;
     }
 
-    select {
-      margin-bottom: 20px;
+    select, input[type="text"] {
+      margin: 5px 5px 15px 0;
       padding: 8px;
     }
 
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      min-height: 100px;
-      position: relative;
-    }
-
-    .loading-spinner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 16px;
-      color: #666;
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
     th, td {
-      padding: 10px;
       border: 1px solid #ccc;
+      padding: 8px;
       text-align: center;
-      font-size: 10px;
-      word-break: break-word;
     }
 
     th {
-      background: #008ca7;
+      background-color: #008ca7;
       color: white;
-    }
-
-    th:nth-child(3), td:nth-child(3) {
-      width: 60px;
     }
 
     .btn {
-      background: #28a745;
+      background: #008ca7;
       color: white;
-      padding: 6px 12px;
+      padding: 5px 10px;
+      border: none;
       border-radius: 5px;
-      text-decoration: none;
-      display: inline-block;
+      cursor: pointer;
     }
 
-    input.qty-input {
-      width: 45px;
-      padding: 4px;
+    .cart-container {
+      margin: 30px 0;
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    }
+
+    .cart-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #008ca7;
+    }
+
+    .cart-table th {
+      background-color: #008ca7;
+      color: white;
+    }
+
+    .total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .empty-message {
+      color: #999;
       text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      .table-container {
-        overflow-x: auto;
-      }
     }
   </style>
 </head>
@@ -89,106 +92,171 @@
 
   <h2>Daftar Produk Voucher Internet</h2>
 
-  <label for="operator">Filter Operator:</label>
-  <select id="operator" onchange="filterData(this.value)">
-    <option value="Semua">Semua</option>
-    <option value="INDOSAT">INDOSAT</option>
-    <option value="TRI">TRI</option>
-    <option value="XL">XL</option>
-    <option value="AXIS">AXIS</option>
-    <option value="TELKOMSEL">TELKOMSEL</option>
-    <option value="SMARTFREN">SMARTFREN</option>
-    <option value="BYU">BYU</option>
-  </select>
-
-  <div class="table-container" id="tabel">
-    <div class="loading-spinner">Memuat data...</div>
+  <div class="cart-container">
+    <div class="cart-title">Keranjang Belanja</div>
+    <table class="cart-table" id="cart-table">
+      <thead>
+        <tr>
+          <th>Nama Produk</th>
+          <th>Qty</th>
+          <th>Harga @</th>
+          <th>Total</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="cart-body">
+        <tr><td colspan="5" class="empty-message">Belum ada produk ditambahkan.</td></tr>
+      </tbody>
+    </table>
+    <div class="total" id="total-harga">Total: Rp 0</div>
+    <br>
+    <a id="wa-link" class="btn" href="#" target="_blank" style="display:none">Kirim Pesanan via WhatsApp</a>
   </div>
+
+  <div class="filters">
+    <select id="operator" onchange="filterData()">
+      <option value="">Semua Operator</option>
+      <option value="INDOSAT">INDOSAT</option>
+      <option value="TRI">TRI</option>
+      <option value="XL">XL</option>
+      <option value="AXIS">AXIS</option>
+      <option value="TELKOMSEL">TELKOMSEL</option>
+      <option value="SMARTFREN">SMARTFREN</option>
+      <option value="BYU">BYU</option>
+    </select>
+    <input type="text" id="search" placeholder="Cari nama produk..." oninput="filterData()"/>
+  </div>
+
+  <div id="loading">Memuat data...</div>
+  <table id="product-table" style="display:none">
+    <thead>
+      <tr>
+        <th>Produk</th>
+        <th>Harga</th>
+        <th>Qty</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="product-body"></tbody>
+  </table>
 
   <script>
     const url = "https://docs.google.com/spreadsheets/d/1h8G5S11u4Nr499ByzrKAChzKCPkLCiGS/gviz/tq?tqx=out:json&sheet=Sheet1";
     let semuaData = [];
+    let keranjang = [];
 
     async function fetchData() {
       try {
-        const response = await fetch(url);
-        const text = await response.text();
+        const res = await fetch(url);
+        const text = await res.text();
         const json = JSON.parse(text.substr(47).slice(0, -2));
         const rows = json.table.rows;
 
-        semuaData = rows.map(row => {
-          return {
-            operator: row.c[1]?.v || "",
-            namaProduk: row.c[2]?.v || "",
-            paket: row.c[3]?.v || "",
-            harga: row.c[4]?.v || "",
-            link: row.c[5]?.v || "#"
-          };
-        });
+        semuaData = rows.map(row => ({
+          operator: row.c[1]?.v || "",
+          nama: row.c[2]?.v || "",
+          paket: row.c[3]?.v || "",
+          harga: parseInt(row.c[4]?.v) || 0
+        }));
 
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("product-table").style.display = "table";
         renderTable(semuaData);
-      } catch (e) {
-        document.getElementById("tabel").innerHTML = `<div style="padding: 20px; color: red;">Gagal memuat data. Silakan refresh halaman atau cek koneksi internet Anda.</div>`;
-        console.error(e);
+      } catch (err) {
+        document.getElementById("loading").innerText = "Gagal memuat data.";
+        console.error(err);
       }
     }
 
     function formatRupiah(angka) {
-      if (!angka || isNaN(angka)) return "-";
       return "Rp " + Number(angka).toLocaleString("id-ID");
     }
 
     function renderTable(data) {
-      let html = `<table>
-        <thead>
-          <tr>
-            <th>Produk</th>
-            <th>Harga</th>
-            <th>Qty</th>
-            <th>Order</th>
-          </tr>
-        </thead>
-        <tbody>`;
+      const tbody = document.getElementById("product-body");
+      tbody.innerHTML = "";
 
       data.forEach((item, index) => {
-        const idQty = `qty-${index}`;
-        const nomorWa = "6282137444888";
+        const namaGabung = `${item.nama} - ${item.paket}`;
+        tbody.innerHTML += `
+          <tr>
+            <td>${namaGabung}</td>
+            <td>${formatRupiah(item.harga)}</td>
+            <td><input type="number" id="qty-${index}" min="1" value="1" style="width:60px"/></td>
+            <td><button class="btn" onclick="tambahKeranjang('${namaGabung}', ${item.harga}, 'qty-${index}')">Add Cart</button></td>
+          </tr>
+        `;
+      });
+    }
 
-        const namaProduk = (item.namaProduk || "").trim();
-        const paket = (item.paket || "").trim();
+    function filterData() {
+      const op = document.getElementById("operator").value.toLowerCase();
+      const search = document.getElementById("search").value.toLowerCase();
 
-        const pesan = `Halo kak MDR Pulsa,\nSaya mau order:\n- Produk: ${namaProduk} – ${paket}\n- Harga: ${formatRupiah(item.harga)}\n- Jumlah: `;
-
-        html += `<tr>
-          <td>
-            <strong>${namaProduk}</strong><br/>
-            <small>${paket}</small>
-          </td>
-          <td>${formatRupiah(item.harga)}</td>
-          <td><input class="qty-input" type="number" id="${idQty}" min="1" value="1" /></td>
-          <td><a class="btn" href="#" onclick="orderViaWa('${nomorWa}', \`${pesan}\`, '${idQty}')">Order</a></td>
-        </tr>`;
+      const filtered = semuaData.filter(item => {
+        const gabungan = (item.nama + " " + item.paket).toLowerCase();
+        return (!op || item.operator.toLowerCase() === op) &&
+               (!search || gabungan.includes(search));
       });
 
-      html += `</tbody></table>`;
-      document.getElementById("tabel").innerHTML = html;
+      renderTable(filtered);
     }
 
-    function filterData(operator) {
-      if (operator === "Semua") {
-        renderTable(semuaData);
+    function tambahKeranjang(nama, harga, qtyId) {
+      const qty = parseInt(document.getElementById(qtyId).value) || 1;
+      const existing = keranjang.find(item => item.nama === nama);
+
+      if (existing) {
+        existing.qty += qty;
       } else {
-        const filtered = semuaData.filter(item => item.operator.toUpperCase() === operator.toUpperCase());
-        renderTable(filtered);
+        keranjang.push({ nama, harga, qty });
       }
+
+      renderKeranjang();
     }
 
-    function orderViaWa(nomor, pesan, qtyId) {
-      const qtyInput = document.getElementById(qtyId);
-      const qty = Math.max(1, parseInt(qtyInput.value) || 1);
-      const fullPesan = `${pesan}${qty}`;
-      const encodedPesan = encodeURIComponent(fullPesan);
-      window.open(`https://wa.me/${nomor}?text=${encodedPesan}`, "_blank");
+    function hapusItem(index) {
+      keranjang.splice(index, 1);
+      renderKeranjang();
+    }
+
+    function renderKeranjang() {
+      const tbody = document.getElementById("cart-body");
+      const waLink = document.getElementById("wa-link");
+      let total = 0;
+      tbody.innerHTML = "";
+
+      if (keranjang.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-message">Belum ada produk ditambahkan.</td></tr>`;
+        waLink.style.display = "none";
+        document.getElementById("total-harga").innerText = "Total: Rp 0";
+        return;
+      }
+
+      keranjang.forEach((item, i) => {
+        const subtotal = item.harga * item.qty;
+        total += subtotal;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.nama}</td>
+            <td>${item.qty}</td>
+            <td>${formatRupiah(item.harga)}</td>
+            <td>${formatRupiah(subtotal)}</td>
+            <td><button class="btn" onclick="hapusItem(${i})">Hapus</button></td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("total-harga").innerText = "Total: " + formatRupiah(total);
+
+      const isiPesan = keranjang.map(item =>
+        `- ${item.nama}\n  Qty: ${item.qty}\n  Harga: ${formatRupiah(item.harga)}\n  Total: ${formatRupiah(item.qty * item.harga)}`
+      ).join("\n\n");
+
+      const pesanWa = `Halo kak MDR Pulsa,%0ASaya mau order produk berikut:%0A%0A${encodeURIComponent(isiPesan)}%0A%0ATotal Belanja: ${formatRupiah(total)}`;
+      waLink.href = `https://wa.me/6282137444888?text=${pesanWa}`;
+      waLink.style.display = "inline-block";
     }
 
     fetchData();

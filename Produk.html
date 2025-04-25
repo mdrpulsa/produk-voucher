@@ -6,20 +6,27 @@
   <title>Voucher Internet MDR Pulsa</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
       background: #f9f9f9;
       box-sizing: border-box;
+      max-width: 100%;
     }
 
     h2 {
       text-align: center;
       color: #008ca7;
+      margin-bottom: 20px;
     }
 
     select, input[type="text"] {
       margin: 5px 5px 15px 0;
       padding: 8px;
+      width: 100%;
+      max-width: 300px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
 
     .filters {
@@ -27,6 +34,7 @@
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
+      margin-bottom: 20px;
     }
 
     table {
@@ -34,57 +42,144 @@
       border-collapse: collapse;
       background: #fff;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
     }
 
     th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
+      border: 1px solid #e0e0e0;
+      padding: 10px;
       text-align: center;
+      word-break: break-word;
     }
 
     th {
       background-color: #008ca7;
       color: white;
+      font-weight: 500;
     }
 
     .btn {
       background: #008ca7;
       color: white;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+      transition: background 0.3s;
     }
 
-    .cart-container {
-      margin: 30px 0;
+    .btn:hover {
+      background: #007693;
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+
+    .order-container {
+      margin: 20px 0;
       background: #fff;
-      padding: 15px;
+      padding: 20px;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       box-shadow: 0 0 5px rgba(0,0,0,0.05);
     }
 
-    .cart-title {
+    .order-title {
       font-size: 18px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       color: #008ca7;
-    }
-
-    .cart-table th {
-      background-color: #008ca7;
-      color: white;
+      text-align: center;
+      font-weight: 600;
     }
 
     .total {
       font-weight: bold;
       text-align: right;
-      margin-top: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .total-amount {
+      color: #e74c3c;
+      font-size: 18px;
     }
 
     .empty-message {
       color: #999;
       text-align: center;
+      padding: 20px;
+      font-style: italic;
+    }
+
+    #product-table {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    .wa-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .product-name {
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .qty-input {
+      width: 60px;
+      max-width: 100%;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      
+      .filters {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      select, input[type="text"] {
+        max-width: 100%;
+      }
+      
+      th, td {
+        padding: 8px 5px;
+        font-size: 14px;
+      }
+      
+      .btn {
+        padding: 5px 8px;
+        font-size: 13px;
+      }
+      
+      .order-title {
+        font-size: 16px;
+      }
+      
+      .total {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -92,25 +187,26 @@
 
   <h2>Daftar Produk Voucher Internet</h2>
 
-  <div class="cart-container">
-    <div class="cart-title">Keranjang Belanja</div>
-    <table class="cart-table" id="cart-table">
+  <div class="order-container">
+    <div class="order-title">Invoice</div>
+    <table class="order-table">
       <thead>
         <tr>
-          <th>Nama Produk</th>
-          <th>Qty</th>
-          <th>Harga @</th>
-          <th>Total</th>
-          <th>Aksi</th>
+          <th style="width: 35%;">Nama Produk</th>
+          <th style="width: 15%;">Qty</th>
+          <th style="width: 25%;">Harga @</th>
+          <th style="width: 25%;">Total</th>
+          <th style="width: 10%;">Aksi</th>
         </tr>
       </thead>
       <tbody id="cart-body">
         <tr><td colspan="5" class="empty-message">Belum ada produk ditambahkan.</td></tr>
       </tbody>
     </table>
-    <div class="total" id="total-harga">Total: Rp 0</div>
-    <br>
-    <a id="wa-link" class="btn" href="#" target="_blank" style="display:none">Kirim Pesanan via WhatsApp</a>
+    <div class="total">Total: <span class="total-amount" id="total-harga">Rp 0</span></div>
+    <div class="wa-btn-container">
+      <a id="wa-link" class="btn" href="#" target="_blank" style="display:none">Kirim Pesanan via WhatsApp</a>
+    </div>
   </div>
 
   <div class="filters">
@@ -131,10 +227,10 @@
   <table id="product-table" style="display:none">
     <thead>
       <tr>
-        <th>Produk</th>
-        <th>Harga</th>
-        <th>Qty</th>
-        <th>Aksi</th>
+        <th style="width: 50%;">Produk</th>
+        <th style="width: 35%;">Harga</th>
+        <th style="width: 5%;">Jumlah</th>
+        <th style="width: 10%;">Aksi</th>
       </tr>
     </thead>
     <tbody id="product-body"></tbody>
@@ -147,9 +243,15 @@
 
     async function fetchData() {
       try {
+        document.getElementById("loading").innerText = "Memuat data...";
         const res = await fetch(url);
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
         const text = await res.text();
-        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const json = JSON.parse(text.substring(47, text.length - 2));
         const rows = json.table.rows;
 
         semuaData = rows.map(row => ({
@@ -163,29 +265,59 @@
         document.getElementById("product-table").style.display = "table";
         renderTable(semuaData);
       } catch (err) {
-        document.getElementById("loading").innerText = "Gagal memuat data.";
-        console.error(err);
+        document.getElementById("loading").innerHTML = "Gagal memuat data. Silakan coba lagi.<br>" + err.message;
+        console.error("Error fetching data:", err);
       }
     }
 
     function formatRupiah(angka) {
-      return "Rp " + Number(angka).toLocaleString("id-ID");
+      return "Rp " + Number(angka).toLocaleString("id-ID").replace(/,/g, ".");
     }
 
     function renderTable(data) {
       const tbody = document.getElementById("product-body");
       tbody.innerHTML = "";
 
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="empty-message">Tidak ada produk ditemukan</td></tr>`;
+        return;
+      }
+
       data.forEach((item, index) => {
         const namaGabung = `${item.nama} - ${item.paket}`;
-        tbody.innerHTML += `
-          <tr>
-            <td>${namaGabung}</td>
-            <td>${formatRupiah(item.harga)}</td>
-            <td><input type="number" id="qty-${index}" min="1" value="1" style="width:60px"/></td>
-            <td><button class="btn" onclick="tambahKeranjang('${namaGabung}', ${item.harga}, 'qty-${index}')">Add Cart</button></td>
-          </tr>
-        `;
+        const row = document.createElement("tr");
+        
+        const nameCell = document.createElement("td");
+        nameCell.className = "product-name";
+        nameCell.textContent = namaGabung;
+        
+        const priceCell = document.createElement("td");
+        priceCell.textContent = formatRupiah(item.harga);
+        
+        const qtyCell = document.createElement("td");
+        const qtyInput = document.createElement("input");
+        qtyInput.type = "number";
+        qtyInput.id = `qty-${index}`;
+        qtyInput.min = "1";
+        qtyInput.value = "1";
+        qtyInput.className = "qty-input";
+        qtyCell.appendChild(qtyInput);
+        
+        const actionCell = document.createElement("td");
+        const addButton = document.createElement("button");
+        addButton.className = "btn";
+        addButton.textContent = "Tambah";
+        addButton.onclick = function() {
+          tambahKeranjang(namaGabung, item.harga, `qty-${index}`);
+        };
+        actionCell.appendChild(addButton);
+        
+        row.appendChild(nameCell);
+        row.appendChild(priceCell);
+        row.appendChild(qtyCell);
+        row.appendChild(actionCell);
+        
+        tbody.appendChild(row);
       });
     }
 
@@ -229,7 +361,7 @@
       if (keranjang.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" class="empty-message">Belum ada produk ditambahkan.</td></tr>`;
         waLink.style.display = "none";
-        document.getElementById("total-harga").innerText = "Total: Rp 0";
+        document.getElementById("total-harga").textContent = "Rp 0";
         return;
       }
 
@@ -237,29 +369,54 @@
         const subtotal = item.harga * item.qty;
         total += subtotal;
 
-        tbody.innerHTML += `
-          <tr>
-            <td>${item.nama}</td>
-            <td>${item.qty}</td>
-            <td>${formatRupiah(item.harga)}</td>
-            <td>${formatRupiah(subtotal)}</td>
-            <td><button class="btn" onclick="hapusItem(${i})">Hapus</button></td>
-          </tr>
-        `;
+        const row = document.createElement("tr");
+        
+        const nameCell = document.createElement("td");
+        nameCell.className = "product-name";
+        nameCell.textContent = item.nama;
+        
+        const qtyCell = document.createElement("td");
+        qtyCell.textContent = item.qty;
+        
+        const priceCell = document.createElement("td");
+        priceCell.textContent = formatRupiah(item.harga);
+        
+        const totalCell = document.createElement("td");
+        totalCell.textContent = formatRupiah(subtotal);
+        
+        const actionCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "btn btn-danger";
+        deleteButton.textContent = "Hapus";
+        deleteButton.onclick = function() {
+          hapusItem(i);
+        };
+        actionCell.appendChild(deleteButton);
+        
+        row.appendChild(nameCell);
+        row.appendChild(qtyCell);
+        row.appendChild(priceCell);
+        row.appendChild(totalCell);
+        row.appendChild(actionCell);
+        
+        tbody.appendChild(row);
       });
 
-      document.getElementById("total-harga").innerText = "Total: " + formatRupiah(total);
+      document.getElementById("total-harga").textContent = formatRupiah(total);
 
       const isiPesan = keranjang.map(item =>
-        `- ${item.nama}\n  Qty: ${item.qty}\n  Harga: ${formatRupiah(item.harga)}\n  Total: ${formatRupiah(item.qty * item.harga)}`
+        `- ${item.nama}\n  Jumlah: ${item.qty}\n  Harga: ${formatRupiah(item.harga)}\n  Subtotal: ${formatRupiah(item.qty * item.harga)}`
       ).join("\n\n");
 
-      const pesanWa = `Halo kak MDR Pulsa,%0ASaya mau order produk berikut:%0A%0A${encodeURIComponent(isiPesan)}%0A%0ATotal Belanja: ${formatRupiah(total)}`;
+      const pesanWa = `Halo kak MDR Pulsa,%0ASaya mau memesan:%0A%0A${encodeURIComponent(isiPesan)}%0A%0ATotal Pesanan: ${formatRupiah(total)}`;
       waLink.href = `https://wa.me/6282137444888?text=${pesanWa}`;
       waLink.style.display = "inline-block";
     }
 
-    fetchData();
+    // Inisialisasi
+    document.addEventListener("DOMContentLoaded", function() {
+      fetchData();
+    });
   </script>
 
 </body>

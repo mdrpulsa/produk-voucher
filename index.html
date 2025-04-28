@@ -310,11 +310,15 @@
   message += `\n💸 *Total:* Rp ${total.toLocaleString('id-ID')}\n\n`;
   message += '📲 *Terima kasih!*\n';
   
+  // Encoding pesan secara keseluruhan
+  const encodedMessage = encodeURIComponent(message);
+
   console.log("Pesan yang akan dikirim: ", message);  // Debugging log
+  console.log("Pesan setelah encodeURIComponent: ", encodedMessage);  // Debugging log
+
+  const url = `https://wa.me/6285134575758?text=${encodedMessage}`;
   
-  const url = `https://wa.me/6285134575758?text=${encodeURIComponent(message)}`;
-  
-  // Verifikasi URL
+  // Verifikasi URL yang terbentuk
   console.log("URL yang akan dibuka: ", url);  // Debugging log
   
   window.open(url, '_blank');

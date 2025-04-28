@@ -297,19 +297,28 @@
 
   function checkout() {
   if (cart.length === 0) return alert('Keranjang kosong.');
+
+  let message = '*******************************\n';
+  message += '     MDR STORE\n';
+  message += '*******************************\n\n';
   
-  let message = '🌟 *MDR STORE* 🌟\n\n';
-  message += 'Hallo Admin MDR STORE! 👋\n\n';
-  message += 'Saya ingin pesan produk berikut: \n\n';
+  message += 'Hallo Admin MDR STORE!\n\n';
+  message += 'Saya ingin pesan produk berikut:\n\n';
   
   cart.forEach(item => {
-    message += `✅ *${item.produk}* (Qty: ${item.qty}) 💼\n`;
+    message += `1. *${item.produk}* (Qty: ${item.qty})\n`;
+    message += `   Harga per unit: Rp ${item.harga.toLocaleString('id-ID')}\n`;
+    message += `   Subtotal: Rp ${(item.harga * item.qty).toLocaleString('id-ID')}\n\n`;
   });
-  
+
   const total = cart.reduce((sum, i) => sum + (i.harga * i.qty), 0);
-  message += `\n💸 *Total:* Rp ${total.toLocaleString('id-ID')}\n\n`;
-  message += '📲 *Terima kasih!*\n';
+  message += '*******************************\n';
+  message += `     Total: Rp ${total.toLocaleString('id-ID')}\n`;
+  message += '*******************************\n\n';
   
+  message += 'Terima kasih!\n';
+  message += '*******************************\n';
+
   // Encoding pesan secara keseluruhan
   const encodedMessage = encodeURIComponent(message);
 

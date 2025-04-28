@@ -297,15 +297,26 @@
 
   function checkout() {
   if (cart.length === 0) return alert('Keranjang kosong.');
+  
   let message = '🌟 *MDR STORE* 🌟\n\n';
   message += 'Hallo Admin MDR STORE! 👋\n\n';
   message += 'Saya ingin pesan produk berikut: \n\n';
+  
   cart.forEach(item => {
     message += `✅ *${item.produk}* (Qty: ${item.qty}) 💼\n`;
   });
-  message += `\n💸 *Total:* Rp ${cart.reduce((sum, i) => sum + (i.harga * i.qty), 0).toLocaleString('id-ID')}\n\n`;
+  
+  const total = cart.reduce((sum, i) => sum + (i.harga * i.qty), 0);
+  message += `\n💸 *Total:* Rp ${total.toLocaleString('id-ID')}\n\n`;
   message += '📲 *Terima kasih!*\n';
+  
+  console.log("Pesan yang akan dikirim: ", message);  // Debugging log
+  
   const url = `https://wa.me/6285134575758?text=${encodeURIComponent(message)}`;
+  
+  // Verifikasi URL
+  console.log("URL yang akan dibuka: ", url);  // Debugging log
+  
   window.open(url, '_blank');
 }
 

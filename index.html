@@ -106,16 +106,36 @@
       justify-content: center;
       overflow: hidden;
       border-radius: 8px 8px 0 0;
+      position: relative;
     }
     .product-image {
-      width: 100%;
-      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
       padding: 5px;
       transition: transform 0.5s ease;
     }
     .product-card:hover .product-image {
       transform: scale(1.05);
+    }
+    .product-watermark {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 8px 5px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 11px;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      pointer-events: none;
+      max-height: 40%;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
     .product-details {
       padding: 12px;
@@ -355,17 +375,21 @@
         .trim();
     }
 
+    function getShortDescription(desc) {
+      const points = desc.split('\n')
+                        .filter(line => line.trim().startsWith('🟡'))
+                        .slice(0, 2)
+                        .map(line => line.replace('🟡', '•').trim());
+      
+      return points.length > 0 ? points.join(' | ') : "Produk berkualitas MDR STORE";
+    }
+
     function formatDescription(desc) {
-      if (desc.includes('\n')) return desc.trim();
       return desc.replace(/(🟡)/g, '\n$1').trim();
     }
 
-    function optimizeCloudinaryUrl(url) {
-      if (!url.includes('cloudinary.com')) return url;
-      return url.replace(
-        /upload\//, 
-        'upload/c_fill,g_auto,h_400,w_400,f_auto,q_auto/'
-      );
+    function getImageUrl(url) {
+      return url || 'https://via.placeholder.com/150?text=No+Image';
     }
 
     const brandFilter = document.getElementById('brand-filter');
@@ -392,13 +416,13 @@
         .then(res => res.json())
         .then(data => {
           products = data.map(item => ({
-            brand: item.Brand,
-            kategori: item['Nama Kategori'],
-            produk: item['Nama Produk'],
+            brand: item.Brand || '',
+            kategori: item['Nama Kategori'] || '',
+            produk: item['Nama Produk'] || '',
             deskripsi: item.Deskripsi || '-',
-            harga: parseInt(item.Harga.replace(/\D/g, '')) || 0,
-            harga_grosir: parseInt(item['Harga Grosir']?.replace(/\D/g, '')) || null,
-            gambar: item['Gambar URL'] || 'https://via.placeholder.com/150?text=No+Image'
+            harga: parseInt(item.Harga?.replace(/\D/g, '') || 0),
+            harga_grosir: parseInt(item['Harga Grosir']?.replace(/\D/g, '') || null),
+            gambar: item['Gambar URL'] || ''
           }));
           renderCategories();
           renderBrands();
@@ -411,19 +435,19 @@
               brand: "Telkomsel",
               kategori: "Voucher Internet",
               produk: "Voucher Telkomsel 10GB",
-              deskripsi: "🟡 Kuota 10GB\n🟡 Masa berlaku 30 Hari",
+              deskripsi: "🟡 Kuota 10GB\n🟡 Masa berlaku 30 Hari\n🟡 Bisa untuk semua jaringan",
               harga: 50000,
               harga_grosir: 45000,
-              gambar: "https://res.cloudinary.com/demo/image/upload/sample.jpg"
+              gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Indosat_Ooredoo_Hutchison.svg/960px-Indosat_Ooredoo_Hutchison.svg.png"
             },
             {
               brand: "XL",
               kategori: "Voucher Internet",
               produk: "Voucher XL 5GB",
-              deskripsi: "🟡 Kuota 5GB\n🟡 Masa berlaku 28 Hari",
+              deskripsi: "🟡 Kuota 5GB\n🟡 Masa berlaku 28 Hari\n🟡 Akses 24 jam",
               harga: 30000,
               harga_grosir: 27000,
-              gambar: "https://res.cloudinary.com/demo/image/upload/sample.jpg"
+              gambar: "https://example.com/wp-content/uploads/xl-voucher.jpg"
             }
           ];
           renderCategories();
@@ -434,6 +458,7 @@
 
     function renderCategories() {
       const categories = [...new Set(products.map(p => p.kategori))];
+      categoryFilter.innerHTML = '<option value="">Semua Kategori</option>';
       categories.forEach(cat => {
         const option = document.createElement('option');
         option.value = cat;
@@ -479,7 +504,8 @@
         const rule = getWholesaleRule(product.kategori);
         card.innerHTML = `
           <div class="product-image-container">
-            <img src="${optimizeCloudinaryUrl(product.gambar)}" alt="${productName}" class="product-image" loading="lazy">
+            <img src="${getImageUrl(product.gambar)}" alt="${productName}" class="product-image" loading="lazy">
+            <div class="product-watermark">${getShortDescription(product.deskripsi)}</div>
           </div>
           <div class="product-details">
             <div class="product-text">
@@ -515,7 +541,7 @@
         <div class="modal visible" id="detail-modal">
           <div class="modal-content" style="max-width:500px">
             <h3>${productName}</h3>
-            <img src="${optimizeCloudinaryUrl(product.gambar)}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
+            <img src="${getImageUrl(product.gambar)}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
             <p><strong>Brand:</strong> ${product.brand}</p>
             <p><strong>Kategori:</strong> ${product.kategori}</p>
             <p><strong>Harga:</strong> Rp ${product.harga.toLocaleString('id-ID')}</p>
@@ -523,7 +549,7 @@
               <p><strong>${rule.label}:</strong> Rp ${product.harga_grosir.toLocaleString('id-ID')}</p>
             ` : ''}
             <p><strong>Deskripsi:</strong></p>
-            <p class="product-desc">${productDesc}</p>
+            <p style="white-space: pre-line">${productDesc}</p>
             <div class="modal-buttons">
               <button id="add-from-detail" style="background:#008ca7;color:white">Tambah ke Keranjang</button>
               <button id="close-detail" style="background:#f44336;color:white">Tutup</button>
@@ -617,7 +643,6 @@
         return;
       }
       
-      // Update harga berdasarkan total kategori
       const categoriesInCart = [...new Set(cart.map(item => item.kategori))];
       categoriesInCart.forEach(category => {
         const rule = getWholesaleRule(category);
@@ -654,7 +679,6 @@
         cartItems.appendChild(cartItem);
       });
       
-      // Tambahkan notifikasi grosir per kategori
       categoriesInCart.forEach(category => {
         const rule = getWholesaleRule(category);
         const totalQty = getTotalQtyByCategory(cart, category);
@@ -713,7 +737,6 @@
       message += `WhatsApp: ${customerData.phone}\n\n`;
       message += `*DETAIL PESANAN*\n`;
       
-      // Group items by category
       const categories = [...new Set(cart.map(item => item.kategori))];
       categories.forEach(category => {
         const categoryItems = cart.filter(item => item.kategori === category);

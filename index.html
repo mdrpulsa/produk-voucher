@@ -141,11 +141,8 @@
       font-size: 12px;
       color: #666;
       margin-bottom: 8px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 36px;
+      white-space: pre-line;
+      line-height: 1.5;
     }
     .product-actions {
       margin-top: auto;
@@ -155,6 +152,16 @@
       font-weight: bold;
       font-size: 16px;
       margin: 8px 0;
+    }
+    .wholesale-price {
+      color: #4CAF50;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+    .wholesale-info {
+      font-size: 12px;
+      color: #4CAF50;
+      margin-bottom: 5px;
     }
     .add-to-cart {
       background: #008ca7;
@@ -282,6 +289,7 @@
     <div class="modal-content">
       <h3>Masukkan Jumlah</h3>
       <input type="number" id="qty-input" min="1" value="1">
+      <div id="price-info" style="margin-bottom:15px"></div>
       <div class="modal-buttons">
         <button id="add-to-cart">Tambah ke Keranjang</button>
         <button id="close-modal">Batal</button>
@@ -323,6 +331,60 @@
       phone: ''
     };
 
+    // ========== KONFIGURASI GROSIR PER KATEGORI ==========
+    const WHOLESALE_RULES = {
+      "Voucher": {
+        minQty: 150,
+        label: "Grosir (≥150 pcs)"
+      },
+      "Kabel Data": {
+        minQty: 50,
+        label: "Grosir (≥50 pcs)"
+      },
+      "Charger": {
+        minQty: 30,
+        label: "Grosir (≥30 pcs)"
+      },
+      "Case HP": {
+        minQty: 20,
+        label: "Grosir (≥20 pcs)"
+      },
+      "Powerbank": {
+        minQty: 10,
+        label: "Grosir (≥10 pcs)"
+      },
+      "Default": {
+        minQty: 100,
+        label: "Grosir (≥100 pcs)"
+      }
+    };
+
+    // Fungsi helper untuk mendapatkan aturan grosir
+    function getWholesaleRule(kategori) {
+      return WHOLESALE_RULES[kategori] || WHOLESALE_RULES["Default"];
+    }
+
+    // Fungsi untuk memformat nama produk
+    function formatProductName(name) {
+      return name
+        .replace(/(Oraimo|Baseus|Telkomsel)\s+/gi, '')
+        .replace(/Model\s+\w+-\w+/i, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    // Fungsi untuk memformat deskripsi (pertahankan format asli dengan emoji)
+    function formatDescription(desc) {
+      // Jika sudah ada line breaks, pertahankan
+      if (desc.includes('\n')) {
+        return desc.trim();
+      }
+      // Jika emoji berurutan dalam satu baris, pisahkan ke baris baru
+      return desc
+        .replace(/(🟡)/g, '\n$1')
+        .trim();
+    }
+
     // DOM Elements
     const brandFilter = document.getElementById('brand-filter');
     const categoryFilter = document.getElementById('category-filter');
@@ -333,6 +395,7 @@
     const checkoutBtn = document.getElementById('checkout-btn');
     const modal = document.getElementById('qty-modal');
     const qtyInput = document.getElementById('qty-input');
+    const priceInfo = document.getElementById('price-info');
     const addToCartBtn = document.getElementById('add-to-cart');
     const closeModalBtn = document.getElementById('close-modal');
     const customerModal = document.getElementById('customer-modal');
@@ -353,6 +416,7 @@
             produk: item['Nama Produk'],
             deskripsi: item.Deskripsi || '-',
             harga: parseInt(item.Harga.replace(/\D/g, '')) || 0,
+            harga_grosir: parseInt(item['Harga Grosir']?.replace(/\D/g, '')) || null,
             gambar: item['Gambar URL'] || 'https://via.placeholder.com/150?text=No+Image'
           }));
           renderBrands();
@@ -363,17 +427,21 @@
           // Fallback data jika fetch gagal
           products = [
             {
-              brand: "Olike",
-              kategori: "Charger",
-              produk: "Olike C402 Charger 20W dual output C + L",
-              harga: 99000,
+              brand: "Telkomsel",
+              kategori: "Voucher",
+              produk: "Voucher Telkomsel 100rb",
+              deskripsi: "🟡 Kuota 3GB\n🟡 Masa berlaku 28 Hari",
+              harga: 95000,
+              harga_grosir: 85000,
               gambar: "https://via.placeholder.com/150"
             },
             {
-              brand: "Olike",
-              kategori: "Charger",
-              produk: "Olike GaN20 Charger 20W output C",
-              harga: 89000,
+              brand: "Oraimo",
+              kategori: "Kabel Data",
+              produk: "Oraimo Kabel Data Micro USB - Model OCD-113M (1M)",
+              deskripsi: "🟡 Fast Charging 2.4A\n🟡 Panjang 1 Meter\n🟡 Tahan lama",
+              harga: 50000,
+              harga_grosir: 45000,
               gambar: "https://via.placeholder.com/150"
             }
           ];
@@ -433,17 +501,28 @@
       filteredProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
+        
+        // Format nama dan deskripsi
+        const productName = formatProductName(product.produk);
+        const productDesc = formatDescription(product.deskripsi);
+        const hasWholesale = product.harga_grosir !== null;
+        const rule = getWholesaleRule(product.kategori);
+        
         card.innerHTML = `
           <div class="product-image-container">
-            <img src="${product.gambar}" alt="${product.produk}" class="product-image">
+            <img src="${product.gambar}" alt="${productName}" class="product-image">
           </div>
           <div class="product-details">
             <div class="product-text">
-              <div class="product-name">${product.produk}</div>
-              <div class="product-desc">${product.deskripsi}</div>
+              <div class="product-name">${productName}</div>
+              <div class="product-desc">${productDesc}</div>
             </div>
             <div class="product-actions">
               <div class="product-price">Rp ${product.harga.toLocaleString('id-ID')}</div>
+              ${hasWholesale ? `
+                <div class="wholesale-price">${rule.label}: Rp ${product.harga_grosir.toLocaleString('id-ID')}</div>
+                <div class="wholesale-info">Min. pembelian ${rule.minQty} pcs</div>
+              ` : ''}
               <button class="add-to-cart">+ Keranjang</button>
             </div>
           </div>
@@ -465,18 +544,26 @@
 
     // Fungsi untuk menampilkan detail produk
     function showProductDetail(product) {
-      const formattedDesc = product.deskripsi.replace(/\n/g, '<br>• ');
+      const productName = formatProductName(product.produk);
+      const productDesc = formatDescription(product.deskripsi);
+      const hasWholesale = product.harga_grosir !== null;
+      const rule = getWholesaleRule(product.kategori);
       
       const detailModal = `
         <div class="modal visible" id="detail-modal">
           <div class="modal-content" style="max-width:500px">
-            <h3>${product.produk}</h3>
-            <img src="${product.gambar}" alt="${product.produk}" 
+            <h3>${productName}</h3>
+            <img src="${product.gambar}" alt="${productName}" 
                  style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
             <p><strong>Brand:</strong> ${product.brand}</p>
             <p><strong>Kategori:</strong> ${product.kategori}</p>
+            <p><strong>Harga:</strong> Rp ${product.harga.toLocaleString('id-ID')}</p>
+            ${hasWholesale ? `
+              <p><strong>${rule.label}:</strong> Rp ${product.harga_grosir.toLocaleString('id-ID')}</p>
+              <p><strong>Minimal Grosir:</strong> ${rule.minQty} pcs</p>
+            ` : ''}
             <p><strong>Deskripsi:</strong></p>
-            <p style="margin-top:5px">• ${formattedDesc}</p>
+            <p class="product-desc">${productDesc}</p>
             <div class="modal-buttons">
               <button id="add-from-detail" style="background:#008ca7;color:white">Tambah ke Keranjang</button>
               <button id="close-detail" style="background:#f44336;color:white">Tutup</button>
@@ -502,11 +589,42 @@
     function showModal() {
       qtyInput.value = 1;
       modal.classList.add('visible');
+      updatePriceInfo();
+      
+      // Update info harga saat jumlah berubah
+      qtyInput.addEventListener('input', updatePriceInfo);
+    }
+
+    // Update info harga berdasarkan kuantitas
+    function updatePriceInfo() {
+      const qty = parseInt(qtyInput.value) || 1;
+      let price = selectedProduct.harga;
+      let isWholesale = false;
+      let rule = getWholesaleRule(selectedProduct.kategori);
+      
+      // Cek apakah produk punya harga grosir dan memenuhi syarat
+      if (selectedProduct.harga_grosir !== null && qty >= rule.minQty) {
+        price = selectedProduct.harga_grosir;
+        isWholesale = true;
+      }
+      
+      const total = price * qty;
+      
+      priceInfo.innerHTML = `
+        <div><strong>Harga Satuan:</strong> Rp ${price.toLocaleString('id-ID')} ${isWholesale ? '(Grosir)' : ''}</div>
+        <div><strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}</div>
+        ${selectedProduct.harga_grosir !== null ? `
+          <div style="margin-top:5px;font-size:12px;color:#666">
+            ${!isWholesale ? `Beli ${rule.minQty - qty} lagi untuk dapat harga grosir Rp ${selectedProduct.harga_grosir.toLocaleString('id-ID')}` : ''}
+          </div>
+        ` : ''}
+      `;
     }
 
     // Sembunyikan modal
     function hideModal() {
       modal.classList.remove('visible');
+      qtyInput.removeEventListener('input', updatePriceInfo);
     }
 
     // Tambah ke keranjang
@@ -514,14 +632,29 @@
       const qty = parseInt(qtyInput.value);
       
       if (qty > 0 && selectedProduct) {
-        const existingItem = cart.find(item => item.produk === selectedProduct.produk);
+        let price = selectedProduct.harga;
+        let isWholesale = false;
+        let rule = getWholesaleRule(selectedProduct.kategori);
         
-        if (existingItem) {
-          existingItem.qty += qty;
+        // Gunakan harga grosir jika memenuhi syarat
+        if (selectedProduct.harga_grosir !== null && qty >= rule.minQty) {
+          price = selectedProduct.harga_grosir;
+          isWholesale = true;
+        }
+        
+        const existingItemIndex = cart.findIndex(item => 
+          item.produk === selectedProduct.produk && 
+          item.harga === price
+        );
+        
+        if (existingItemIndex >= 0) {
+          cart[existingItemIndex].qty += qty;
         } else {
           cart.push({
             ...selectedProduct,
-            qty: qty
+            harga: price,
+            qty: qty,
+            isWholesale: isWholesale
           });
         }
         
@@ -551,8 +684,9 @@
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
           <div>
-            <div>${item.produk}</div>
+            <div>${formatProductName(item.produk)}</div>
             <div>${item.qty} x Rp ${item.harga.toLocaleString('id-ID')}</div>
+            ${item.isWholesale ? `<div style="color:#4CAF50;font-size:12px">(Harga Grosir)</div>` : ''}
           </div>
           <div>
             <button onclick="removeFromCart(${index})">Hapus</button>
@@ -627,9 +761,11 @@
       // Detail pesanan
       message += `*DETAIL PESANAN*\n`;
       cart.forEach((item, index) => {
-        message += `${index + 1}. ${item.produk} (${item.brand || '-'})\n`;
-        message += `   ▪ Jumlah: ${item.qty}\n`;
-        message += `   ▪ Harga: Rp ${item.harga.toLocaleString('id-ID')}\n`;
+        const rule = getWholesaleRule(item.kategori);
+        
+        message += `${index + 1}. ${formatProductName(item.produk)} (${item.brand || '-'})\n`;
+        message += `   ▪ Jumlah: ${item.qty} pcs\n`;
+        message += `   ▪ Harga: Rp ${item.harga.toLocaleString('id-ID')} ${item.isWholesale ? `(Grosir ≥${rule.minQty} pcs)` : ''}\n`;
         message += `   ▪ Subtotal: Rp ${(item.qty * item.harga).toLocaleString('id-ID')}\n\n`;
       });
 

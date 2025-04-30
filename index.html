@@ -97,8 +97,8 @@
     }
     .product-card:hover {
       transform: translateY(-3px);
-      }
-      .product-image-container {
+    }
+    .product-image-container {
       height: 180px;
       background: #f8f8f8;
       display: flex;
@@ -116,8 +116,8 @@
     }
     .product-card:hover .product-image {
       transform: scale(1.05);
-      }
-      .product-details {
+    }
+    .product-details {
       padding: 12px;
       display: flex;
       flex-direction: column;
@@ -238,14 +238,14 @@
       .product-grid {
         grid-template-columns: repeat(3, 1fr);
       }
-      }
-      @media (min-width: 992px) {
+    }
+    @media (min-width: 992px) {
       .product-grid {
         grid-template-columns: repeat(4, 1fr);
       }
-      }
-      </style>
-      </head>
+    }
+  </style>
+</head>
 <body>
   <div class="header">
     <h1>MDR STORE</h1>
@@ -324,89 +324,89 @@
         label: "Grosir (≥100)"
       },
       "Kabel Data": {
-      minQty: 50,
+        minQty: 50,
         label: "Grosir (≥50)"
       },
       "Charger": {
-      minQty: 30,
+        minQty: 30,
         label: "Grosir (≥30)"
       },
       "Default": {
-      minQty: 100,
+        minQty: 100,
         label: "Grosir (≥100)"
       }
-      };
+    };
 
-      function getWholesaleRule(kategori) {
+    function getWholesaleRule(kategori) {
       return WHOLESALE_RULES[kategori] || WHOLESALE_RULES["Default"];
     }
 
     function getTotalQtyByCategory(cart, category) {
       return cart.reduce((total, item) => {
-      return item.kategori === category ? total + item.qty : total;
+        return item.kategori === category ? total + item.qty : total;
       }, 0);
-      }
+    }
 
-      function formatProductName(name) {
+    function formatProductName(name) {
       return name
         .replace(/(Oraimo|Baseus|Telkomsel)\s+/gi, '')
-      .replace(/Model\s+\w+-\w+/i, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-      }
+        .replace(/Model\s+\w+-\w+/i, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
 
-      function formatDescription(desc) {
+    function formatDescription(desc) {
       if (desc.includes('\n')) return desc.trim();
       return desc.replace(/(🟡)/g, '\n$1').trim();
-      }
+    }
 
-      function optimizeCloudinaryUrl(url) {
+    function optimizeCloudinaryUrl(url) {
       if (!url.includes('cloudinary.com')) return url;
       return url.replace(
-        /upload\//,
+        /upload\//, 
         'upload/c_fill,g_auto,h_400,w_400,f_auto,q_auto/'
       );
-      }
+    }
 
-      const brandFilter = document.getElementById('brand-filter');
-      const categoryFilter = document.getElementById('category-filter');
-      const productGrid = document.getElementById('product-grid');
-      const cartContainer = document.getElementById('cart');
-      const cartItems = document.getElementById('cart-items');
-      const cartTotal = document.getElementById('cart-total');
-      const checkoutBtn = document.getElementById('checkout-btn');
-      const modal = document.getElementById('qty-modal');
-      const qtyInput = document.getElementById('qty-input');
-      const priceInfo = document.getElementById('price-info');
-      const addToCartBtn = document.getElementById('add-to-cart');
-      const closeModalBtn = document.getElementById('close-modal');
-      const customerModal = document.getElementById('customer-modal');
-      const customerName = document.getElementById('customer-name');
-      const customerAddress = document.getElementById('customer-address');
-      const customerPhone = document.getElementById('customer-phone');
-      const confirmCustomerBtn = document.getElementById('confirm-customer');
-      const cancelCustomerBtn = document.getElementById('cancel-customer');
+    const brandFilter = document.getElementById('brand-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    const productGrid = document.getElementById('product-grid');
+    const cartContainer = document.getElementById('cart');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const modal = document.getElementById('qty-modal');
+    const qtyInput = document.getElementById('qty-input');
+    const priceInfo = document.getElementById('price-info');
+    const addToCartBtn = document.getElementById('add-to-cart');
+    const closeModalBtn = document.getElementById('close-modal');
+    const customerModal = document.getElementById('customer-modal');
+    const customerName = document.getElementById('customer-name');
+    const customerAddress = document.getElementById('customer-address');
+    const customerPhone = document.getElementById('customer-phone');
+    const confirmCustomerBtn = document.getElementById('confirm-customer');
+    const cancelCustomerBtn = document.getElementById('cancel-customer');
 
-      function loadProducts() {
+    function loadProducts() {
       fetch('https://opensheet.elk.sh/1Qn-UWBFxghJpBfRMXvtayXBxO5I3y5rHk-we0m2J9mU/Sheet1')
-      .then(res => res.json())
-      .then(data => {
+        .then(res => res.json())
+        .then(data => {
           products = data.map(item => ({
             brand: item.Brand,
             kategori: item['Nama Kategori'],
             produk: item['Nama Produk'],
             deskripsi: item.Deskripsi || '-',
             harga: parseInt(item.Harga.replace(/\D/g, '')) || 0,
-      harga_grosir: parseInt(item['Harga Grosir']?.replace(/\D/g, '')) || null,
+            harga_grosir: parseInt(item['Harga Grosir']?.replace(/\D/g, '')) || null,
             gambar: item['Gambar URL'] || 'https://via.placeholder.com/150?text=No+Image'
           }));
-      renderCategories();
-      renderBrands();
-      renderProducts();
-      })
-      .catch(error => {
+          renderCategories();
+          renderBrands();
+          renderProducts();
+        })
+        .catch(error => {
           console.error('Error loading products:', error);
-      products = [
+          products = [
             {
               brand: "Telkomsel",
               kategori: "Voucher Internet",
@@ -427,59 +427,60 @@
             }
           ];
           renderCategories();
-      renderBrands();
-      renderProducts();
-      });
-      }
+          renderBrands();
+          renderProducts();
+        });
+    }
 
-      function renderCategories() {
+    function renderCategories() {
       const categories = [...new Set(products.map(p => p.kategori))];
       categories.forEach(cat => {
         const option = document.createElement('option');
-      option.value = cat;
+        option.value = cat;
         option.textContent = cat;
         categoryFilter.appendChild(option);
       });
-      }
+    }
 
-      function renderBrands() {
+    function renderBrands() {
       brandFilter.innerHTML = '<option value="">Semua Brand</option>';
       const selectedCategory = categoryFilter.value;
       let filteredProducts = products;
       if (selectedCategory) {
-      filteredProducts = products.filter(p => p.kategori === selectedCategory);
+        filteredProducts = products.filter(p => p.kategori === selectedCategory);
       }
       const brands = [...new Set(filteredProducts.map(p => p.brand))];
       brands.forEach(brand => {
         const option = document.createElement('option');
-      option.value = brand;
+        option.value = brand;
         option.textContent = brand;
         brandFilter.appendChild(option);
       });
-      }
+    }
 
-      function renderProducts() {
+    function renderProducts() {
       productGrid.innerHTML = '';
       const selectedCategory = categoryFilter.value;
       const selectedBrand = brandFilter.value;
       let filteredProducts = products;
+      
       if (selectedCategory) {
-      filteredProducts = filteredProducts.filter(p => p.kategori === selectedCategory);
+        filteredProducts = filteredProducts.filter(p => p.kategori === selectedCategory);
       }
       if (selectedBrand) {
-      filteredProducts = filteredProducts.filter(p => p.brand === selectedBrand);
+        filteredProducts = filteredProducts.filter(p => p.brand === selectedBrand);
       }
-
+      
       filteredProducts.forEach(product => {
         const card = document.createElement('div');
-      card.className = 'product-card';
+        card.className = 'product-card';
         const productName = formatProductName(product.produk);
-      const hasWholesale = product.harga_grosir !== null;
+        const hasWholesale = product.harga_grosir !== null;
         const rule = getWholesaleRule(product.kategori);
-      card.innerHTML = `
+        card.innerHTML = `
           <div class="product-image-container">
             <img src="${optimizeCloudinaryUrl(product.gambar)}" alt="${productName}" class="product-image" loading="lazy">
-      </div>
+          </div>
           <div class="product-details">
             <div class="product-text">
               <div class="product-name">${productName}</div>
@@ -494,18 +495,18 @@
           </div>
         `;
         card.querySelector('.add-to-cart').addEventListener('click', (e) => {
-      e.stopPropagation();
-      selectedProduct = product;
+          e.stopPropagation();
+          selectedProduct = product;
           showModal();
+        });
+        card.addEventListener('click', () => {
+          showProductDetail(product);
+        });
+        productGrid.appendChild(card);
       });
-      card.addEventListener('click', () => {
-      showProductDetail(product);
-      });
-      productGrid.appendChild(card);
-      });
-      }
+    }
 
-      function showProductDetail(product) {
+    function showProductDetail(product) {
       const productName = formatProductName(product.produk);
       const productDesc = formatDescription(product.deskripsi);
       const hasWholesale = product.harga_grosir !== null;
@@ -515,7 +516,7 @@
           <div class="modal-content" style="max-width:500px">
             <h3>${productName}</h3>
             <img src="${optimizeCloudinaryUrl(product.gambar)}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
-      <p><strong>Brand:</strong> ${product.brand}</p>
+            <p><strong>Brand:</strong> ${product.brand}</p>
             <p><strong>Kategori:</strong> ${product.kategori}</p>
             <p><strong>Harga:</strong> Rp ${product.harga.toLocaleString('id-ID')}</p>
             ${hasWholesale ? `
@@ -532,41 +533,39 @@
       `;
       document.body.insertAdjacentHTML('beforeend', detailModal);
       document.getElementById('close-detail').addEventListener('click', () => {
-      document.getElementById('detail-modal').remove();
+        document.getElementById('detail-modal').remove();
       });
       document.getElementById('add-from-detail').addEventListener('click', () => {
-      selectedProduct = product;
+        selectedProduct = product;
         document.getElementById('detail-modal').remove();
-      showModal();
+        showModal();
       });
-      }
+    }
 
-      function showModal() {
+    function showModal() {
       qtyInput.value = 1;
       modal.classList.add('visible');
       updatePriceInfo();
       qtyInput.addEventListener('input', updatePriceInfo);
-      }
+    }
 
-      function updatePriceInfo() {
+    function updatePriceInfo() {
       const qty = parseInt(qtyInput.value) || 1;
       let price = selectedProduct.harga;
       let isWholesale = false;
       const rule = getWholesaleRule(selectedProduct.kategori);
       const totalQtyInCart = getTotalQtyByCategory(cart, selectedProduct.kategori);
       const totalQty = totalQtyInCart + qty;
+      
       if (selectedProduct.harga_grosir !== null && totalQty >= rule.minQty) {
-      price = selectedProduct.harga_grosir;
+        price = selectedProduct.harga_grosir;
         isWholesale = true;
       }
+      
       const total = price * qty;
       priceInfo.innerHTML = `
-        <div><strong>Harga Satuan:</strong> Rp ${price.toLocaleString('id-ID')} ${isWholesale ? '(Grosir)' : ''
-  }
-
-  </div>
-  <div><strong>Total:</strong> Rp $ {
-    total.toLocaleString('id-ID')}</div>
+        <div><strong>Harga Satuan:</strong> Rp ${price.toLocaleString('id-ID')} ${isWholesale ? '(Grosir)' : ''}</div>
+        <div><strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}</div>
         ${selectedProduct.harga_grosir !== null ? `
           <div style="margin-top:5px;font-size:12px;color:#666">
             ${!isWholesale ? `Total ${totalQtyInCart} pcs di keranjang. Beli ${rule.minQty - totalQty} pcs lagi untuk dapat harga grosir!` : ''}
@@ -576,24 +575,26 @@
     }
 
     function hideModal() {
-    modal.classList.remove('visible');
-    qtyInput.removeEventListener('input', updatePriceInfo);
+      modal.classList.remove('visible');
+      qtyInput.removeEventListener('input', updatePriceInfo);
     }
 
     function addToCart() {
-    const qty = parseInt(qtyInput.value);
-    if (qty > 0 && selectedProduct) {
-    const rule = getWholesaleRule(selectedProduct.kategori);
-    const totalQtyInCategory = getTotalQtyByCategory(cart, selectedProduct.kategori) + qty;
+      const qty = parseInt(qtyInput.value);
+      if (qty > 0 && selectedProduct) {
+        const rule = getWholesaleRule(selectedProduct.kategori);
+        const totalQtyInCategory = getTotalQtyByCategory(cart, selectedProduct.kategori) + qty;
         const isWholesale = totalQtyInCategory >= rule.minQty && selectedProduct.harga_grosir !== null;
+        
         const price = isWholesale ? selectedProduct.harga_grosir : selectedProduct.harga;
-        const existingItemIndex = cart.findIndex(item =>
-          item.produk === selectedProduct.produk &&
+        
+        const existingItemIndex = cart.findIndex(item => 
+          item.produk === selectedProduct.produk && 
           item.harga === price
         );
-
-    if (existingItemIndex >= 0) {
-    cart[existingItemIndex].qty += qty;
+        
+        if (existingItemIndex >= 0) {
+          cart[existingItemIndex].qty += qty;
         } else {
           cart.push({
             ...selectedProduct,
@@ -601,40 +602,45 @@
             qty: qty,
             isWholesale: isWholesale
           });
-    }
-
-    updateCart();
-    hideModal();
-    }
+        }
+        
+        updateCart();
+        hideModal();
+      }
     }
 
     function updateCart() {
-    cartItems.innerHTML = '';
+      cartItems.innerHTML = '';
+      
       if (cart.length === 0) {
-    cartContainer.classList.remove('visible');
-    return;
+        cartContainer.classList.remove('visible');
+        return;
       }
+      
       // Update harga berdasarkan total kategori
       const categoriesInCart = [...new Set(cart.map(item => item.kategori))];
-    categoriesInCart.forEach(category => {
+      categoriesInCart.forEach(category => {
         const rule = getWholesaleRule(category);
-    const totalQty = getTotalQtyByCategory(cart, category);
-    const shouldApplyWholesale = totalQty >= rule.minQty;
+        const totalQty = getTotalQtyByCategory(cart, category);
+        const shouldApplyWholesale = totalQty >= rule.minQty;
+        
         cart.forEach(item => {
           if (item.kategori === category && item.harga_grosir !== null) {
-    item.harga = shouldApplyWholesale ? item.harga_grosir : item.harga;
+            item.harga = shouldApplyWholesale ? item.harga_grosir : item.harga;
             item.isWholesale = shouldApplyWholesale;
           }
         });
-    });
-
-    cartContainer.classList.add('visible');
-    let total = 0;
+      });
+      
+      cartContainer.classList.add('visible');
+      let total = 0;
+      
       cart.forEach((item, index) => {
-    const subtotal = item.harga * item.qty;
+        const subtotal = item.harga * item.qty;
         total += subtotal;
+        
         const cartItem = document.createElement('div');
-    cartItem.className = 'cart-item';
+        cartItem.className = 'cart-item';
         cartItem.innerHTML = `
           <div>
             <div>${formatProductName(item.produk)}</div>
@@ -643,37 +649,38 @@
           </div>
           <div>
             <button onclick="removeFromCart(${index})">Hapus</button>
-    </div>
+          </div>
         `;
         cartItems.appendChild(cartItem);
-    });
-
-    // Tambahkan notifikasi grosir per kategori
+      });
+      
+      // Tambahkan notifikasi grosir per kategori
       categoriesInCart.forEach(category => {
         const rule = getWholesaleRule(category);
-    const totalQty = getTotalQtyByCategory(cart, category);
-    const remaining = rule.minQty - totalQty;
+        const totalQty = getTotalQtyByCategory(cart, category);
+        const remaining = rule.minQty - totalQty;
+        
         if (remaining > 0 && cart.some(item => item.kategori === category && item.harga_grosir)) {
-    cartItems.innerHTML += `
+          cartItems.innerHTML += `
             <div class="wholesale-notification">
               Beli ${remaining} pcs lagi dalam kategori ${category} untuk dapat harga grosir!
             </div>
           `;
         }
       });
-
-    cartTotal.textContent = total.toLocaleString('id-ID');
+      
+      cartTotal.textContent = total.toLocaleString('id-ID');
     }
 
     function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
+      cart.splice(index, 1);
+      updateCart();
     }
 
     function checkout() {
-    if (cart.length === 0) {
-    alert('Keranjang belanja kosong!');
-    return;
+      if (cart.length === 0) {
+        alert('Keranjang belanja kosong!');
+        return;
       }
       customerName.value = '';
       customerAddress.value = '';
@@ -682,9 +689,9 @@
     }
 
     function processCheckout() {
-    if (!customerName.value || !customerAddress.value || !customerPhone.value) {
-    alert('Harap lengkapi semua data pemesan!');
-    return;
+      if (!customerName.value || !customerAddress.value || !customerPhone.value) {
+        alert('Harap lengkapi semua data pemesan!');
+        return;
       }
       customerData = {
         name: customerName.value,
@@ -692,41 +699,39 @@
         phone: customerPhone.value
       };
       const message = generateOrderMessage();
-    const whatsappUrl = `https://wa.me/6285134575758?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    customerModal.classList.remove('visible');
+      const whatsappUrl = `https://wa.me/6285134575758?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      customerModal.classList.remove('visible');
     }
 
     function generateOrderMessage() {
-    let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
+      let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
       message += `==============================\n\n`;
       message += `*DATA PELANGGAN*\n`;
       message += `Nama: ${customerData.name}\n`;
       message += `Alamat: ${customerData.address}\n`;
       message += `WhatsApp: ${customerData.phone}\n\n`;
       message += `*DETAIL PESANAN*\n`;
+      
       // Group items by category
       const categories = [...new Set(cart.map(item => item.kategori))];
-    categories.forEach(category => {
+      categories.forEach(category => {
         const categoryItems = cart.filter(item => item.kategori === category);
-    const rule = getWholesaleRule(category);
-    const totalQty = getTotalQtyByCategory(cart, category);
-
-    message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
+        const rule = getWholesaleRule(category);
+        const totalQty = getTotalQtyByCategory(cart, category);
+        
+        message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
+        
         categoryItems.forEach((item, index) => {
-    message += `${index + 1}. ${formatProductName(item.produk)}\n`;
+          message += `${index + 1}. ${formatProductName(item.produk)}\n`;
           message += `   ▪ Jumlah: ${item.qty} pcs\n`;
-          message += `   ▪ Harga: Rp ${item.harga.toLocaleString('id-ID')} ${item.isWholesale ? '(Grosir)' : ''
-}
-
-\n`;
-message += `   ▪ Subtotal: Rp $ {
-  (item.qty * item.harga).toLocaleString('id-ID')}\n\n`;
+          message += `   ▪ Harga: Rp ${item.harga.toLocaleString('id-ID')} ${item.isWholesale ? '(Grosir)' : ''}\n`;
+          message += `   ▪ Subtotal: Rp ${(item.qty * item.harga).toLocaleString('id-ID')}\n\n`;
         });
-  });
+      });
 
-  const total = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
-  message += `*TOTAL PEMBAYARAN: Rp ${total.toLocaleString('id-ID')}*\n\n`;
+      const total = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+      message += `*TOTAL PEMBAYARAN: Rp ${total.toLocaleString('id-ID')}*\n\n`;
       message += `*INSTRUKSI PEMBAYARAN*\n`;
       message += `1. Transfer ke rekening berikut:\n`;
       message += `   Bank: BRI\n`;
@@ -740,19 +745,19 @@ message += `   ▪ Subtotal: Rp $ {
 
     // Event listeners
     categoryFilter.addEventListener('change', () => {
-  renderBrands();
-  renderProducts();
-  });
-  brandFilter.addEventListener('change', renderProducts);
-  addToCartBtn.addEventListener('click', addToCart);
-  closeModalBtn.addEventListener('click', hideModal);
-  checkoutBtn.addEventListener('click', checkout);
-  confirmCustomerBtn.addEventListener('click', processCheckout);
-  cancelCustomerBtn.addEventListener('click', () => {
-  customerModal.classList.remove('visible');
-  });
+      renderBrands();
+      renderProducts();
+    });
+    brandFilter.addEventListener('change', renderProducts);
+    addToCartBtn.addEventListener('click', addToCart);
+    closeModalBtn.addEventListener('click', hideModal);
+    checkoutBtn.addEventListener('click', checkout);
+    confirmCustomerBtn.addEventListener('click', processCheckout);
+    cancelCustomerBtn.addEventListener('click', () => {
+      customerModal.classList.remove('visible');
+    });
 
-  // Inisialisasi
+    // Inisialisasi
     window.removeFromCart = removeFromCart;
     loadProducts();
   </script>

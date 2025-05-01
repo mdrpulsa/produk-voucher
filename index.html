@@ -349,6 +349,11 @@
       }
     };
 
+    // Wholesale Rules - HANYA untuk Voucher Internet
+    const WHOLESALE_RULES = {
+      "Voucher Internet": { minQty: 100, label: "Grosir (≥100)" }
+    };
+
     // System Variables
     let products = [];
     let cart = [];
@@ -357,11 +362,6 @@
       name: '',
       address: '',
       phone: ''
-    };
-
-    // Wholesale Rules - HANYA untuk Voucher Internet
-    const WHOLESALE_RULES = {
-      "Voucher Internet": { minQty: 100, label: "Grosir (≥100)" }
     };
 
     // Fallback Data - termasuk contoh produk Oraimo

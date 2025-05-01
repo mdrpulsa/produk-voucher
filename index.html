@@ -730,41 +730,44 @@
       },
       
       generateOrderMessage: () => {
-        let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
-        message += `==============================\n\n`;
-        message += `*DATA PELANGGAN*\n`;
-        message += `Nama: ${customerData.name}\n`;
-        message += `Alamat: ${customerData.address}\n`;
-        message += `WhatsApp: ${customerData.phone}\n\n`;
-        message += `*DETAIL PESANAN*\n`;
-        
-        const categories = [...new Set(cart.map(item => item.kategori))];
-        categories.forEach(category => {
-          const categoryItems = cart.filter(item => item.kategori === category);
-          const rule = utils.getWholesaleRule(category);
-          const totalQty = utils.getTotalQtyByCategory(cart, category);
-          
-          message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
-          
-          categoryItems.forEach((item, index) => {
-            message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
-            message += `   - Jumlah: ${item.qty} pcs\n`;
-            message += `   - Harga: Rp ${utils.formatCurrency(item.harga)} ${item.isWholesale ? '(Grosir)' : ''}\n`;
-            message += `   - Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
-          });
-        });
+    let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
+    message += `==============================\n\n`;
+    message += `*DATA PELANGGAN*\n`;
+    message += `Nama: ${customerData.name}\n`;
+    message += `Alamat: ${customerData.address}\n`;
+    message += `WhatsApp: ${customerData.phone}\n\n`;
+    message += `*DETAIL PESANAN*\n`;
+    
+    const categories = [...new Set(cart.map(item => item.kategori))];
+    categories.forEach(category => {
+      const categoryItems = cart.filter(item => item.kategori === category);
+      const rule = utils.getWholesaleRule(category);
+      const totalQty = utils.getTotalQtyByCategory(cart, category);
+      
+      message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
+      
+      categoryItems.forEach((item, index) => {
+        message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
+        message += `   • Jumlah: ${item.qty} pcs\n`;
+        message += `   • Harga: Rp ${utils.formatCurrency(item.harga)} ${item.isWholesale ? '(Grosir)' : ''}\n`;
+        message += `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
+      });
+    });
 
-        message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(cart.reduce((sum, item) => sum + (item.harga * item.qty), 0))}*\n\n`;
-        message += `*INSTRUKSI PEMBAYARAN*\n`;
-        message += `1. Transfer ke rekening berikut:\n`;
-        message += `   Bank: BRI\n`;
-        message += `   No. Rek: 6619-0100-0007-560\n`;
-        message += `   A/N: SUYOKO\n\n`;
-        message += `2. Konfirmasi pembayaran dengan mengirim bukti transfer\n\n`;
-        message += `_Pesanan akan diproses dalam 1x24 jam setelah pembayaran diverifikasi_`;
+    // Hitung total pembayaran
+    const totalPayment = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+    
+    message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
+    message += `*INSTRUKSI PEMBAYARAN*\n`;
+    message += `1. Transfer ke rekening berikut:\n`;
+    message += `   Bank: BRI\n`;
+    message += `   No. Rek: 6619-0100-0007-560\n`;
+    message += `   A/N: SUYOKO\n\n`;
+    message += `2. Konfirmasi pembayaran dengan mengirim bukti transfer\n\n`;
+    message += `_Pesanan akan diproses dalam 1x24 jam setelah pembayaran diverifikasi_`;
 
-        return message;
-      }
+    return message;
+  }
     };
 
     // Core Application

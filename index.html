@@ -366,6 +366,7 @@
     // Fallback Data - termasuk contoh produk Oraimo
     const fallbackProducts = [
       {
+        kode: "TELK-10GB",
         brand: "Telkomsel",
         kategori: "Voucher Internet",
         produk: "Voucher Telkomsel 10GB",
@@ -375,6 +376,7 @@
         gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Indosat_Ooredoo_Hutchison.svg/960px-Indosat_Ooredoo_Hutchison.svg.png"
       },
       {
+        kode: "XL-5GB",
         brand: "XL",
         kategori: "Voucher Internet",
         produk: "Voucher XL 5GB",
@@ -384,21 +386,23 @@
         gambar: "https://example.com/wp-content/uploads/xl-voucher.jpg"
       },
       {
+        kode: "OR-CBL1M",
         brand: "Oraimo",
         kategori: "Aksesoris",
         produk: "Oraimo Cable 1m",
         deskripsi: "🟡 Kabel data original Oraimo\n🟡 Panjang 1 meter\n🟡 Fast charging",
         harga: 75000,
-        harga_grosir: null, // Tidak ada grosir untuk Oraimo
+        harga_grosir: null,
         gambar: "https://example.com/oraimo-cable.jpg"
       },
       {
+        kode: "OR-PB10K",
         brand: "Oraimo",
         kategori: "Aksesoris",
         produk: "Oraimo Powerbank 10000mAh",
         deskripsi: "🟡 Powerbank original Oraimo\n🟡 Kapasitas 10000mAh\n🟡 Fast charging",
         harga: 250000,
-        harga_grosir: null, // Tidak ada grosir untuk Oraimo
+        harga_grosir: null,
         gambar: "https://example.com/oraimo-powerbank.jpg"
       }
     ];
@@ -432,14 +436,13 @@
 
     // Utility Functions
     const utils = {
-      getWholesaleRule: (kategori) => WHOLESALE_RULES[kategori] || null, // Hanya return rule jika kategori Voucher Internet
+      getWholesaleRule: (kategori) => WHOLESALE_RULES[kategori] || null,
       
       getTotalQtyByCategory: (cart, category) => {
         return cart.reduce((total, item) => item.kategori === category ? total + item.qty : total, 0);
       },
       
       formatProductName: (name) => {
-        // Jangan hapus kata "Oraimo" dari nama produk
         if (name.includes("Oraimo")) {
           return name.replace(/\s+/g, ' ').trim();
         }
@@ -470,7 +473,7 @@
       },
       
       formatOrderItem: (item, index) => {
-        return `${index + 1}. ${utils.formatProductName(item.produk)}\n` +
+        return `${index + 1}. ${utils.formatProductName(item.produk)} (${item.kode || '-'})\n` +
                `   • Jumlah: ${item.qty} pcs\n` +
                `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n` +
                `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
@@ -506,6 +509,7 @@
       
       processRawData: (rawData) => {
         return rawData.map(item => ({
+          kode: item['Kode Produk'] || item.kode || '',
           brand: item.Brand || item.brand || '',
           kategori: item['Nama Kategori'] || item.kategori || '',
           produk: item['Nama Produk'] || item.produk || '',
@@ -513,7 +517,7 @@
           harga: parseInt(item.Harga?.replace(/\D/g, '') || item.harga || 0),
           harga_grosir: item.kategori === "Voucher Internet" ? 
                        parseInt(item['Harga Grosir']?.replace(/\D/g, '') || item.harga_grosir || null) : 
-                       null, // Hanya set harga_grosir untuk Voucher Internet
+                       null,
           gambar: item['Gambar URL'] || item.gambar || ''
         }));
       },
@@ -530,7 +534,6 @@
         ui.updateFilters();
         ui.renderProducts();
         
-        // Schedule refresh
         setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
       }
     };
@@ -538,7 +541,6 @@
     // UI Functions
     const ui = {
       updateFilters: () => {
-        // Categories
         elements.categoryFilter.innerHTML = '<option value="">Semua Kategori</option>';
         [...new Set(products.map(p => p.kategori))].forEach(cat => {
           const option = document.createElement('option');
@@ -547,7 +549,6 @@
           elements.categoryFilter.appendChild(option);
         });
         
-        // Brands
         ui.updateBrandFilter();
       },
       
@@ -586,7 +587,7 @@
           card.innerHTML = `
             <div class="product-image-container">
               <img src="${utils.getImageUrl(product.gambar)}" alt="${productName}" class="product-image" loading="lazy">
-              <div class="product-watermark">${utils.getShortDescription(product.deskripsi)}</div>
+              <div class="product-watermark">${product.kode ? product.kode + ' | ' : ''}MDR STORE</div>
             </div>
             <div class="product-details">
               <div class="product-text">
@@ -627,6 +628,7 @@
           <div class="modal visible" id="detail-modal">
             <div class="modal-content" style="max-width:500px">
               <h3>${productName}</h3>
+              <p><small>Kode: ${product.kode || '-'}</small></p>
               <img src="${utils.getImageUrl(product.gambar)}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
               <p><strong>Brand:</strong> ${product.brand}</p>
               <p><strong>Kategori:</strong> ${product.kategori}</p>
@@ -669,7 +671,6 @@
         let price = selectedProduct.harga;
         let isWholesale = false;
         
-        // Hanya berlaku untuk Voucher Internet
         if (selectedProduct.kategori === "Voucher Internet" && selectedProduct.harga_grosir !== null) {
           const rule = utils.getWholesaleRule(selectedProduct.kategori);
           const totalQtyInCart = utils.getTotalQtyByCategory(cart, selectedProduct.kategori);
@@ -706,7 +707,6 @@
           return;
         }
         
-        // Update wholesale prices - hanya untuk Voucher Internet
         const categoriesInCart = [...new Set(cart.map(item => item.kategori))];
         categoriesInCart.forEach(category => {
           if (category === "Voucher Internet") {
@@ -726,7 +726,6 @@
         elements.cartContainer.classList.add('visible');
         let total = 0;
         
-        // Render cart items
         cart.forEach((item, index) => {
           const subtotal = item.harga * item.qty;
           total += subtotal;
@@ -735,7 +734,7 @@
           cartItem.className = 'cart-item';
           cartItem.innerHTML = `
             <div>
-              <div>${utils.formatProductName(item.produk)}</div>
+              <div>${utils.formatProductName(item.produk)} (${item.kode || '-'})</div>
               <div>${item.qty} x Rp ${utils.formatCurrency(item.harga)}</div>
               ${item.isWholesale ? `<div style="color:#4CAF50;font-size:12px">(Harga Grosir)</div>` : ''}
             </div>
@@ -746,7 +745,6 @@
           elements.cartItems.appendChild(cartItem);
         });
         
-        // Add wholesale notifications - hanya untuk Voucher Internet
         categoriesInCart.forEach(category => {
           if (category === "Voucher Internet") {
             const rule = utils.getWholesaleRule(category);
@@ -828,7 +826,6 @@
           let price = selectedProduct.harga;
           let isWholesale = false;
           
-          // Hanya berlaku untuk Voucher Internet
           if (selectedProduct.kategori === "Voucher Internet" && selectedProduct.harga_grosir !== null) {
             const rule = utils.getWholesaleRule(selectedProduct.kategori);
             const totalQtyInCategory = utils.getTotalQtyByCategory(cart, selectedProduct.kategori) + qty;
@@ -870,7 +867,6 @@
         const address = elements.inputs.customerAddress.value.trim();
         const phone = elements.inputs.customerPhone.value.trim();
         
-        // Validasi data
         if (!name || !address || !phone) {
           alert('Harap lengkapi semua data pemesan!');
           return;
@@ -881,7 +877,6 @@
           return;
         }
         
-        // Simpan data ke localStorage
         localStorage.setItem('customerName', name);
         localStorage.setItem('customerAddress', address);
         localStorage.setItem('customerPhone', phone);
@@ -891,20 +886,16 @@
         const message = ui.generateOrderMessage();
         const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
-        // Buka WhatsApp di tab baru
         window.open(whatsappUrl, '_blank');
         
-        // Reset cart setelah checkout
         cart = [];
         ui.updateCart();
         elements.modals.customer.classList.remove('visible');
         
-        // Notifikasi
         alert('Pesanan berhasil dibuat! Silahkan lanjutkan pembayaran via WhatsApp.');
       },
       
       init: () => {
-        // Event Listeners
         elements.categoryFilter.addEventListener('change', () => {
           ui.updateBrandFilter();
           ui.renderProducts();
@@ -920,11 +911,9 @@
           elements.modals.customer.classList.remove('visible');
         });
         
-        // Initialize
         window.removeFromCart = app.removeFromCart;
         dataService.loadProducts();
         
-        // Cek ada data customer di localStorage
         const savedName = localStorage.getItem('customerName');
         if (savedName) {
           customerData.name = savedName;
@@ -933,7 +922,6 @@
       }
     };
 
-    // Start the application
     document.addEventListener('DOMContentLoaded', app.init);
   </script>
 </body>

@@ -748,9 +748,9 @@
           
           categoryItems.forEach((item, index) => {
             message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
-            message += `   ▪ Jumlah: ${item.qty} pcs\n`;
-            message += `   ▪ Harga: Rp ${utils.formatCurrency(item.harga)} ${item.isWholesale ? '(Grosir)' : ''}\n`;
-            message += `   ▪ Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
+            message += `   - Jumlah: ${item.qty} pcs\n`;
+            message += `   - Harga: Rp ${utils.formatCurrency(item.harga)} ${item.isWholesale ? '(Grosir)' : ''}\n`;
+            message += `   - Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
           });
         });
 

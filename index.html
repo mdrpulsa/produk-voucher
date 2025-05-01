@@ -342,11 +342,6 @@
       ],
       refreshInterval: 3600000, // 1 jam
       whatsappNumber: '6285134575758',
-      bankAccount: {
-        bankName: 'BRI',
-        accountNumber: '6619-0100-0007-560',
-        accountHolder: 'SUYOKO'
-      }
     };
 
     // System Variables
@@ -362,9 +357,9 @@
     // Wholesale Rules
     const WHOLESALE_RULES = {
       "Voucher Internet": { minQty: 100, label: "Grosir (≥100)" },
-      "Kabel Data": { minQty: 50, label: "Grosir (≥50)" },
-      "Charger": { minQty: 30, label: "Grosir (≥30)" },
-      "Default": { minQty: 100, label: "Grosir (≥100)" }
+      "Kabel Data": { minQty: 2, label: "Grosir (≥2)" },
+      "Charger": { minQty: 2, label: "Grosir (≥2)" },
+      "Default": { minQty: 2, label: "Grosir (≥2)" }
       };
 
       // Fallback Data
@@ -744,39 +739,40 @@ elements.modals.customer.classList.add('visible');
 ,
 
 generateOrderMessage: () => {
-let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
-        message += `==============================\n\n`;
-        message += `*DATA PELANGGAN*\n`;
-        message += `Nama: ${customerData.name}\n`;
-        message += `Alamat: ${customerData.address}\n`;
-        message += `WhatsApp: ${customerData.phone}\n\n`;
-        message += `*DETAIL PESANAN*\n`;
-        const categories = [...new Set(cart.map(item => item.kategori))];
-let totalPayment = 0;
-        categories.forEach(category => {
-          const categoryItems = cart.filter(item => item.kategori === category);
-const rule = utils.getWholesaleRule(category);
-const totalQty = utils.getTotalQtyByCategory(cart, category);
+  let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
+  message += `==============================\n\n`;
+  message += `*DATA PELANGGAN*\n`;
+  message += `Nama: ${customerData.name}\n`;
+  message += `Alamat: ${customerData.address}\n`;
+  message += `WhatsApp: ${customerData.phone}\n\n`;
 
-message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
-          categoryItems.forEach((item, index) => {
-message += utils.formatOrderItem(item, index);
-totalPayment += item.harga * item.qty;
-          });
-});
+  message += `*DETAIL PESANAN*\n`;
+  const categories = [...new Set(cart.map(item => item.kategori))];
+  let totalPayment = 0;
 
-message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
-        message += `*INSTRUKSI PEMBAYARAN*\n`;
-        message += `1. Transfer ke rekening berikut:\n`;
-        message += `   Bank: ${CONFIG.bankAccount.bankName}\n`;
-        message += `   No. Rek: ${CONFIG.bankAccount.accountNumber}\n`;
-        message += `   A/N: ${CONFIG.bankAccount.accountHolder}\n\n`;
-        message += `2. Konfirmasi pembayaran dengan mengirim bukti transfer\n\n`;
-        message += `_Pesanan akan diproses dalam 1x24 jam setelah pembayaran diverifikasi_\n\n`;
-        message += `*Terima kasih telah berbelanja di MDR STORE*`;
+  categories.forEach(category => {
+    const categoryItems = cart.filter(item => item.kategori === category);
+    const rule = utils.getWholesaleRule(category);
+    const totalQty = utils.getTotalQtyByCategory(cart, category);
 
-        return message;
-      }
+    message += `${category.toUpperCase()} (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
+    categoryItems.forEach((item, index) => {
+      message += utils.formatOrderItem(item, index);
+      totalPayment += item.harga * item.qty;
+    });
+  });
+
+  message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
+
+  message += `*INSTRUKSI PEMBAYARAN*\n`;
+  message += `1. Admin akan mengirim nomor rekening setelah Anda klik tombol *Checkout* dan masuk ke WhatsApp.\n`;
+  message += `2. Transfer sesuai nominal, lalu kirim bukti transfer.\n`;
+  message += `3. Pesanan diproses maksimal 1x24 jam setelah pembayaran terverifikasi.\n\n`;
+
+  message += `_Terima kasih telah berbelanja di MDR STORE_`;
+
+  return message;
+}
     };
 
     // Core Application

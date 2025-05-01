@@ -340,7 +340,12 @@
         'https://api.mdrstore.com/v1/products'
       ],
       refreshInterval: 3600000, // 1 jam
-      whatsappNumber: '6285134575758'
+      whatsappNumber: '6285134575758',
+      bankAccount: {
+        bankName: 'BRI',
+        accountNumber: '6619-0100-0007-560',
+        accountHolder: 'SUYOKO'
+      }
     };
 
     // System Variables
@@ -438,7 +443,19 @@
       
       getImageUrl: (url) => url || 'https://via.placeholder.com/150?text=No+Image',
       
-      formatCurrency: (amount) => new Intl.NumberFormat('id-ID').format(amount)
+      formatCurrency: (amount) => new Intl.NumberFormat('id-ID').format(amount),
+      
+      validatePhone: (phone) => {
+        const phoneRegex = /^[0-9]{10,15}$/;
+        return phoneRegex.test(phone.replace(/\D/g, ''));
+      },
+      
+      formatOrderItem: (item, index) => {
+        return `${index + 1}. ${utils.formatProductName(item.produk)}\n` +
+               `   • Jumlah: ${item.qty} pcs\n` +
+               `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n` +
+               `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
+      }
     };
 
     // Data Loading Functions
@@ -723,51 +740,53 @@
           alert('Keranjang belanja kosong!');
           return;
         }
-        elements.inputs.customerName.value = '';
-        elements.inputs.customerAddress.value = '';
-        elements.inputs.customerPhone.value = '';
+        ui.showCustomerModal();
+      },
+      
+      showCustomerModal: () => {
+        elements.inputs.customerName.value = localStorage.getItem('customerName') || '';
+        elements.inputs.customerAddress.value = localStorage.getItem('customerAddress') || '';
+        elements.inputs.customerPhone.value = localStorage.getItem('customerPhone') || '';
         elements.modals.customer.classList.add('visible');
       },
       
       generateOrderMessage: () => {
-    let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
-    message += `==============================\n\n`;
-    message += `*DATA PELANGGAN*\n`;
-    message += `Nama: ${customerData.name}\n`;
-    message += `Alamat: ${customerData.address}\n`;
-    message += `WhatsApp: ${customerData.phone}\n\n`;
-    message += `*DETAIL PESANAN*\n`;
-    
-    const categories = [...new Set(cart.map(item => item.kategori))];
-    categories.forEach(category => {
-      const categoryItems = cart.filter(item => item.kategori === category);
-      const rule = utils.getWholesaleRule(category);
-      const totalQty = utils.getTotalQtyByCategory(cart, category);
-      
-      message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
-      
-      categoryItems.forEach((item, index) => {
-        message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
-        message += `   • Jumlah: ${item.qty} pcs\n`;
-        message += `   • Harga: Rp ${utils.formatCurrency(item.harga)} ${item.isWholesale ? '(Grosir)' : ''}\n`;
-        message += `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
-      });
-    });
+        let message = `*FORMAT PEMESANAN - MDR STORE*\n`;
+        message += `==============================\n\n`;
+        message += `*DATA PELANGGAN*\n`;
+        message += `Nama: ${customerData.name}\n`;
+        message += `Alamat: ${customerData.address}\n`;
+        message += `WhatsApp: ${customerData.phone}\n\n`;
+        message += `*DETAIL PESANAN*\n`;
+        
+        const categories = [...new Set(cart.map(item => item.kategori))];
+        let totalPayment = 0;
+        
+        categories.forEach(category => {
+          const categoryItems = cart.filter(item => item.kategori === category);
+          const rule = utils.getWholesaleRule(category);
+          const totalQty = utils.getTotalQtyByCategory(cart, category);
+          
+          message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
+          
+          categoryItems.forEach((item, index) => {
+            message += utils.formatOrderItem(item, index);
+            totalPayment += item.harga * item.qty;
+          });
+        });
 
-    // Hitung total pembayaran
-    const totalPayment = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
-    
-    message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
-    message += `*INSTRUKSI PEMBAYARAN*\n`;
-    message += `1. Transfer ke rekening berikut:\n`;
-    message += `   Bank: BRI\n`;
-    message += `   No. Rek: 6619-0100-0007-560\n`;
-    message += `   A/N: SUYOKO\n\n`;
-    message += `2. Konfirmasi pembayaran dengan mengirim bukti transfer\n\n`;
-    message += `_Pesanan akan diproses dalam 1x24 jam setelah pembayaran diverifikasi_`;
+        message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
+        message += `*INSTRUKSI PEMBAYARAN*\n`;
+        message += `1. Transfer ke rekening berikut:\n`;
+        message += `   Bank: ${CONFIG.bankAccount.bankName}\n`;
+        message += `   No. Rek: ${CONFIG.bankAccount.accountNumber}\n`;
+        message += `   A/N: ${CONFIG.bankAccount.accountHolder}\n\n`;
+        message += `2. Konfirmasi pembayaran dengan mengirim bukti transfer\n\n`;
+        message += `_Pesanan akan diproses dalam 1x24 jam setelah pembayaran diverifikasi_\n\n`;
+        message += `*Terima kasih telah berbelanja di MDR STORE*`;
 
-    return message;
-  }
+        return message;
+      }
     };
 
     // Core Application
@@ -808,21 +827,41 @@
       },
       
       processCheckout: () => {
-        if (!elements.inputs.customerName.value || !elements.inputs.customerAddress.value || !elements.inputs.customerPhone.value) {
+        const name = elements.inputs.customerName.value.trim();
+        const address = elements.inputs.customerAddress.value.trim();
+        const phone = elements.inputs.customerPhone.value.trim();
+        
+        // Validasi data
+        if (!name || !address || !phone) {
           alert('Harap lengkapi semua data pemesan!');
           return;
         }
         
-        customerData = {
-          name: elements.inputs.customerName.value,
-          address: elements.inputs.customerAddress.value,
-          phone: elements.inputs.customerPhone.value
-        };
+        if (!utils.validatePhone(phone)) {
+          alert('Nomor WhatsApp tidak valid! Harap masukkan 10-15 digit nomor.');
+          return;
+        }
+        
+        // Simpan data ke localStorage
+        localStorage.setItem('customerName', name);
+        localStorage.setItem('customerAddress', address);
+        localStorage.setItem('customerPhone', phone);
+        
+        customerData = { name, address, phone };
         
         const message = ui.generateOrderMessage();
         const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+        
+        // Buka WhatsApp di tab baru
         window.open(whatsappUrl, '_blank');
+        
+        // Reset cart setelah checkout
+        cart = [];
+        ui.updateCart();
         elements.modals.customer.classList.remove('visible');
+        
+        // Notifikasi
+        alert('Pesanan berhasil dibuat! Silahkan lanjutkan pembayaran via WhatsApp.');
       },
       
       init: () => {
@@ -845,6 +884,13 @@
         // Initialize
         window.removeFromCart = app.removeFromCart;
         dataService.loadProducts();
+        
+        // Cek ada data customer di localStorage
+        const savedName = localStorage.getItem('customerName');
+        if (savedName) {
+          customerData.name = savedName;
+          elements.inputs.customerName.value = savedName;
+        }
       }
     };
 

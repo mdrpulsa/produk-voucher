@@ -140,9 +140,13 @@
       pointer-events: none;
       max-height: 40%;
       overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .product-watermark div:first-child {
+      font-weight: bold;
+      font-size: 12px;
     }
     .product-details {
       padding: 12px;
@@ -334,7 +338,8 @@
     <p id="timestamp" style="font-size: 0.8rem; color: #fffff;"></p>
 <div class="marquee-container">
   <div class="marquee-text">
-    Harga grosir untuk voucher internet — Minimal total 100pcs, bisa mix produk
+    🔥 Voucher Internet grosir? Min. 100 pcs, bebas mix produk! Gaskeun belanja
+    hemat di MDR STORE! 🚀
   </div>
 </div>
   </div>
@@ -433,6 +438,7 @@ const WHOLESALE_RULES = {
 // Fallback Data
 const fallbackProducts = [
   {
+    kode: "TELKOMSEL-001",
     brand: "Telkomsel",
     kategori: "Voucher Internet",
     produk: "Voucher Telkomsel 10GB",
@@ -442,6 +448,7 @@ const fallbackProducts = [
     gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Indosat_Ooredoo_Hutchison.svg/960px-Indosat_Ooredoo_Hutchison.svg.png"
   },
   {
+    kode: "XL-001",
     brand: "XL",
     kategori: "Voucher Internet",
     produk: "Voucher XL 5GB",
@@ -520,6 +527,7 @@ const utils = {
 
   formatOrderItem: (item, index) => {
     return `${index + 1}. ${utils.formatProductName(item.produk)}\n` +
+           `   • Kode: ${item.kode}\n` +
            `   • Jumlah: ${item.qty} pcs\n` +
            `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n` +
            `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
@@ -554,6 +562,7 @@ const dataService = {
 
   processRawData: (rawData) => {
     return rawData.map(item => ({
+      kode: item['Kode Produk'] || '',
       brand: item.Brand || '',
       kategori: item['Nama Kategori'] || '',
       produk: item['Nama Produk'] || '',
@@ -616,7 +625,8 @@ const ui = {
     if (selectedBrand) filteredProducts = filteredProducts.filter(p => p.brand === selectedBrand);
     if (searchTerm) filteredProducts = filteredProducts.filter(p => 
       p.produk.toLowerCase().includes(searchTerm) || 
-      utils.formatProductName(p.produk).toLowerCase().includes(searchTerm)
+      utils.formatProductName(p.produk).toLowerCase().includes(searchTerm) ||
+      p.kode.toLowerCase().includes(searchTerm)
     );
 
     filteredProducts.forEach(product => {
@@ -629,7 +639,10 @@ const ui = {
       card.innerHTML = `
         <div class="product-image-container">
           <img src="${utils.getImageUrl(product.gambar)}" alt="${productName}" class="product-image" loading="lazy">
-          <div class="product-watermark">${utils.getShortDescription(product.deskripsi)}</div>
+          <div class="product-watermark">
+            <div>Kode: ${product.kode}</div>
+            ${utils.getShortDescription(product.deskripsi)}
+          </div>
         </div>
         <div class="product-details">
           <div class="product-text">
@@ -669,6 +682,7 @@ const ui = {
       <div class="modal visible" id="detail-modal">
         <div class="modal-content" style="max-width:500px">
           <h3>${productName}</h3>
+          <p><strong>Kode:</strong> ${product.kode}</p>
           <img src="${utils.getImageUrl(product.gambar)}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
           <p><strong>Brand:</strong> ${product.brand}</p>
           <p><strong>Kategori:</strong> ${product.kategori}</p>
@@ -770,6 +784,7 @@ const ui = {
       cartItem.innerHTML = `
         <div>
           <div>${utils.formatProductName(item.produk)}</div>
+          <div>Kode: ${item.kode}</div>
           <div>${item.qty} x Rp ${utils.formatCurrency(item.harga)}</div>
           ${item.isWholesale ? `<div style="color:#4CAF50;font-size:12px">(Harga Grosir)</div>` : ''}
         </div>
@@ -840,7 +855,7 @@ const ui = {
   message += `*TOTAL: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
   message += `*PEMBAYARAN QRIS*\n`;
   message += ` - Scan QR Code berikut:\n`;
-  message += `   https://bit.ly/QRIS-MDRSTORE\n`;
+  message += `   ${CONFIG.qrisImageUrl}\n`;
   message += `Pembayaran akan diverifikasi otomatis dalam 1x24 jam`;
 
   return message;

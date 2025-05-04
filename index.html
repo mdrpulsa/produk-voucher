@@ -76,7 +76,7 @@
     }
     
     #checkout-btn {
-      background: green;
+      background: #4CAF50;
       color: white;
       border: none;
       padding: 12px;
@@ -292,6 +292,8 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      background-color: #008CA7;
+      color:white;
     }
     
     #add-to-cart {
@@ -300,6 +302,11 @@
     }
     
     #close-modal {
+      background: #f44336;
+      color: white;
+    }
+    
+    #cancel-customer {
       background: #f44336;
       color: white;
     }
@@ -643,7 +650,6 @@
 
       formatOrderItem: (item, index) => {
         return `${index + 1}. ${utils.formatProductName(item.produk)}\n` +
-               `   • Kode: ${item.kode}\n` +
                `   • Jumlah: ${item.qty} pcs\n` +
                `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n` +
                `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;

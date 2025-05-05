@@ -9,13 +9,13 @@
   <style>
     /* Base Styles */
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Nunito:wght@400;700&display=swap');
-    
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+
     body {
       font-family: 'Nunito', sans-serif;
       background-color: #f4f4f4;
@@ -24,7 +24,7 @@
       -moz-user-select: none;
       -ms-user-select: none;
     }
-    
+
     /* Header Styles */
     .header {
       text-align: center;
@@ -33,20 +33,20 @@
       color: white;
       margin-bottom: 20px;
     }
-    
+
     .header h1 {
       font-family: 'Barlow', sans-serif;
       font-size: 28px;
       margin-bottom: 5px;
     }
-    
+
     /* Main Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 15px;
     }
-    
+
     /* Shopping Cart Styles */
     #cart {
       background: white;
@@ -56,25 +56,25 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       display: none;
     }
-    
+
     #cart.visible {
       display: block;
     }
-    
+
     .cart-item {
       display: flex;
       justify-content: space-between;
       padding: 10px 0;
       border-bottom: 1px solid #eee;
     }
-    
+
     .cart-total {
       text-align: right;
       font-weight: bold;
       margin-top: 15px;
       font-size: 18px;
     }
-    
+
     #checkout-btn {
       background: #4CAF50;
       color: white;
@@ -86,7 +86,7 @@
       cursor: pointer;
       font-weight: bold;
     }
-    
+
     /* Filter Section */
     .filter-section {
       display: flex;
@@ -94,7 +94,7 @@
       margin-bottom: 20px;
       flex-wrap: wrap;
     }
-    
+
     .filter-section select, 
     .filter-section input {
       padding: 10px;
@@ -103,7 +103,7 @@
       flex: 1;
       min-width: 150px;
     }
-    
+
     /* Product Grid */
     .product-grid {
       display: grid;
@@ -111,7 +111,7 @@
       gap: 15px;
       margin-bottom: 30px;
     }
-    
+
     .product-card {
       background: white;
       border-radius: 8px;
@@ -122,11 +122,11 @@
       flex-direction: column;
       height: 100%;
     }
-    
+
     .product-card:hover {
       transform: translateY(-3px);
     }
-    
+
     .product-image-container {
       height: 180px;
       background: #f8f8f8;
@@ -137,7 +137,7 @@
       border-radius: 8px 8px 0 0;
       position: relative;
     }
-    
+
     .product-image {
       max-width: 100%;
       max-height: 100%;
@@ -145,11 +145,11 @@
       padding: 5px;
       transition: transform 0.5s ease;
     }
-    
+
     .product-card:hover .product-image {
       transform: scale(1.05);
     }
-    
+
     .product-watermark {
       position: absolute;
       bottom: 0;
@@ -169,23 +169,23 @@
       flex-direction: column;
       gap: 3px;
     }
-    
+
     .product-watermark div:first-child {
       font-weight: bold;
       font-size: 12px;
     }
-    
+
     .product-details {
       padding: 12px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
-    
+
     .product-text {
       flex-grow: 1;
     }
-    
+
     .product-name {
       font-weight: bold;
       margin-bottom: 5px;
@@ -196,18 +196,18 @@
       overflow: hidden;
       min-height: 40px;
     }
-    
+
     .product-actions {
       margin-top: auto;
     }
-    
+
     .product-price {
       color: #008ca7;
       font-weight: bold;
       font-size: 16px;
       margin: 8px 0;
     }
-    
+
     .wholesale-price {
       color: #4CAF50;
       font-size: 13px;
@@ -216,7 +216,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    
+
     .add-to-cart {
       background: #008ca7;
       color: white !important;
@@ -228,11 +228,11 @@
       font-size: 14px;
       transition: all 0.3s;
     }
-    
+
     .add-to-cart:hover {
       background: #006d82;
     }
-    
+
     .wholesale-notification {
       background: #FFF9C4;
       padding: 10px;
@@ -240,7 +240,7 @@
       border-radius: 5px;
       font-size: 14px;
     }
-    
+
     /* Modal Styles */
     .modal {
       position: fixed;
@@ -255,11 +255,11 @@
       z-index: 1000;
       display: none;
     }
-    
+
     .modal.visible {
       display: flex;
     }
-    
+
     .modal-content {
       background: white;
       padding: 20px;
@@ -267,11 +267,11 @@
       width: 90%;
       max-width: 400px;
     }
-    
+
     .modal h3 {
       margin-bottom: 15px;
     }
-    
+
     .modal input, 
     .modal textarea {
       width: 100%;
@@ -280,12 +280,12 @@
       border: 1px solid #ddd;
       border-radius: 5px;
     }
-    
+
     .modal-buttons {
       display: flex;
       gap: 10px;
     }
-    
+
     .modal-buttons button {
       flex: 1;
       padding: 10px;
@@ -295,32 +295,32 @@
       background-color: #008CA7;
       color:white;
     }
-    
+
     #add-to-cart {
       background: #008ca7;
       color: white;
     }
-    
+
     #close-modal {
       background: #f44336;
       color: white;
     }
-    
+
     #cancel-customer {
       background: #f44336;
       color: white;
     }
-    
+
     #customer-modal .modal-content {
       max-width: 500px;
     }
-    
+
     #customer-modal label {
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
     }
-    
+
     /* Cart Item Buttons */
     .cart-item button {
       background-color: #f44336;
@@ -334,26 +334,26 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       margin-left: 10px;
     }
-    
+
     .cart-item button:hover {
       background-color: #d32f2f;
       transform: translateY(-1px);
       box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
-    
+
     /* Responsive Grid */
     @media (min-width: 768px) {
       .product-grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
-    
+
     @media (min-width: 992px) {
       .product-grid {
         grid-template-columns: repeat(4, 1fr);
       }
     }
-    
+
     /* Marquee Styles */
     .marquee-container {
       overflow: hidden;
@@ -364,13 +364,13 @@
       white-space: nowrap;
       position: relative;
     }
-    
+
     .marquee-text {
       display: inline-block;
       padding-left: 100%;
       animation: scroll-left 20s linear infinite;
     }
-    
+
     @keyframes scroll-left {
       0% {
         transform: translateX(0%);
@@ -379,34 +379,34 @@
         transform: translateX(-100%);
       }
     }
-    
+
     /* SweetAlert Custom Styles */
     .swal2-container {
       z-index: 99999 !important;
     }
-    
+
     .swal2-popup {
       animation: fadeInUp 0.3s ease-out !important;
       border-radius: 12px !important;
     }
-    
+
     .swal2-toast {
       animation: fadeInUp 0.3s ease-out, fadeOut 0.5s ease-out 1.2s forwards !important;
     }
-    
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     @keyframes fadeOut {
       to { opacity: 0; }
     }
-    
+
     .swal2-timer-progress-bar {
       background: rgba(0,0,0,0.2) !important;
     }
-    
+
     /* Loading Indicator */
     .loading-indicator {
       position: fixed;
@@ -421,7 +421,7 @@
       font-size: 14px;
       animation: pulse 1.5s infinite;
     }
-    
+
     @keyframes pulse {
       0% { opacity: 0.6; }
       50% { opacity: 1; }
@@ -518,12 +518,10 @@
     const CONFIG = {
       primarySheet: {
         id: '1Qn-UWBFxghJpBfRMXvtayXBxO5I3y5rHk-we0m2J9mU',
-        sheetName: 'Sheet1'
+        sheetName: 'Sheet1',
+        salesSheet: 'Penjualan', // Nama sheet untuk log transaksi
+        apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
       },
-      backupSources: [
-        'https://backup.mdrstore.com/products.json',
-        'https://api.mdrstore.com/v1/products'
-      ],
       refreshInterval: 3600000, // 1 jam dalam milidetik
       whatsappNumber: '6285134575758',
       qrisImageUrl: 'https://bit.ly/QRIS-MDRSTORE',
@@ -569,10 +567,10 @@
     /**
      * SYSTEM VARIABLES
      */
-    let products = []; // Menyimpan daftar produk
-    let cart = []; // Menyimpan item keranjang belanja
-    let selectedProduct = null; // Produk yang sedang dipilih
-    let customerData = { // Data pelanggan
+    let products = [];
+    let cart = [];
+    let selectedProduct = null;
+    let customerData = {
       name: '',
       address: '',
       phone: ''
@@ -634,10 +632,6 @@
         return points.length > 0 ? points.join(' | ') : "Produk berkualitas MDR STORE";
       },
 
-      formatDescription: (desc) => desc.replace(/(🟡)/g, '\n$1').trim(),
-
-      getImageUrl: (url) => url || 'https://via.placeholder.com/150?text=No+Image',
-      
       formatCurrency: (amount) => {
         if(isNaN(amount)) return "0";
         return new Intl.NumberFormat('id-ID').format(amount);
@@ -646,13 +640,6 @@
       validatePhone: (phone) => {
         const phoneRegex = /^[0-9]{10,15}$/;
         return phoneRegex.test(phone.replace(/\D/g, ''));
-      },
-
-      formatOrderItem: (item, index) => {
-        return `${index + 1}. ${utils.formatProductName(item.produk)}\n` +
-               `   • Jumlah: ${item.qty} pcs\n` +
-               `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n` +
-               `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
       },
 
       isCacheValid: () => {
@@ -668,40 +655,110 @@
     const dataService = {
       fetchPrimaryData: async () => {
         try {
-          const url = `https://opensheet.elk.sh/${CONFIG.primarySheet.id}/${CONFIG.primarySheet.sheetName}`;
+          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.sheetName}?key=${CONFIG.primarySheet.apiKey}`;
           const response = await fetch(url);
-          if (!response.ok) throw new Error('Failed to fetch primary data');
-          const data = await response.json();
           
-          localStorage.setItem('cachedProducts', JSON.stringify(data));
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error dari Google Sheets API:', errorData.error.message);
+            throw new Error(`Gagal mengambil data: ${errorData.error.message}`);
+          }
+          
+          const data = await response.json();
+          console.log('Data mentah dari Google Sheets:', data);
+          
+          if (!data.values || !Array.isArray(data.values)) {
+            throw new Error('Format data tidak valid - tidak ada array values');
+          }
+          
+          const headers = data.values[0];
+          const processedData = data.values.slice(1).map(row => {
+            const item = {};
+            headers.forEach((header, index) => {
+              const cleanHeader = header.trim();
+              switch(cleanHeader) {
+                case 'Kode Produk':
+                  item.kode = row[index] || '';
+                  break;
+                case 'Brand':
+                  item.brand = row[index] || '';
+                  break;
+                case 'Nama Kategori':
+                  item.kategori = row[index] || '';
+                  break;
+                case 'Nama Produk':
+                  item.produk = row[index] || '';
+                  break;
+                case 'Deskripsi':
+                  item.deskripsi = row[index] || '-';
+                  break;
+                case 'Harga':
+                  item.harga = parseInt((row[index] || '0').replace(/\D/g, '')) || 0;
+                  break;
+                case 'Harga Grosir':
+                  item.harga_grosir = parseInt((row[index] || '').replace(/\D/g, '')) || null;
+                  break;
+                case 'Gambar URL':
+                  item.gambar = row[index] || '';
+                  break;
+              }
+            });
+            return item;
+          });
+          
+          localStorage.setItem('cachedProducts', JSON.stringify(processedData));
           localStorage.setItem('lastCacheTime', new Date().getTime());
-          return data;
+          return processedData;
+          
         } catch (error) {
-          console.error('Primary data error:', error);
+          console.error('Error dalam fetchPrimaryData:', error);
           return null;
         }
       },
 
-      fetchBackupData: async () => {
-        for (const url of CONFIG.backupSources) {
-          try {
-            const response = await fetch(url);
-            if (response.ok) {
-              const data = await response.json();
-              localStorage.setItem('cachedProducts', JSON.stringify(data));
-              localStorage.setItem('lastCacheTime', new Date().getTime());
-              return data;
-            }
-          } catch (e) {
-            console.warn(`Backup failed (${url}):`, e);
+      logTransaction: async (customer, items, total) => {
+        try {
+          const timestamp = new Date().toISOString();
+          const transactionData = [
+            timestamp,
+            customer.name,
+            customer.phone,
+            customer.address,
+            JSON.stringify(items),
+            total,
+            'Pending' // Status awal
+          ];
+
+          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.salesSheet}:append?valueInputOption=USER_ENTERED&key=${CONFIG.primarySheet.apiKey}`;
+          
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              values: [transactionData]
+            })
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            console.error('Gagal menyimpan transaksi:', error);
+            return false;
           }
+
+          console.log('Transaksi berhasil dicatat');
+          return true;
+
+        } catch (error) {
+          console.error('Error saat mencatat transaksi:', error);
+          return false;
         }
-        return null;
       },
 
       getCachedProducts: () => {
         if (!utils.isCacheValid()) return null;
-        
+
         const cachedData = localStorage.getItem('cachedProducts');
         if (cachedData) {
           try {
@@ -714,89 +771,38 @@
         return null;
       },
 
-      processRawData: (rawData) => {
-        return rawData.map(item => ({
-          kode: item['Kode Produk'] || '',
-          brand: item.Brand || '',
-          kategori: item['Nama Kategori'] || '',
-          produk: item['Nama Produk'] || '',
-          deskripsi: item.Deskripsi || '-',
-          harga: parseInt(item.Harga?.replace(/\D/g, '') || 0),
-          harga_grosir: parseInt(item['Harga Grosir']?.replace(/\D/g, '') || null),
-          gambar: item['Gambar URL'] || ''
-        }));
-      },
+      loadProducts: async () => {
+        document.getElementById('loading-indicator').style.display = 'block';
 
-      // Di dalam fungsi loadProducts pada dataService
-loadProducts: async () => {
-  document.getElementById('loading-indicator').style.display = 'block';
-  
-  const cachedProducts = dataService.getCachedProducts();
-  if (cachedProducts) {
-    products = dataService.processRawData(cachedProducts);
-    ui.updateFilters();
-    ui.renderProducts();
-  }
+        const cachedProducts = dataService.getCachedProducts();
+        if (cachedProducts) {
+          products = cachedProducts;
+          ui.updateFilters();
+          ui.renderProducts();
+        }
 
-  let rawData = null;
-  try {
-    rawData = await dataService.fetchPrimaryData();
-    if (!rawData) {
-      console.warn('Using backup data');
-      rawData = await dataService.fetchBackupData();
-    }
-  } catch (error) {
-    console.error('Error loading products:', error);
-  }
-
-  if (!rawData) {
-    console.warn('Using fallback data');
-    rawData = fallbackProducts;
-  }
-  
-  const newProducts = dataService.processRawData(rawData);
-  
-  if (JSON.stringify(products) !== JSON.stringify(newProducts)) {
-    products = newProducts;
-    ui.updateFilters();
-    ui.renderProducts();
-    
-    if (cachedProducts) {
-      // PERBAIKAN DI SINI - Notifikasi pembaruan produk
-      const updateNotification = Swal.fire({
-        icon: 'success',
-        title: 'Data Produk Diperbarui',
-        text: 'Katalog produk telah diperbarui dengan versi terbaru',
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer);
-          toast.addEventListener('mouseleave', Swal.resumeTimer);
-        },
-        willClose: () => {
-          const container = document.querySelector('.swal2-container');
-          if (container) {
-            container.removeEventListener('mouseenter', Swal.stopTimer);
-            container.removeEventListener('mouseleave', Swal.resumeTimer);
+        let rawData = null;
+        try {
+          rawData = await dataService.fetchPrimaryData();
+          if (!rawData) {
+            console.warn('Menggunakan data fallback lokal');
+            rawData = fallbackProducts;
           }
+        } catch (error) {
+          console.error('Error loading products:', error);
+          rawData = fallbackProducts;
         }
-      });
 
-      // Fallback untuk menutup notifikasi
-      setTimeout(() => {
-        if (updateNotification.isVisible()) {
-          updateNotification.close();
+        const newProducts = rawData;
+        if (JSON.stringify(products) !== JSON.stringify(newProducts)) {
+          products = newProducts;
+          ui.updateFilters();
+          ui.renderProducts();
         }
-      }, 2000);
-    }
-  }
-  
-  document.getElementById('loading-indicator').style.display = 'none';
-  setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
-}
+
+        document.getElementById('loading-indicator').style.display = 'none';
+        setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
+      }
     };
 
     /**
@@ -830,11 +836,11 @@ loadProducts: async () => {
 
       renderProducts: () => {
         elements.productGrid.innerHTML = '';
-        
+
         const selectedCategory = elements.categoryFilter.value;
         const selectedBrand = elements.brandFilter.value;
         const searchTerm = elements.productFilter.value.toLowerCase();
-        
+
         let filteredProducts = products.filter(p => {
           const matchesCategory = !selectedCategory || p.kategori === selectedCategory;
           const matchesBrand = !selectedBrand || p.brand === selectedBrand;
@@ -842,7 +848,7 @@ loadProducts: async () => {
             p.produk.toLowerCase().includes(searchTerm) || 
             utils.formatProductName(p.produk).toLowerCase().includes(searchTerm) ||
             p.kode.toLowerCase().includes(searchTerm);
-          
+
           return matchesCategory && matchesBrand && matchesSearch;
         });
 
@@ -868,7 +874,7 @@ loadProducts: async () => {
 
           card.innerHTML = `
             <div class="product-image-container">
-              <img src="${utils.getImageUrl(product.gambar)}" alt="${productName}" class="product-image" loading="lazy">
+              <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}" alt="${productName}" class="product-image" loading="lazy">
               <div class="product-watermark">
                 <div>Kode: ${product.kode}</div>
                 ${utils.getShortDescription(product.deskripsi)}
@@ -887,7 +893,7 @@ loadProducts: async () => {
               </div>
             </div>
           `;
-          
+
           card.querySelector('.add-to-cart').addEventListener('click', (e) => {
             e.stopPropagation();
             selectedProduct = product;
@@ -904,7 +910,7 @@ loadProducts: async () => {
 
       showProductDetail: (product) => {
         const productName = utils.formatProductName(product.produk);
-        const productDesc = utils.formatDescription(product.deskripsi);
+        const productDesc = product.deskripsi.replace(/(🟡)/g, '\n$1').trim();
         const hasWholesale = product.harga_grosir !== null;
         const rule = utils.getWholesaleRule(product.kategori);
 
@@ -913,7 +919,7 @@ loadProducts: async () => {
             <div class="modal-content" style="max-width:500px">
               <h3>${productName}</h3>
               <p><strong>Kode:</strong> ${product.kode}</p>
-              <img src="${utils.getImageUrl(product.gambar)}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
+              <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
               <p><strong>Brand:</strong> ${product.brand}</p>
               <p><strong>Kategori:</strong> ${product.kategori}</p>
               <p><strong>Harga:</strong> Rp ${utils.formatCurrency(product.harga)}</p>
@@ -929,7 +935,7 @@ loadProducts: async () => {
             </div>
           </div>
         `;
-        
+
         document.body.insertAdjacentHTML('beforeend', detailModal);
 
         document.getElementById('close-detail').addEventListener('click', () => {
@@ -957,12 +963,12 @@ loadProducts: async () => {
         const rule = utils.getWholesaleRule(selectedProduct.kategori);
         const totalQtyInCart = utils.getTotalQtyByCategory(cart, selectedProduct.kategori);
         const totalQty = totalQtyInCart + qty;
-        
+
         if (selectedProduct.harga_grosir !== null && totalQty >= rule.minQty) {
           price = selectedProduct.harga_grosir;
           isWholesale = true;
         }
-        
+
         const total = price * qty;
         elements.priceInfo.innerHTML = `
           <div><strong>Harga Satuan:</strong> Rp ${utils.formatCurrency(price)} ${isWholesale ? '(Grosir)' : ''}</div>
@@ -982,18 +988,18 @@ loadProducts: async () => {
 
       updateCart: () => {
         elements.cartItems.innerHTML = '';
-        
+
         if (cart.length === 0) {
           elements.cartContainer.classList.remove('visible');
           return;
         }
-        
+
         const categoriesInCart = [...new Set(cart.map(item => item.kategori))];
         categoriesInCart.forEach(category => {
           const rule = utils.getWholesaleRule(category);
           const totalQty = utils.getTotalQtyByCategory(cart, category);
           const shouldApplyWholesale = totalQty >= rule.minQty;
-          
+
           cart.forEach(item => {
             if (item.kategori === category && item.harga_grosir !== null) {
               item.harga = shouldApplyWholesale ? item.harga_grosir : item.harga;
@@ -1004,11 +1010,11 @@ loadProducts: async () => {
 
         elements.cartContainer.classList.add('visible');
         let total = 0;
-        
+
         cart.forEach((item, index) => {
           const subtotal = item.harga * item.qty;
           total += subtotal;
-          
+
           const cartItem = document.createElement('div');
           cartItem.className = 'cart-item';
           cartItem.innerHTML = `
@@ -1028,7 +1034,7 @@ loadProducts: async () => {
           const rule = utils.getWholesaleRule(category);
           const totalQty = utils.getTotalQtyByCategory(cart, category);
           const remaining = rule.minQty - totalQty;
-          
+
           if (remaining > 0 && cart.some(item => item.kategori === category && item.harga_grosir)) {
             elements.cartItems.innerHTML += `
               <div class="wholesale-notification">
@@ -1081,8 +1087,11 @@ loadProducts: async () => {
 
           message += `${category.toUpperCase()} (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR' : ''})\n`;
           categoryItems.forEach((item, index) => {
-            message += utils.formatOrderItem(item, index);
-            totalPayment += item.harga * item.qty;
+            message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
+            message += `   • Jumlah: ${item.qty} pcs\n`;
+            message += `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n`;
+            message += `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
+            totalPayment += item.qty * item.harga;
           });
         });
 
@@ -1092,7 +1101,7 @@ loadProducts: async () => {
         message += `   ${CONFIG.qrisImageUrl}\n`;
         message += `Pembayaran akan diverifikasi otomatis dalam 1x24 jam`;
 
-        return message;
+        return { message, total: totalPayment };
       }
     };
 
@@ -1106,13 +1115,13 @@ loadProducts: async () => {
           console.error("Produk tidak valid");
           return;
         }
-        
+
         if (qty > 0 && selectedProduct) {
           const rule = utils.getWholesaleRule(selectedProduct.kategori);
           const totalQtyInCategory = utils.getTotalQtyByCategory(cart, selectedProduct.kategori) + qty;
           const isWholesale = totalQtyInCategory >= rule.minQty && selectedProduct.harga_grosir !== null;
           const price = isWholesale ? selectedProduct.harga_grosir : selectedProduct.harga;
-          
+
           const existingItemIndex = cart.findIndex(item =>
             item.produk === selectedProduct.produk &&
             item.harga === price
@@ -1131,8 +1140,7 @@ loadProducts: async () => {
 
           ui.updateCart();
           ui.hideModal();
-          
-          // Notifikasi yang diperbaiki
+
           const notification = Swal.fire({
             icon: 'success',
             title: 'Berhasil!',
@@ -1141,26 +1149,8 @@ loadProducts: async () => {
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer);
-              toast.addEventListener('mouseleave', Swal.resumeTimer);
-            },
-            willClose: () => {
-              const container = document.querySelector('.swal2-container');
-              if (container) {
-                container.removeEventListener('mouseenter', Swal.stopTimer);
-                container.removeEventListener('mouseleave', Swal.resumeTimer);
-              }
-            }
+            timerProgressBar: true
           });
-
-          // Double insurance untuk menutup notifikasi
-          setTimeout(() => {
-            if (notification.isVisible()) {
-              notification.close();
-            }
-          }, 1500);
         }
       },
 
@@ -1169,7 +1159,7 @@ loadProducts: async () => {
         ui.updateCart();
       },
 
-      processCheckout: () => {
+      processCheckout: async () => {
         const name = elements.inputs.customerName.value.trim();
         const address = elements.inputs.customerAddress.value.trim();
         const phone = elements.inputs.customerPhone.value.trim();
@@ -1184,7 +1174,7 @@ loadProducts: async () => {
           });
           return;
         }
-        
+
         if (!utils.validatePhone(phone)) {
           Swal.fire({
             icon: 'error',
@@ -1195,15 +1185,27 @@ loadProducts: async () => {
           });
           return;
         }
-        
+
         localStorage.setItem('customerName', name);
         localStorage.setItem('customerAddress', address);
         localStorage.setItem('customerPhone', phone);
 
         customerData = { name, address, phone };
-        
-        const message = ui.generateOrderMessage();
+
+        const { message, total } = ui.generateOrderMessage();
         const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+        // Simpan transaksi ke Google Sheets
+        const logSuccess = await dataService.logTransaction(customerData, cart, total);
+        
+        if (!logSuccess) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Peringatan',
+            text: 'Transaksi berhasil tapi gagal disimpan di database',
+            timer: 2000
+          });
+        }
 
         window.open(whatsappUrl, '_blank');
 
@@ -1225,10 +1227,10 @@ loadProducts: async () => {
           ui.updateBrandFilter();
           ui.renderProducts();
         });
-        
+
         elements.brandFilter.addEventListener('change', ui.renderProducts);
         elements.productFilter.addEventListener('input', ui.renderProducts);
-        
+
         elements.buttons.addToCart.addEventListener('click', app.addToCart);
         elements.buttons.closeModal.addEventListener('click', ui.hideModal);
         elements.checkoutBtn.addEventListener('click', ui.checkout);

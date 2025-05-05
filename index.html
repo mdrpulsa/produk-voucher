@@ -689,10 +689,10 @@ const dataService = {
               item.deskripsi = row[index] || '-';
               break;
             case 'Harga':
-              item.harga = Math.max(1, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
+              item.harga = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
               break;
             case 'Harga Grosir':
-              item.harga_grosir = Math.max(1, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
+              item.harga_grosir = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
               break;
             case 'Gambar URL':
               item.gambar = row[index] || '';

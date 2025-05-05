@@ -87,6 +87,11 @@
       font-weight: bold;
     }
 
+    #checkout-btn:disabled {
+      background: #cccccc !important;
+      cursor: not-allowed !important;
+    }
+
     /* Filter Section */
     .filter-section {
       display: flex;
@@ -229,7 +234,12 @@
       transition: all 0.3s;
     }
 
-    .add-to-cart:hover {
+    .add-to-cart:disabled {
+      background: #cccccc !important;
+      cursor: not-allowed !important;
+    }
+
+    .add-to-cart:hover:not(:disabled) {
       background: #006d82;
     }
 
@@ -319,26 +329,6 @@
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
-    }
-
-    /* Cart Item Buttons */
-    .cart-item button {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: all 0.3s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-left: 10px;
-    }
-
-    .cart-item button:hover {
-      background-color: #d32f2f;
-      transform: translateY(-1px);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
 
     /* Responsive Grid */
@@ -519,13 +509,13 @@
       primarySheet: {
         id: '1Qn-UWBFxghJpBfRMXvtayXBxO5I3y5rHk-we0m2J9mU',
         sheetName: 'Sheet1',
-        salesSheet: 'Penjualan', // Nama sheet untuk log transaksi
+        salesSheet: 'Penjualan',
         apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
       },
-      refreshInterval: 3600000, // 1 jam dalam milidetik
+      refreshInterval: 3600000,
       whatsappNumber: '6285134575758',
       qrisImageUrl: 'https://bit.ly/QRIS-MDRSTORE',
-      cacheExpiry: 3600000 // 1 jam untuk expiry cache
+      cacheExpiry: 3600000
     };
 
     /**
@@ -646,75 +636,81 @@
         const lastCacheTime = localStorage.getItem('lastCacheTime');
         if (!lastCacheTime) return false;
         return (new Date().getTime() - parseInt(lastCacheTime)) < CONFIG.cacheExpiry;
+      },
+
+      validatePrice: (price) => {
+        return price > 0 && !isNaN(price);
       }
     };
 
     /**
-     * DATA SERVICE
-     */
-    const dataService = {
-      fetchPrimaryData: async () => {
-        try {
-          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.sheetName}?key=${CONFIG.primarySheet.apiKey}`;
-          const response = await fetch(url);
-          
-          if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Error dari Google Sheets API:', errorData.error.message);
-            throw new Error(`Gagal mengambil data: ${errorData.error.message}`);
+ * DATA SERVICE
+ */
+const dataService = {
+  fetchPrimaryData: async () => {
+    try {
+      // Modified to fetch only A1:K1000 range
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/Sheet1!A1:K1000?key=${CONFIG.primarySheet.apiKey}`;
+      
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error dari Google Sheets API:', errorData.error.message);
+        throw new Error(`Gagal mengambil data: ${errorData.error.message}`);
+      }
+      
+      const data = await response.json();
+      console.log('Data mentah dari Google Sheets:', data);
+      
+      if (!data.values || !Array.isArray(data.values)) {
+        throw new Error('Format data tidak valid - tidak ada array values');
+      }
+      
+      const headers = data.values[0];
+      const processedData = data.values.slice(1).map(row => {
+        const item = {};
+        headers.forEach((header, index) => {
+          const cleanHeader = header.trim();
+          switch(cleanHeader) {
+            case 'Kode Produk':
+              item.kode = row[index] || '';
+              break;
+            case 'Brand':
+              item.brand = row[index] || '';
+              break;
+            case 'Nama Kategori':
+              item.kategori = row[index] || '';
+              break;
+            case 'Nama Produk':
+              item.produk = row[index] || '';
+              break;
+            case 'Deskripsi':
+              item.deskripsi = row[index] || '-';
+              break;
+            case 'Harga':
+              item.harga = Math.max(1, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
+              break;
+            case 'Harga Grosir':
+              item.harga_grosir = Math.max(1, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
+              break;
+            case 'Gambar URL':
+              item.gambar = row[index] || '';
+              break;
           }
-          
-          const data = await response.json();
-          console.log('Data mentah dari Google Sheets:', data);
-          
-          if (!data.values || !Array.isArray(data.values)) {
-            throw new Error('Format data tidak valid - tidak ada array values');
-          }
-          
-          const headers = data.values[0];
-          const processedData = data.values.slice(1).map(row => {
-            const item = {};
-            headers.forEach((header, index) => {
-              const cleanHeader = header.trim();
-              switch(cleanHeader) {
-                case 'Kode Produk':
-                  item.kode = row[index] || '';
-                  break;
-                case 'Brand':
-                  item.brand = row[index] || '';
-                  break;
-                case 'Nama Kategori':
-                  item.kategori = row[index] || '';
-                  break;
-                case 'Nama Produk':
-                  item.produk = row[index] || '';
-                  break;
-                case 'Deskripsi':
-                  item.deskripsi = row[index] || '-';
-                  break;
-                case 'Harga':
-                  item.harga = parseInt((row[index] || '0').replace(/\D/g, '')) || 0;
-                  break;
-                case 'Harga Grosir':
-                  item.harga_grosir = parseInt((row[index] || '').replace(/\D/g, '')) || null;
-                  break;
-                case 'Gambar URL':
-                  item.gambar = row[index] || '';
-                  break;
-              }
-            });
-            return item;
-          });
-          
-          localStorage.setItem('cachedProducts', JSON.stringify(processedData));
-          localStorage.setItem('lastCacheTime', new Date().getTime());
-          return processedData;
-          
-        } catch (error) {
-          console.error('Error dalam fetchPrimaryData:', error);
-          return null;
-        }
-      },
+        });
+        return item;
+      });
+      
+      localStorage.setItem('cachedProducts', JSON.stringify(processedData));
+      localStorage.setItem('lastCacheTime', new Date().getTime());
+      return processedData;
+      
+    } catch (error) {
+      console.error('Error dalam fetchPrimaryData:', error);
+      return fallbackProducts;
+    }
+  },
 
       logTransaction: async (customer, items, total) => {
         try {
@@ -726,7 +722,7 @@
             customer.address,
             JSON.stringify(items),
             total,
-            'Pending' // Status awal
+            'Pending'
           ];
 
           const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.salesSheet}:append?valueInputOption=USER_ENTERED&key=${CONFIG.primarySheet.apiKey}`;
@@ -773,6 +769,7 @@
 
       loadProducts: async () => {
         document.getElementById('loading-indicator').style.display = 'block';
+        elements.checkoutBtn.disabled = true;
 
         const cachedProducts = dataService.getCachedProducts();
         if (cachedProducts) {
@@ -801,6 +798,7 @@
         }
 
         document.getElementById('loading-indicator').style.display = 'none';
+        elements.checkoutBtn.disabled = false;
         setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
       }
     };
@@ -865,16 +863,24 @@
           return;
         }
 
+        // Auto-refresh jika ada harga invalid
+        const hasInvalidPrices = filteredProducts.some(p => !utils.validatePrice(p.harga));
+        if (hasInvalidPrices) {
+          setTimeout(dataService.loadProducts, 3000);
+        }
+
         filteredProducts.forEach(product => {
           const card = document.createElement('div');
           card.className = 'product-card';
           const productName = utils.formatProductName(product.produk);
-          const hasWholesale = product.harga_grosir !== null;
+          const hasWholesale = product.harga_grosir !== null && utils.validatePrice(product.harga_grosir);
           const rule = utils.getWholesaleRule(product.kategori);
+          const isPriceReady = utils.validatePrice(product.harga);
 
           card.innerHTML = `
             <div class="product-image-container">
-              <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}" alt="${productName}" class="product-image" loading="lazy">
+              <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}" 
+                   alt="${productName}" class="product-image" loading="lazy">
               <div class="product-watermark">
                 <div>Kode: ${product.kode}</div>
                 ${utils.getShortDescription(product.deskripsi)}
@@ -885,17 +891,37 @@
                 <div class="product-name">${productName}</div>
               </div>
               <div class="product-actions">
-                <div class="product-price">Rp ${utils.formatCurrency(product.harga)}</div>
+                <div class="product-price">
+                  ${isPriceReady ? `Rp ${utils.formatCurrency(product.harga)}` : 
+                    '<span style="color:red">Memuat harga...</span>'}
+                </div>
                 ${hasWholesale ? `
-                  <div class="wholesale-price">${rule.label}: Rp ${utils.formatCurrency(product.harga_grosir)}</div>
+                  <div class="wholesale-price">${rule.label}: 
+                    ${utils.validatePrice(product.harga_grosir) ? 
+                      `Rp ${utils.formatCurrency(product.harga_grosir)}` : 'N/A'}
+                  </div>
                 ` : ''}
-                <button class="add-to-cart">+ Keranjang</button>
+                <button class="add-to-cart" ${!isPriceReady ? 'disabled' : ''}>
+                  ${isPriceReady ? '+ Keranjang' : 'Tunggu...'}
+                </button>
               </div>
             </div>
           `;
 
-          card.querySelector('.add-to-cart').addEventListener('click', (e) => {
+          const addToCartBtn = card.querySelector('.add-to-cart');
+          addToCartBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            
+            if (!utils.validatePrice(product.harga)) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Harga Belum Siap',
+                text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar...',
+                timer: 2000
+              });
+              return;
+            }
+            
             selectedProduct = product;
             ui.showModal();
           });
@@ -911,7 +937,7 @@
       showProductDetail: (product) => {
         const productName = utils.formatProductName(product.produk);
         const productDesc = product.deskripsi.replace(/(🟡)/g, '\n$1').trim();
-        const hasWholesale = product.harga_grosir !== null;
+        const hasWholesale = product.harga_grosir !== null && utils.validatePrice(product.harga_grosir);
         const rule = utils.getWholesaleRule(product.kategori);
 
         const detailModal = `
@@ -922,14 +948,16 @@
               <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}" alt="${productName}" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0">
               <p><strong>Brand:</strong> ${product.brand}</p>
               <p><strong>Kategori:</strong> ${product.kategori}</p>
-              <p><strong>Harga:</strong> Rp ${utils.formatCurrency(product.harga)}</p>
+              <p><strong>Harga:</strong> Rp ${utils.validatePrice(product.harga) ? utils.formatCurrency(product.harga) : 'Memuat...'}</p>
               ${hasWholesale ? `
                 <p><strong>${rule.label}:</strong> Rp ${utils.formatCurrency(product.harga_grosir)}</p>
               ` : ''}
               <p><strong>Deskripsi:</strong></p>
               <p style="white-space: pre-line">${productDesc}</p>
               <div class="modal-buttons">
-                <button id="add-from-detail" style="background:#008ca7;color:white">Tambah ke Keranjang</button>
+                <button id="add-from-detail" style="background:#008ca7;color:white" ${!utils.validatePrice(product.harga) ? 'disabled' : ''}>
+                  Tambah ke Keranjang
+                </button>
                 <button id="close-detail" style="background:#f44336;color:white">Tutup</button>
               </div>
             </div>
@@ -942,11 +970,23 @@
           document.getElementById('detail-modal').remove();
         });
 
-        document.getElementById('add-from-detail').addEventListener('click', () => {
-          selectedProduct = product;
-          document.getElementById('detail-modal').remove();
-          ui.showModal();
-        });
+        const addFromDetailBtn = document.getElementById('add-from-detail');
+        if (addFromDetailBtn) {
+          addFromDetailBtn.addEventListener('click', () => {
+            if (!utils.validatePrice(product.harga)) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Harga Belum Siap',
+                text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar...',
+                timer: 2000
+              });
+              return;
+            }
+            selectedProduct = product;
+            document.getElementById('detail-modal').remove();
+            ui.showModal();
+          });
+        }
       },
 
       showModal: () => {
@@ -1058,6 +1098,18 @@
           });
           return;
         }
+
+        const hasInvalidPrice = cart.some(item => !utils.validatePrice(item.harga));
+        if (hasInvalidPrice) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Harga Tidak Valid',
+            text: 'Ada produk dengan harga tidak valid. Segarkan halaman dan coba lagi.',
+            timer: 2000
+          });
+          return;
+        }
+
         ui.showCustomerModal();
       },
 
@@ -1111,15 +1163,21 @@
     const app = {
       addToCart: () => {
         const qty = parseInt(elements.inputs.qty.value) || 1;
-        if(!selectedProduct || !selectedProduct.produk) {
-          console.error("Produk tidak valid");
+        
+        if (!utils.validatePrice(selectedProduct.harga)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Harga produk tidak valid. Segarkan halaman dan coba lagi.',
+            timer: 2000
+          });
           return;
         }
 
         if (qty > 0 && selectedProduct) {
           const rule = utils.getWholesaleRule(selectedProduct.kategori);
           const totalQtyInCategory = utils.getTotalQtyByCategory(cart, selectedProduct.kategori) + qty;
-          const isWholesale = totalQtyInCategory >= rule.minQty && selectedProduct.harga_grosir !== null;
+          const isWholesale = totalQtyInCategory >= rule.minQty && utils.validatePrice(selectedProduct.harga_grosir);
           const price = isWholesale ? selectedProduct.harga_grosir : selectedProduct.harga;
 
           const existingItemIndex = cart.findIndex(item =>

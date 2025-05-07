@@ -821,7 +821,7 @@
                 case 'Deskripsi':
                   item.deskripsi = row[index] || '-';
                   break;
-                case 'Harga':
+                case 'Harga Retail':
                   item.harga = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
                   break;
                 case 'Harga Grosir':

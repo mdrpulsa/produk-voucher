@@ -637,10 +637,10 @@
         salesSheet: 'Penjualan',
         apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
       },
-      refreshInterval: 3600000,
-      whatsappNumber: '6285134575758',
+      refreshInterval: 36000000,
+      whatsappNumber: '6288988444888',
       qrisImageUrl: 'https://bit.ly/QRIS-MDRSTORE',
-      cacheExpiry: 3600000
+      cacheExpiry: 72000000
     };
 
     /**
@@ -1000,7 +1000,7 @@
         // Auto-refresh jika ada harga invalid
         const hasInvalidPrices = filteredProducts.some(p => !utils.validatePrice(p.harga));
         if (hasInvalidPrices) {
-          setTimeout(dataService.loadProducts, 3000);
+          setTimeout(dataService.loadProducts, 36000000);
         }
 
         filteredProducts.forEach(product => {

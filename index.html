@@ -18,29 +18,77 @@
     }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      background-color: #f4f4f4;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-    }
+  font-family: 'Nunito', sans-serif;
+  background-color: #f4f4f4;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  padding-top: 130px; /* Sesuaikan nilai ini dengan tinggi header Anda */
+}
 
     /* Header Styles */
     .header {
-      text-align: center;
-      padding: 20px;
-      background: linear-gradient(90deg, #006D82, #008CA7);
-      color: white;
-      margin-bottom: 20px;
-      position: relative;
-    }
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(90deg, #006D82, #008CA7);
+  color: white;
+  margin-bottom: 20px;
+  position: fixed; /* Tambahkan ini */
+  top: 0; /* Tambahkan ini */
+  left: 0; /* Tambahkan ini */
+  right: 0; /* Tambahkan ini */
+  z-index: 1000; /* Tambahkan ini untuk memastikan header selalu di atas elemen lain */
+  width: 100%; /* Tambahkan ini */
+}
 
     .header h1 {
       font-family: 'Barlow', sans-serif;
       font-size: 28px;
       margin-bottom: 5px;
     }
+
+    /* [NEW] Category Tabs Styles */
+    .category-tabs {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 15px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      scrollbar-width: none; /* Firefox */
+      border-radius: 12px; /* Tambahkan ini */
+      box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),  /* Shadow dasar */
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), /* Shadow untuk kedalaman */
+    0 0 0 1px rgba(0, 0, 0, 0.05);      /* Garis tepi halus */
+  transition: all 0.3s ease;
+    }
+
+    .category-tabs::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .tab-btn {
+      flex: 0 0 auto;
+      padding: 10px 20px;
+      border: none;
+      background: #f0f0f0;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active {
+      background: #008CA7; /* Warna teal */
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 140, 167, 0.2);
+      }
 
     /* Cart Icon Styles */
     .cart-icon-container {
@@ -75,6 +123,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 15px;
+      margin-top: 20px;
     }
 
     /* Shopping Cart Modal Styles */
@@ -196,22 +245,45 @@
       background: #45a049;
     }
 
-    /* Filter Section */
-    .filter-section {
+    /* Brand Filter Menu */
+    .brand-menu {
       display: flex;
-      gap: 10px;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 15px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       margin-bottom: 20px;
-      flex-wrap: wrap;
+      scrollbar-width: none;
+      border-radius: 12px; /* Tambahkan ini */
+      box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),  /* Shadow dasar */
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), /* Shadow untuk kedalaman */
+    0 0 0 1px rgba(0, 0, 0, 0.05);      /* Garis tepi halus */
+  transition: all 0.3s ease;
+}
+
+    .brand-menu::-webkit-scrollbar {
+      display: none;
     }
 
-    .filter-section select, 
-    .filter-section input {
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      flex: 1;
-      min-width: 150px;
+    .brand-btn {
+      flex: 0 0 auto;
+      padding: 8px 15px;
+      border: none;
+      background: #E8F5E9; /* Hijau sangat muda */
+  color: #2E7D32; /* Hijau gelap */
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 13px;
+      white-space: nowrap;
     }
+
+    .brand-btn.active {
+      background: #4CAF50; /* Hijau */
+  color: white;
+}
 
     /* Product Grid */
     .product-grid {
@@ -355,11 +427,14 @@
       right: 0;
       bottom: 0;
       background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px); /* Efek blur utama */
+  -webkit-backdrop-filter: blur(5px); /* Untuk browser WebKit */
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
       display: none;
+      transition: backdrop-filter 0.3s ease;
     }
 
     .modal.visible {
@@ -372,6 +447,7 @@
       border-radius: 8px;
       width: 90%;
       max-width: 400px;
+      z-index: 1001;
     }
 
     .modal h3 {
@@ -425,19 +501,6 @@
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
-    }
-
-    /* Responsive Grid */
-    @media (min-width: 768px) {
-      .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (min-width: 992px) {
-      .product-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
     }
 
     /* Marquee Styles */
@@ -535,6 +598,19 @@
       to { bottom: 20px; opacity: 1; }
     }
 
+    /* Responsive Grid */
+    @media (min-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
     /* Responsive adjustments */
     @media (max-width: 480px) {
       #cart {
@@ -551,7 +627,20 @@
         margin-top: 8px;
         align-self: flex-end;
       }
+
+      .tab-btn {
+        padding: 8px 15px;
+        font-size: 13px;
+      }
     }
+    .section-title {
+  font-size: 1.3rem;
+  color: #006D82;
+  margin: 25px 0 15px 0;
+  font-family: 'Barlow', sans-serif;
+  border-bottom: 2px solid #008CA7;
+  padding-bottom: 5px;
+}
   </style>
 </head>
 <body>
@@ -574,6 +663,22 @@
 
   <!-- Main Container -->
   <div class="container">
+    <!-- [NEW] Category Tabs -->
+    <h2 class="section-title">
+    <i class="fas fa-list-ul"></i> Kategori Produk
+  </h2>
+    <div class="category-tabs" id="category-tabs">
+      <!-- Will be filled dynamically -->
+    </div>
+
+    <!-- Brand Filter Menu -->
+    <h2 class="section-title">
+    <i class="fas fa-tags"></i> Brand
+  </h2>
+    <div class="brand-menu" id="brand-menu">
+      <!-- Will be filled dynamically -->
+    </div>
+
     <!-- Shopping Cart Modal -->
     <div id="cart">
       <div class="cart-header">
@@ -590,18 +695,10 @@
       <button id="checkout-btn">Checkout via WhatsApp</button>
     </div>
 
-    <!-- Filter Section -->
-    <div class="filter-section">
-      <select id="category-filter">
-        <option value="">Semua Kategori</option>
-      </select>
-      <select id="brand-filter">
-        <option value="">Semua Brand</option>
-      </select>
-      <input type="text" id="product-filter" placeholder="Cari nama produk...">
-    </div>
-
     <!-- Product Grid -->
+    <h2 class="section-title">
+    <i class="fas fa-boxes"></i> Daftar Produk
+  </h2>
     <div class="product-grid" id="product-grid"></div>
   </div>
 
@@ -716,9 +813,6 @@
      * DOM ELEMENTS
      */
     const elements = {
-      brandFilter: document.getElementById('brand-filter'),
-      categoryFilter: document.getElementById('category-filter'),
-      productFilter: document.getElementById('product-filter'),
       productGrid: document.getElementById('product-grid'),
       cartContainer: document.getElementById('cart'),
       cartItems: document.getElementById('cart-items'),
@@ -745,7 +839,11 @@
         closeModal: document.getElementById('close-modal'),
         confirmCustomer: document.getElementById('confirm-customer'),
         cancelCustomer: document.getElementById('cancel-customer')
-      }
+      },
+      // Hidden filters for functionality
+      categoryFilter: document.createElement('select'),
+      brandFilter: document.createElement('select'),
+      productFilter: document.createElement('input')
     };
 
     /**
@@ -796,6 +894,17 @@
 
       getCartItemCount: () => {
         return cart.reduce((total, item) => total + item.qty, 0);
+      },
+
+      activateMenuButton: (menuContainer, value) => {
+        const buttons = menuContainer.querySelectorAll('.tab-btn, .brand-btn');
+        buttons.forEach(button => {
+          if (button.dataset.category === value || button.dataset.brand === value) {
+            button.classList.add('active');
+          } else {
+            button.classList.remove('active');
+          }
+        });
       }
     };
 
@@ -931,7 +1040,8 @@
           const cachedProducts = dataService.getCachedProducts();
           if (cachedProducts) {
             products = cachedProducts;
-            ui.updateFilters();
+            ui.createCategoryTabs();
+            ui.updateBrandMenu();
             ui.renderProducts();
           }
         }
@@ -944,13 +1054,15 @@
           localStorage.setItem('cachedProducts', JSON.stringify(products));
           localStorage.setItem('lastCacheTime', new Date().getTime());
 
-          ui.updateFilters();
+          ui.createCategoryTabs();
+          ui.updateBrandMenu();
           ui.renderProducts();
 
         } catch (error) {
           console.error('Error loading products:', error);
           products = fallbackProducts;
-          ui.updateFilters();
+          ui.createCategoryTabs();
+          ui.updateBrandMenu();
           ui.renderProducts();
         } finally {
           document.getElementById('loading-indicator').style.display = 'none';
@@ -974,28 +1086,82 @@
      * UI FUNCTIONS
      */
     const ui = {
-      updateFilters: () => {
+      createCategoryTabs: () => {
+        const tabsContainer = document.getElementById('category-tabs');
+        tabsContainer.innerHTML = '';
+        
+        // Initialize hidden category filter
         elements.categoryFilter.innerHTML = '<option value="">Semua Kategori</option>';
-        [...new Set(products.map(p => p.kategori))].forEach(cat => {
-          const option = document.createElement('option');
-          option.value = cat;
-          option.textContent = cat;
-          elements.categoryFilter.appendChild(option);
+        
+        // Get all unique categories
+        const categories = ["Semua", ...new Set(products.map(p => p.kategori))];
+        
+        categories.forEach(category => {
+          // Add to visible tabs
+          const tab = document.createElement('button');
+          tab.className = 'tab-btn';
+          tab.textContent = category;
+          tab.dataset.category = category === "Semua" ? "" : category;
+          
+          if(category === "Semua") tab.classList.add('active');
+          
+          tab.addEventListener('click', () => {
+            utils.activateMenuButton(tabsContainer, tab.dataset.category);
+            elements.categoryFilter.value = tab.dataset.category;
+            ui.updateBrandMenu();
+            ui.renderProducts();
+          });
+          
+          tabsContainer.appendChild(tab);
+          
+          // Add to hidden filter
+          if(category !== "Semua") {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            elements.categoryFilter.appendChild(option);
+          }
         });
-        ui.updateBrandFilter();
       },
 
-      updateBrandFilter: () => {
+      updateBrandMenu: () => {
+        const brandMenu = document.getElementById('brand-menu');
+        brandMenu.innerHTML = '';
+        
+        // Initialize hidden brand filter
         elements.brandFilter.innerHTML = '<option value="">Semua Brand</option>';
+        
         const selectedCategory = elements.categoryFilter.value;
         let filteredProducts = selectedCategory
           ? products.filter(p => p.kategori === selectedCategory)
           : products;
-        [...new Set(filteredProducts.map(p => p.brand))].forEach(brand => {
-          const option = document.createElement('option');
-          option.value = brand;
-          option.textContent = brand;
-          elements.brandFilter.appendChild(option);
+          
+        const brands = ["Semua", ...new Set(filteredProducts.map(p => p.brand))];
+        
+        brands.forEach(brand => {
+          // Add to visible menu
+          const btn = document.createElement('button');
+          btn.className = 'brand-btn';
+          btn.textContent = brand;
+          btn.dataset.brand = brand === "Semua" ? "" : brand;
+          
+          if(brand === "Semua") btn.classList.add('active');
+          
+          btn.addEventListener('click', () => {
+            utils.activateMenuButton(brandMenu, btn.dataset.brand);
+            elements.brandFilter.value = btn.dataset.brand;
+            ui.renderProducts();
+          });
+          
+          brandMenu.appendChild(btn);
+          
+          // Add to hidden filter
+          if(brand !== "Semua") {
+            const option = document.createElement('option');
+            option.value = brand;
+            option.textContent = brand;
+            elements.brandFilter.appendChild(option);
+          }
         });
       },
 
@@ -1021,19 +1187,13 @@
           elements.productGrid.innerHTML = `
             <div style="grid-column:1/-1; text-align:center; padding:20px;">
               <p>Tidak ada produk yang ditemukan</p>
-              <button onclick="elements.categoryFilter.value='';elements.brandFilter.value='';elements.productFilter.value='';ui.renderProducts()" 
+              <button onclick="ui.resetFilters()" 
                 style="background:#008ca7;color:white;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;margin-top:10px;">
                 Reset Filter
               </button>
             </div>
           `;
           return;
-        }
-
-        // Auto-refresh jika ada harga invalid
-        const hasInvalidPrices = filteredProducts.some(p => !utils.validatePrice(p.harga));
-        if (hasInvalidPrices) {
-          setTimeout(dataService.loadProducts, 36000000);
         }
 
         filteredProducts.forEach(product => {
@@ -1078,7 +1238,6 @@
           const addToCartBtn = card.querySelector('.add-to-cart');
           addToCartBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-
             if (!utils.validatePrice(product.harga)) {
               Swal.fire({
                 icon: 'error',
@@ -1088,7 +1247,6 @@
               });
               return;
             }
-
             selectedProduct = product;
             ui.showModal();
           });
@@ -1099,6 +1257,24 @@
 
           elements.productGrid.appendChild(card);
         });
+      },
+
+      resetFilters: () => {
+        // Reset category
+        elements.categoryFilter.value = '';
+        const categoryTabs = document.getElementById('category-tabs');
+        utils.activateMenuButton(categoryTabs, '');
+        
+        // Reset brand
+        elements.brandFilter.value = '';
+        const brandMenu = document.getElementById('brand-menu');
+        utils.activateMenuButton(brandMenu, '');
+        
+        // Reset search
+        elements.productFilter.value = '';
+        
+        ui.updateBrandMenu();
+        ui.renderProducts();
       },
 
       showProductDetail: (product) => {
@@ -1468,13 +1644,25 @@
       },
 
       init: () => {
-        elements.categoryFilter.addEventListener('change', () => {
-          ui.updateBrandFilter();
+        // Initialize hidden filters
+        elements.categoryFilter.id = 'category-filter';
+        elements.brandFilter.id = 'brand-filter';
+        elements.productFilter.id = 'product-filter';
+        elements.productFilter.type = 'text';
+        elements.productFilter.placeholder = 'Cari produk...';
+        
+        document.body.appendChild(elements.categoryFilter);
+        document.body.appendChild(elements.brandFilter);
+        document.body.appendChild(elements.productFilter);
+        
+        elements.categoryFilter.style.display = 'none';
+        elements.brandFilter.style.display = 'none';
+        elements.productFilter.style.display = 'none';
+
+        // Set up event listeners
+        elements.productFilter.addEventListener('input', () => {
           ui.renderProducts();
         });
-
-        elements.brandFilter.addEventListener('change', ui.renderProducts);
-        elements.productFilter.addEventListener('input', ui.renderProducts);
 
         elements.buttons.addToCart.addEventListener('click', app.addToCart);
         elements.buttons.closeModal.addEventListener('click', ui.hideModal);

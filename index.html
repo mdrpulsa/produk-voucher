@@ -6,7 +6,7 @@
   <title>Katalog Produk - MDR STORE</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css">
- <link rel="icon" type="image/png" href="https://mdrpulsadata.wordpress.com/wp-content/uploads/2025/05/logo-favicon-48-x-44-px.png">
+  <link rel="icon" type="image/png" href="https://mdrpulsadata.wordpress.com/wp-content/uploads/2025/05/logo-favicon-48-x-44-px.png">
   <style>
     /* Base Styles */
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Nunito:wght@400;700&display=swap');
@@ -514,6 +514,27 @@
       100% { opacity: 0.6; }
     }
 
+    /* Auto-Refresh Notification */
+    .refresh-notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #008ca7;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: opacity 0.5s;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { bottom: -50px; opacity: 0; }
+      to { bottom: 20px; opacity: 1; }
+    }
+
     /* Responsive adjustments */
     @media (max-width: 480px) {
       #cart {
@@ -628,7 +649,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
   <script>
     /**
-     * CONFIGURATION
+     * CONFIGURATION - UPDATED WITH AUTO-REFRESH SETTINGS
      */
     const CONFIG = {
       primarySheet: {
@@ -637,9 +658,9 @@
         salesSheet: 'Penjualan',
         apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
       },
-      refreshInterval: 36000000,
+      refreshInterval: 3600000, // 1 hour in milliseconds
       whatsappNumber: '6288988444888',
-      cacheExpiry: 72000000
+      cacheExpiry: 3600000 // 1 hour cache validity
     };
 
     /**
@@ -689,6 +710,7 @@
       address: '',
       phone: ''
     };
+    let refreshTimer = null;
 
     /**
      * DOM ELEMENTS
@@ -904,35 +926,47 @@
         document.getElementById('loading-indicator').style.display = 'block';
         elements.checkoutBtn.disabled = true;
 
-        const cachedProducts = dataService.getCachedProducts();
-        if (cachedProducts) {
-          products = cachedProducts;
-          ui.updateFilters();
-          ui.renderProducts();
+        // Check cache only if not expired
+        if (utils.isCacheValid()) {
+          const cachedProducts = dataService.getCachedProducts();
+          if (cachedProducts) {
+            products = cachedProducts;
+            ui.updateFilters();
+            ui.renderProducts();
+          }
         }
 
-        let rawData = null;
         try {
-          rawData = await dataService.fetchPrimaryData();
-          if (!rawData) {
-            console.warn('Menggunakan data fallback lokal');
-            rawData = fallbackProducts;
-          }
+          const rawData = await dataService.fetchPrimaryData();
+          products = rawData || fallbackProducts;
+          
+          // Save to cache with timestamp
+          localStorage.setItem('cachedProducts', JSON.stringify(products));
+          localStorage.setItem('lastCacheTime', new Date().getTime());
+
+          ui.updateFilters();
+          ui.renderProducts();
+
         } catch (error) {
           console.error('Error loading products:', error);
-          rawData = fallbackProducts;
-        }
-
-        const newProducts = rawData;
-        if (JSON.stringify(products) !== JSON.stringify(newProducts)) {
-          products = newProducts;
+          products = fallbackProducts;
           ui.updateFilters();
           ui.renderProducts();
+        } finally {
+          document.getElementById('loading-indicator').style.display = 'none';
+          elements.checkoutBtn.disabled = false;
+          
+          // Schedule next auto-refresh
+          refreshTimer = setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
         }
+      },
 
-        document.getElementById('loading-indicator').style.display = 'none';
-        elements.checkoutBtn.disabled = false;
-        setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
+      startAutoRefresh: () => {
+        if (refreshTimer) clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(() => {
+          ui.showAutoRefreshNotification();
+          dataService.loadProducts();
+        }, CONFIG.refreshInterval);
       }
     };
 
@@ -1295,6 +1329,18 @@
         message += ` - Mohon berikan nomor rekening untuk pembayaran.\n`;
 
         return { message, total: totalPayment };
+      },
+
+      showAutoRefreshNotification: () => {
+        const notif = document.createElement('div');
+        notif.className = 'refresh-notification';
+        notif.innerHTML = '<i class="fas fa-sync-alt"></i> Memperbarui data produk...';
+        document.body.appendChild(notif);
+        
+        setTimeout(() => {
+          notif.style.opacity = '0';
+          setTimeout(() => notif.remove(), 500);
+        }, 2000);
       }
     };
 
@@ -1442,8 +1488,12 @@
         elements.closeCartBtn.addEventListener('click', ui.closeCart);
 
         window.removeFromCart = app.removeFromCart;
+        
+        // Load products and start auto-refresh
         dataService.loadProducts();
+        dataService.startAutoRefresh();
 
+        // Load saved customer data if exists
         const savedName = localStorage.getItem('customerName');
         if (savedName) {
           customerData.name = savedName;

@@ -87,7 +87,6 @@
     .tab-btn.active {
       background: #008CA7; /* Warna teal */
       color: white;
-      box-shadow: 0 4px 8px rgba(0, 140, 167, 0.2);
       }
 
     /* Cart Icon Styles */
@@ -254,7 +253,7 @@
       background: white;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       margin-bottom: 20px;
-      scrollbar-width: none;
+      scrollbar-width: none; /* Firefox */
       border-radius: 12px; /* Tambahkan ini */
       box-shadow: 
     0 4px 6px -1px rgba(0, 0, 0, 0.1),  /* Shadow dasar */
@@ -269,21 +268,22 @@
 
     .brand-btn {
       flex: 0 0 auto;
-      padding: 8px 15px;
+      padding: 10px 20px;
       border: none;
-      background: #E8F5E9; /* Hijau sangat muda */
-  color: #2E7D32; /* Hijau gelap */
+      background: #f0f0f0;
       border-radius: 20px;
       cursor: pointer;
+      font-family: 'Nunito', sans-serif;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 14px;
       white-space: nowrap;
+      transition: all 0.3s;
     }
 
     .brand-btn.active {
-      background: #4CAF50; /* Hijau */
-  color: white;
-}
+      background: #008ca7;
+      color: white;
+    }
 
     /* Product Grid */
     .product-grid {

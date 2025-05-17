@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Katalog Produk - MDR STORE</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css">
-  <link rel="icon" type="image/png" href="https://mdrpulsadata.wordpress.com/wp-content/uploads/2025/05/logo-favicon-48-x-44-px.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" />
+  <link rel="icon" type="image/png"
+    href="https://mdrpulsadata.wordpress.com/wp-content/uploads/2025/05/logo-favicon-48-x-44-px.png">
   <style>
     /* Base Styles */
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Nunito:wght@400;500;700&display=swap');
@@ -41,10 +43,10 @@
       right: 0;
       z-index: 1000;
       width: 100%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      }
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-      .header h1 {
+    .header h1 {
       font-family: 'Barlow', sans-serif;
       font-size: 28px;
       margin-bottom: 5px;
@@ -91,7 +93,7 @@
     }
 
     /* Cart Icon Styles */
-      .cart-icon-container {
+    .cart-icon-container {
       position: absolute;
       top: 20px;
       right: 20px;
@@ -105,9 +107,9 @@
 
     .cart-icon-container:hover {
       transform: scale(1.1);
-      }
+    }
 
-      .cart-count {
+    .cart-count {
       background: #EA5455;
       color: white;
       border-radius: 50%;
@@ -122,10 +124,10 @@
       top: -8px;
       right: 5px;
       font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      }
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-      /* Main Container */
+    /* Main Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -138,7 +140,7 @@
       background: white;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
       display: none;
       position: fixed;
       top: 80px;
@@ -157,11 +159,18 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
       }
 
-      .cart-header {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cart-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -232,9 +241,9 @@
     .cart-item-remove:hover {
       background: #d33f3f;
       transform: translateY(-1px);
-      }
+    }
 
-      .wholesale-notification {
+    .wholesale-notification {
       background: #FFF9C4;
       padding: 12px;
       margin: 10px 0;
@@ -267,14 +276,14 @@
       font-size: 1rem;
       transition: all 0.3s;
       box-shadow: 0 2px 5px rgba(58, 99, 81, 0.3);
-      }
+    }
 
-      #checkout-btn:hover {
+    #checkout-btn:hover {
       background: #2e4f40;
       transform: translateY(-1px);
-      }
+    }
 
-      /* Brand Filter Menu */
+    /* Brand Filter Menu */
     .brand-menu {
       display: flex;
       overflow-x: auto;
@@ -314,7 +323,7 @@
     }
 
     /* Product Grid */
-      .product-grid {
+    .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
@@ -367,12 +376,12 @@
       left: 0;
       width: 100%;
       padding: 8px 5px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
       color: white;
       font-family: 'Nunito', sans-serif;
       font-size: 11px;
       text-align: center;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       pointer-events: none;
       max-height: 40%;
       overflow: hidden;
@@ -458,13 +467,13 @@
     }
 
     /* Modal Styles */
-      .modal {
+    .modal {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
       display: flex;
@@ -486,10 +495,10 @@
       width: 90%;
       max-width: 400px;
       z-index: 1001;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      }
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
 
-      .modal h3 {
+    .modal h3 {
       margin-bottom: 20px;
       color: #2D4059;
       font-size: 1.3rem;
@@ -511,9 +520,9 @@
       border-color: #008ca7;
       outline: none;
       box-shadow: 0 0 0 2px rgba(58, 99, 81, 0.2);
-      }
+    }
 
-      .modal-buttons {
+    .modal-buttons {
       display: flex;
       gap: 12px;
       margin-top: 15px;
@@ -528,7 +537,8 @@
       font-weight: 600;
       transition: all 0.3s;
     }
-    #confirm-customer{
+
+    #confirm-customer {
       background: #4caf50;
       color: #f6f6f6;
     }
@@ -537,25 +547,27 @@
       background: #008ca7;
       color: white;
       box-shadow: 0 2px 5px rgba(58, 99, 81, 0.3);
-      }
+    }
 
-      #add-to-cart:hover {
+    #add-to-cart:hover {
       background: #2e4f40;
       transform: translateY(-1px);
-      }
+    }
 
-      #close-modal, #cancel-customer {
+    #close-modal,
+    #cancel-customer {
       background: #EA5455;
       color: white;
       box-shadow: 0 2px 5px rgba(234, 84, 85, 0.3);
-      }
+    }
 
-      #close-modal:hover, #cancel-customer:hover {
+    #close-modal:hover,
+    #cancel-customer:hover {
       background: #d33f3f;
       transform: translateY(-1px);
-      }
+    }
 
-      #customer-modal .modal-content {
+    #customer-modal .modal-content {
       max-width: 500px;
     }
 
@@ -629,13 +641,14 @@
       0% {
         transform: translateX(0%);
       }
-100% {
+
+      100% {
         transform: translateX(-100%);
       }
     }
 
     /* SweetAlert Custom Styles */
-      .swal2-container {
+    .swal2-container {
       z-index: 99999 !important;
     }
 
@@ -656,12 +669,21 @@
     }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
 
-      @keyframes fadeOut {
-      to { opacity: 0; }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+      }
     }
 
     .swal2-timer-progress-bar {
@@ -682,13 +704,21 @@
       font-size: 14px;
       font-weight: 500;
       animation: pulse 1.5s infinite;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.8;
       }
 
-      @keyframes pulse {
-      0% { opacity: 0.8; }
-      50% { opacity: 1; }
-      100% { opacity: 0.8; }
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.8;
+      }
     }
 
     /* Auto-Refresh Notification */
@@ -701,7 +731,7 @@
       color: white;
       padding: 12px 24px;
       border-radius: 50px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       z-index: 1000;
       transition: opacity 0.5s;
       animation: slideUp 0.5s ease-out;
@@ -712,8 +742,15 @@
     }
 
     @keyframes slideUp {
-      from { bottom: -50px; opacity: 0; }
-      to { bottom: 20px; opacity: 1; }
+      from {
+        bottom: -50px;
+        opacity: 0;
+      }
+
+      to {
+        bottom: 20px;
+        opacity: 1;
+      }
     }
 
     /* Section Title */
@@ -734,12 +771,12 @@
       .product-grid {
         grid-template-columns: repeat(3, 1fr);
       }
-      }
+    }
 
-      @media (min-width: 992px) {
+    @media (min-width: 992px) {
       .product-grid {
         grid-template-columns: repeat(4, 1fr);
-      gap: 25px;
+        gap: 25px;
       }
     }
 
@@ -760,678 +797,670 @@
         align-self: flex-end;
       }
 
-      .tab-btn, .brand-btn {
+      .tab-btn,
+      .brand-btn {
         padding: 8px 15px;
         font-size: 13px;
       }
+
       .header h1 {
         font-size: 24px;
       }
+
       .product-name {
         font-size: 13px;
       }
+
       .detail-grid {
         grid-template-columns: 1fr;
       }
     }
-    </style>
-  </head>
-  <body>
-    <!-- Header Section -->
-    <div class="header">
-      <h1>MDR STORE</h1>
-      <p>
-        Solusi Belanja Digital Cepat & Terpercaya
-      </p>
-      <p id="timestamp" style="font-size: 0.8rem; color: rgba(255,255,255,0.8);"></p>
-      <div class="marquee-container">
-        <div class="marquee-text">
-          🔥 Voucher Internet grosir? Min. 100 pcs, bebas mix produk! Gaskeun belanja hemat di MDR STORE! 🚀
-        </div>
-      </div>
-      <!-- Cart Icon -->
-      <div class="cart-icon-container" id="cart-icon">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count" class="cart-count">0</span>
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>MDR STORE</h1>
+    <p>
+      Solusi Belanja Digital Cepat & Terpercaya
+    </p>
+    <p id="timestamp" style="font-size: 0.8rem; color: rgba(255,255,255,0.8);"></p>
+    <div class="marquee-container">
+      <div class="marquee-text">
+        🔥 Voucher Internet grosir? Min. 100 pcs, bebas mix produk! Gaskeun belanja hemat di MDR STORE! 🚀
       </div>
     </div>
+    <div class="cart-icon-container" id="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cart-count" class="cart-count">0</span>
+    </div>
+  </div>
 
-    <!-- Main Container -->
-    <div class="container">
-      <!-- Category Tabs -->
-      <h2 class="section-title">
-        <i class="fas fa-list-ul"></i> Kategori Produk
-      </h2>
-      <div class="category-tabs" id="category-tabs">
-        <!-- Will be filled dynamically -->
+  <div class="container">
+    <h2 class="section-title">
+      <i class="fas fa-list-ul"></i> Kategori Produk
+    </h2>
+    <div class="category-tabs" id="category-tabs"></div>
+
+    <h2 class="section-title">
+      <i class="fas fa-tags"></i> Brand
+    </h2>
+    <div class="brand-menu" id="brand-menu"></div>
+
+    <div id="cart">
+      <div class="cart-header">
+        <h2>Keranjang Belanja</h2>
+        <button class="close-cart" id="close-cart">&times;</button>
       </div>
-
-      <!-- Brand Filter Menu -->
-      <h2 class="section-title">
-        <i class="fas fa-tags"></i> Brand
-      </h2>
-      <div class="brand-menu" id="brand-menu">
-        <!-- Will be filled dynamically -->
+      <div id="cart-items"></div>
+      <div class="wholesale-notification" id="wholesale-notice" style="display:none">
+        Beli <span id="remaining-qty">97</span> pcs lagi dalam kategori <span id="wholesale-category">Voucher
+          Internet</span> untuk dapat harga grosir!
       </div>
-
-      <!-- Shopping Cart Modal -->
-      <div id="cart">
-        <div class="cart-header">
-          <h2>Keranjang Belanja</h2>
-          <button class="close-cart" id="close-cart">&times;</button>
-        </div>
-        <div id="cart-items"></div>
-        <div class="wholesale-notification" id="wholesale-notice" style="display:none">
-          Beli <span id="remaining-qty">97</span> pcs lagi dalam kategori <span id="wholesale-category">Voucher Internet</span> untuk dapat harga grosir!
-        </div>
-        <div class="cart-total">
-          Total: Rp <span id="cart-total">0</span>
-        </div>
-        <button id="checkout-btn">Checkout via WhatsApp</button>
+      <div class="cart-total">
+        Total: Rp <span id="cart-total">0</span>
       </div>
-
-      <!-- Product Grid -->
-      <h2 class="section-title">
-        <i class="fas fa-boxes"></i> Daftar Produk
-      </h2>
-      <div class="product-grid" id="product-grid"></div>
+      <button id="checkout-btn">Checkout via WhatsApp</button>
     </div>
 
-    <!-- Quantity Modal -->
-    <div class="modal" id="qty-modal">
-      <div class="modal-content">
-        <h3>Masukkan Jumlah</h3>
-        <input type="number" id="qty-input" min="1" value="1">
-        <div id="price-info" style="margin-bottom:15px"></div>
-        <div class="modal-buttons">
-          <button id="add-to-cart">Tambah ke Keranjang</button>
-          <button id="close-modal">Batal</button>
-        </div>
+    <h2 class="section-title">
+      <i class="fas fa-boxes"></i> Daftar Produk
+    </h2>
+    <div class="product-grid" id="product-grid"></div>
+  </div>
+
+  <div class="modal" id="qty-modal">
+    <div class="modal-content">
+      <h3>Masukkan Jumlah</h3>
+      <input type="number" id="qty-input" min="1" value="1">
+      <div id="price-info" style="margin-bottom:15px"></div>
+      <div class="modal-buttons">
+        <button id="add-to-cart">Tambah ke Keranjang</button>
+        <button id="close-modal">Batal</button>
       </div>
     </div>
+  </div>
 
-    <!-- Customer Data Modal -->
-    <div class="modal" id="customer-modal">
-      <div class="modal-content">
-        <h3>Data Pemesan</h3>
-        <div>
-          <label for="customer-name">Nama Lengkap*</label>
-          <input type="text" id="customer-name" required>
-        </div>
-        <div>
-          <label for="customer-address">Alamat Lengkap*</label>
-          <textarea id="customer-address" required rows="3"></textarea>
-        </div>
-        <div>
-          <label for="customer-phone">No. WhatsApp*</label>
-          <input type="tel" id="customer-phone" required>
-        </div>
-        <div class="modal-buttons">
-          <button id="confirm-customer">Lanjutkan Checkout</button>
-          <button id="cancel-customer">Batal</button>
-        </div>
+  <div class="modal" id="customer-modal">
+    <div class="modal-content">
+      <h3>Data Pemesan</h3>
+      <div>
+        <label for="customer-name">Nama Lengkap*</label>
+        <input type="text" id="customer-name" required>
+      </div>
+      <div>
+        <label for="customer-address">Alamat Lengkap*</label>
+        <textarea id="customer-address" required rows="3"></textarea>
+      </div>
+      <div>
+        <label for="customer-phone">No. WhatsApp*</label>
+        <input type="tel" id="customer-phone" required>
+      </div>
+      <div class="modal-buttons">
+        <button id="confirm-customer">Lanjutkan Checkout</button>
+        <button id="cancel-customer">Batal</button>
       </div>
     </div>
+  </div>
 
-    <!-- Loading Indicator -->
-    <div id="loading-indicator" class="loading-indicator" style="display:none">
-      <i class="fas fa-sync-alt fa-spin"></i> Memperbarui data produk...
-    </div>
+  <div id="loading-indicator" class="loading-indicator" style="display:none">
+    <i class="fas fa-sync-alt fa-spin"></i> Memperbarui data produk...
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
-    <script>
-      /**
-      * CONFIGURATION - UPDATED WITH AUTO-REFRESH SETTINGS
-      */
-      const CONFIG = {
-        primarySheet: {
-          id: '1Qn-UWBFxghJpBfRMXvtayXBxO5I3y5rHk-we0m2J9mU',
-          sheetName: 'Sheet1',
-          salesSheet: 'Penjualan',
-          apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
-        },
-        refreshInterval: 3600000,
-        // 1 hour in milliseconds
-        whatsappNumber: '6288988444888',
-        cacheExpiry: 3600000 // 1 hour cache validity
-      };
-
-      /**
-      * WHOLESALE RULES
-      */
-      const WHOLESALE_RULES = {
-        "Voucher Internet": {
-          minQty: 100,
-          label: "Grosir (≥100)"
-        },
-        "Cable": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Charger": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Earphone": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "TWS Bluetooth": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Bluetooth earphone": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Smart Watch": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Universal HUB": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Car Charger": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Power Bank": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        },
-        "Default": {
-          minQty: 2,
-          label: "Grosir (≥2)"
-        }
-      };
-
-      /**
-      * FALLBACK PRODUCTS
-      */
-      const fallbackProducts = [{
-        kode: "TELKOMSEL-001",
-        brand: "Telkomsel",
-        kategori: "Voucher Internet",
-        produk: "Voucher Telkomsel 10GB",
-        deskripsi: "🟡 Kuota 10GB\n🟡 Masa berlaku 30 Hari\n🟡 Bisa untuk semua jaringan",
-        harga: 50000,
-        harga_grosir: 45000,
-        gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Indosat_Ooredoo_Hutchison.svg/960px-Indosat_Ooredoo_Hutchison.svg.png"
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+  <script>
+    /**
+    * CONFIGURATION - UPDATED WITH AUTO-REFRESH SETTINGS
+    */
+    const CONFIG = {
+      primarySheet: {
+        id: '1Qn-UWBFxghJpBfRMXvtayXBxO5I3y5rHk-we0m2J9mU',
+        sheetName: 'Sheet1',
+        salesSheet: 'Penjualan',
+        apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
       },
-        {
-          kode: "XL-001",
-          brand: "XL",
-          kategori: "Voucher Internet",
-          produk: "Voucher XL 5GB",
-          deskripsi: "🟡 Kuota 5GB\n🟡 Masa berlaku 28 Hari\n🟡 Akses 24 jam",
-          harga: 30000,
-          harga_grosir: 27000,
-          gambar: "https://example.com/wp-content/uploads/xl-voucher.jpg"
-        }];
+      refreshInterval: 3600000,
+      // 1 hour in milliseconds
+      whatsappNumber: '6288988444888',
+      cacheExpiry: 3600000 // 1 hour cache validity
+    };
 
-      /**
-      * SYSTEM VARIABLES
-      */
-      let products = [];
-      let cart = [];
-      let selectedProduct = null;
-      let customerData = {
-        name: '',
-        address: '',
-        phone: ''
-      };
-      let refreshTimer = null;
+    /**
+    * WHOLESALE RULES
+    */
+    const WHOLESALE_RULES = {
+      "Voucher Internet": {
+        minQty: 100,
+        label: "Grosir (≥100)"
+      },
+      "Cable": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Charger": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Earphone": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "TWS Bluetooth": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Bluetooth earphone": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Smart Watch": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Universal HUB": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Car Charger": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Power Bank": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Default": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      }
+    };
 
-      /**
-      * DOM ELEMENTS
-      */
-      const elements = {
-        productGrid: document.getElementById('product-grid'),
-        cartContainer: document.getElementById('cart'),
-        cartItems: document.getElementById('cart-items'),
-        cartTotal: document.getElementById('cart-total'),
-        checkoutBtn: document.getElementById('checkout-btn'),
-        cartIcon: document.getElementById('cart-icon'),
-        cartCount: document.getElementById('cart-count'),
-        closeCartBtn: document.getElementById('close-cart'),
-        wholesaleNotice: document.getElementById('wholesale-notice'),
-        remainingQty: document.getElementById('remaining-qty'),
-        wholesaleCategory: document.getElementById('wholesale-category'),
-        modals: {
-          qty: document.getElementById('qty-modal'),
-          customer: document.getElementById('customer-modal')
-        },
-        inputs: {
-          qty: document.getElementById('qty-input'),
-          customerName: document.getElementById('customer-name'),
-          customerAddress: document.getElementById('customer-address'),
-          customerPhone: document.getElementById('customer-phone')
-        },
-        buttons: {
-          addToCart: document.getElementById('add-to-cart'),
-          closeModal: document.getElementById('close-modal'),
-          confirmCustomer: document.getElementById('confirm-customer'),
-          cancelCustomer: document.getElementById('cancel-customer')
-        },
-        // Hidden filters for functionality
-        categoryFilter: document.createElement('select'),
-        brandFilter: document.createElement('select'),
-        productFilter: document.createElement('input')
-      };
+    /**
+    * FALLBACK PRODUCTS
+    */
+    const fallbackProducts = [{
+      kode: "TELKOMSEL-001",
+      brand: "Telkomsel",
+      kategori: "Voucher Internet",
+      produk: "Voucher Telkomsel 10GB",
+      deskripsi: "▪ Kuota 10GB\n▪ Masa berlaku 30 Hari\n▪ Bisa untuk semua jaringan",
+      harga: 50000,
+      harga_grosir: 45000,
+      gambar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Indosat_Ooredoo_Hutchison.svg/960px-Indosat_Ooredoo_Hutchison.svg.png"
+    },
+    {
+      kode: "XL-001",
+      brand: "XL",
+      kategori: "Voucher Internet",
+      produk: "Voucher XL 5GB",
+      deskripsi: "▪ Kuota 5GB\n▪ Masa berlaku 28 Hari\n▪ Akses 24 jam",
+      harga: 30000,
+      harga_grosir: 27000,
+      gambar: "https://example.com/wp-content/uploads/xl-voucher.jpg"
+    }];
 
-      /**
-      * UTILITY FUNCTIONS
-      */
-      const utils = {
-        getWholesaleRule: (kategori) => WHOLESALE_RULES[kategori] || WHOLESALE_RULES["Default"],
+    /**
+    * SYSTEM VARIABLES
+    */
+    let products = [];
+    let cart = [];
+    let selectedProduct = null;
+    let customerData = {
+      name: '',
+      address: '',
+      phone: ''
+    };
+    let refreshTimer = null;
 
-        getTotalQtyByCategory: (cart, category) => {
-          return cart.reduce((total, item) => item.kategori === category ? total + item.qty: total, 0);
-        },
+    /**
+    * DOM ELEMENTS
+    */
+    const elements = {
+      productGrid: document.getElementById('product-grid'),
+      cartContainer: document.getElementById('cart'),
+      cartItems: document.getElementById('cart-items'),
+      cartTotal: document.getElementById('cart-total'),
+      checkoutBtn: document.getElementById('checkout-btn'),
+      cartIcon: document.getElementById('cart-icon'),
+      cartCount: document.getElementById('cart-count'),
+      closeCartBtn: document.getElementById('close-cart'),
+      wholesaleNotice: document.getElementById('wholesale-notice'),
+      remainingQty: document.getElementById('remaining-qty'),
+      wholesaleCategory: document.getElementById('wholesale-category'),
+      modals: {
+        qty: document.getElementById('qty-modal'),
+        customer: document.getElementById('customer-modal')
+      },
+      inputs: {
+        qty: document.getElementById('qty-input'),
+        customerName: document.getElementById('customer-name'),
+        customerAddress: document.getElementById('customer-address'),
+        customerPhone: document.getElementById('customer-phone')
+      },
+      buttons: {
+        addToCart: document.getElementById('add-to-cart'),
+        closeModal: document.getElementById('close-modal'),
+        confirmCustomer: document.getElementById('confirm-customer'),
+        cancelCustomer: document.getElementById('cancel-customer')
+      },
+      // Hidden filters for functionality
+      categoryFilter: document.createElement('select'),
+      brandFilter: document.createElement('select'),
+      productFilter: document.createElement('input')
+    };
 
-        formatProductName: (name) => {
-          return name
+    /**
+    * UTILITY FUNCTIONS
+    */
+    const utils = {
+      getWholesaleRule: (kategori) => WHOLESALE_RULES[kategori] || WHOLESALE_RULES["Default"],
+
+      getTotalQtyByCategory: (cart, category) => {
+        return cart.reduce((total, item) => item.kategori === category ? total + item.qty : total, 0);
+      },
+
+      formatProductName: (name) => {
+        return name
           .replace(/(Oraimo|Baseus|Telkomsel)\s+/gi, '')
           .replace(/Model\s+\w+-\w+/i, '')
           .replace(/\s+/g, ' ')
           .trim();
-        },
+      },
 
-        getShortDescription: (desc) => {
-          const points = desc.split('\n')
-          .filter(line => line.trim().startsWith('🟡'))
+      getShortDescription: (desc) => {
+        const points = desc.split('\n')
+          .filter(line => line.trim().startsWith('▪'))
           .slice(0, 2)
-          .map(line => line.replace('🟡', '•').trim());
-          return points.length > 0 ? points.join(' | '): "Produk berkualitas MDR STORE";
-        },
+          .map(line => line.replace('▪', '▪').trim());
+        return points.length > 0 ? points.join(' | ') : "Produk berkualitas MDR STORE";
+      },
 
-        formatCurrency: (amount) => {
-          if (isNaN(amount)) return "0";
-          return new Intl.NumberFormat('id-ID').format(amount);
-        },
+      formatCurrency: (amount) => {
+        if (isNaN(amount)) return "0";
+        return new Intl.NumberFormat('id-ID').format(amount);
+      },
 
-        validatePhone: (phone) => {
-          const phoneRegex = /^[0-9]{10,15}$/;
-          return phoneRegex.test(phone.replace(/\D/g, ''));
-        },
+      validatePhone: (phone) => {
+        const phoneRegex = /^[0-9]{10,15}$/;
+        return phoneRegex.test(phone.replace(/\D/g, ''));
+      },
 
-        isCacheValid: () => {
-          const lastCacheTime = localStorage.getItem('lastCacheTime');
-          if (!lastCacheTime) return false;
-          return (new Date().getTime() - parseInt(lastCacheTime)) < CONFIG.cacheExpiry;
-        },
+      isCacheValid: () => {
+        const lastCacheTime = localStorage.getItem('lastCacheTime');
+        if (!lastCacheTime) return false;
+        return (new Date().getTime() - parseInt(lastCacheTime)) < CONFIG.cacheExpiry;
+      },
 
-        validatePrice: (price) => {
-          return price > 0 && !isNaN(price);
-        },
+      validatePrice: (price) => {
+        return price > 0 && !isNaN(price);
+      },
 
-        getCartItemCount: () => {
-          return cart.reduce((total, item) => total + item.qty, 0);
-        },
+      getCartItemCount: () => {
+        return cart.reduce((total, item) => total + item.qty, 0);
+      },
 
-        activateMenuButton: (menuContainer, value) => {
-          const buttons = menuContainer.querySelectorAll('.tab-btn, .brand-btn');
-          buttons.forEach(button => {
-            if (button.dataset.category === value || button.dataset.brand === value) {
-              button.classList.add('active');
-            } else {
-              button.classList.remove('active');
-            }
-          });
-        }
-      };
-
-      /**
-      * DATA SERVICE
-      */
-      const dataService = {
-        fetchPrimaryData: async () => {
-          try {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/Sheet1!A1:K1000?key=${CONFIG.primarySheet.apiKey}`;
-
-            const response = await fetch(url);
-
-            if (!response.ok) {
-              const errorData = await response.json();
-              console.error('Error dari Google Sheets API:', errorData.error.message);
-              throw new Error(`Gagal mengambil data: ${errorData.error.message}`);
-            }
-
-            const data = await response.json();
-            console.log('Data mentah dari Google Sheets:', data);
-
-            if (!data.values || !Array.isArray(data.values)) {
-              throw new Error('Format data tidak valid - tidak ada array values');
-            }
-
-            const headers = data.values[0];
-            const processedData = data.values.slice(1).map(row => {
-              const item = {};
-              headers.forEach((header, index) => {
-                const cleanHeader = header.trim();
-                switch (cleanHeader) {
-                  case 'Kode Produk':
-                    item.kode = row[index] || '';
-                    break;
-                  case 'Brand':
-                    item.brand = row[index] || '';
-                    break;
-                  case 'Nama Kategori':
-                    item.kategori = row[index] || '';
-                    break;
-                  case 'Nama Produk':
-                    item.produk = row[index] || '';
-                    break;
-                  case 'Deskripsi':
-                    item.deskripsi = row[index] || '-';
-                    break;
-                  case 'Harga Retail':
-                    item.harga = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
-                    break;
-                  case 'Harga Grosir':
-                    item.harga_grosir = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
-                    break;
-                  case 'Gambar URL':
-                    item.gambar = row[index] || '';
-                    break;
-                }
-              });
-              return item;
-            });
-
-            localStorage.setItem('cachedProducts', JSON.stringify(processedData));
-            localStorage.setItem('lastCacheTime', new Date().getTime());
-            return processedData;
-
-          } catch (error) {
-            console.error('Error dalam fetchPrimaryData:', error);
-            return fallbackProducts;
+      activateMenuButton: (menuContainer, value) => {
+        const buttons = menuContainer.querySelectorAll('.tab-btn, .brand-btn');
+        buttons.forEach(button => {
+          if (button.dataset.category === value || button.dataset.brand === value) {
+            button.classList.add('active');
+          } else {
+            button.classList.remove('active');
           }
-        },
+        });
+      }
+    };
 
-        logTransaction: async (customer, items, total) => {
-          try {
-            const timestamp = new Date().toISOString();
-            const transactionData = [
-              timestamp,
-              customer.name,
-              customer.phone,
-              customer.address,
-              JSON.stringify(items),
-              total,
-              'Pending'
-            ];
+    /**
+    * DATA SERVICE
+    */
+    const dataService = {
+      fetchPrimaryData: async () => {
+        try {
+          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/Sheet1!A1:K1000?key=${CONFIG.primarySheet.apiKey}`;
 
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.salesSheet}:append?valueInputOption=USER_ENTERED&key=${CONFIG.primarySheet.apiKey}`;
+          const response = await fetch(url);
 
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                values: [transactionData]
-              })
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error dari Google Sheets API:', errorData.error.message);
+            throw new Error(`Gagal mengambil data: ${errorData.error.message}`);
+          }
+
+          const data = await response.json();
+          console.log('Data mentah dari Google Sheets:', data);
+
+          if (!data.values || !Array.isArray(data.values)) {
+            throw new Error('Format data tidak valid - tidak ada array values');
+          }
+
+          const headers = data.values[0];
+          const processedData = data.values.slice(1).map(row => {
+            const item = {};
+            headers.forEach((header, index) => {
+              const cleanHeader = header.trim();
+              switch (cleanHeader) {
+                case 'Kode Produk':
+                  item.kode = row[index] || '';
+                  break;
+                case 'Brand':
+                  item.brand = row[index] || '';
+                  break;
+                case 'Nama Kategori':
+                  item.kategori = row[index] || '';
+                  break;
+                case 'Nama Produk':
+                  item.produk = row[index] || '';
+                  break;
+                case 'Deskripsi':
+                  item.deskripsi = row[index] || '-';
+                  break;
+                case 'Harga Retail':
+                  item.harga = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
+                  break;
+                case 'Harga Grosir':
+                  item.harga_grosir = Math.max(0, parseInt((row[index] || '0').replace(/\D/g, ''))) || null;
+                  break;
+                case 'Gambar URL':
+                  item.gambar = row[index] || '';
+                  break;
+              }
             });
+            return item;
+          });
 
-            if (!response.ok) {
-              const error = await response.json();
-              console.error('Gagal menyimpan transaksi:', error);
-              return false;
-            }
+          localStorage.setItem('cachedProducts', JSON.stringify(processedData));
+          localStorage.setItem('lastCacheTime', new Date().getTime());
+          return processedData;
 
-            console.log('Transaksi berhasil dicatat');
-            return true;
+        } catch (error) {
+          console.error('Error dalam fetchPrimaryData:', error);
+          return fallbackProducts;
+        }
+      },
 
-          } catch (error) {
-            console.error('Error saat mencatat transaksi:', error);
+      logTransaction: async (customer, items, total) => {
+        try {
+          const timestamp = new Date().toISOString();
+          const transactionData = [
+            timestamp,
+            customer.name,
+            customer.phone,
+            customer.address,
+            JSON.stringify(items),
+            total,
+            'Pending'
+          ];
+
+          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.salesSheet}:append?valueInputOption=USER_ENTERED&key=${CONFIG.primarySheet.apiKey}`;
+
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              values: [transactionData]
+            })
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            console.error('Gagal menyimpan transaksi:', error);
             return false;
           }
-        },
 
-        getCachedProducts: () => {
-          if (!utils.isCacheValid()) return null;
+          console.log('Transaksi berhasil dicatat');
+          return true;
 
-          const cachedData = localStorage.getItem('cachedProducts');
-          if (cachedData) {
-            try {
-              return JSON.parse(cachedData);
-            } catch (e) {
-              console.error('Error parsing cached products', e);
-              return null;
-            }
-          }
-          return null;
-        },
-
-        loadProducts: async () => {
-          document.getElementById('loading-indicator').style.display = 'block';
-          elements.checkoutBtn.disabled = true;
-
-          // Check cache only if not expired
-          if (utils.isCacheValid()) {
-            const cachedProducts = dataService.getCachedProducts();
-            if (cachedProducts) {
-              products = cachedProducts;
-              ui.createCategoryTabs();
-              ui.updateBrandMenu();
-              ui.renderProducts();
-            }
-          }
-
-          try {
-            const rawData = await dataService.fetchPrimaryData();
-            products = rawData || fallbackProducts;
-
-            // Save to cache with timestamp
-            localStorage.setItem('cachedProducts', JSON.stringify(products));
-            localStorage.setItem('lastCacheTime', new Date().getTime());
-
-            ui.createCategoryTabs();
-            ui.updateBrandMenu();
-            ui.renderProducts();
-
-          } catch (error) {
-            console.error('Error loading products:', error);
-            products = fallbackProducts;
-            ui.createCategoryTabs();
-            ui.updateBrandMenu();
-            ui.renderProducts();
-          } finally {
-            document.getElementById('loading-indicator').style.display = 'none';
-            elements.checkoutBtn.disabled = false;
-
-            // Schedule next auto-refresh
-            refreshTimer = setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
-          }
-        },
-
-        startAutoRefresh: () => {
-          if (refreshTimer) clearTimeout(refreshTimer);
-          refreshTimer = setTimeout(() => {
-            ui.showAutoRefreshNotification();
-            dataService.loadProducts();
-          }, CONFIG.refreshInterval);
+        } catch (error) {
+          console.error('Error saat mencatat transaksi:', error);
+          return false;
         }
-      };
+      },
 
-      /**
-      * UI FUNCTIONS
-      */
-      const ui = {
-        createCategoryTabs: () => {
-          const tabsContainer = document.getElementById('category-tabs');
-          tabsContainer.innerHTML = '';
+      getCachedProducts: () => {
+        if (!utils.isCacheValid()) return null;
 
-          // Initialize hidden category filter
-          elements.categoryFilter.innerHTML = '<option value="">Semua Kategori</option>';
+        const cachedData = localStorage.getItem('cachedProducts');
+        if (cachedData) {
+          try {
+            return JSON.parse(cachedData);
+          } catch (e) {
+            console.error('Error parsing cached products', e);
+            return null;
+          }
+        }
+        return null;
+      },
 
-          // Get all unique categories
-          const categories = ["Semua",
-            ...new Set(products.map(p => p.kategori))];
+      loadProducts: async () => {
+        document.getElementById('loading-indicator').style.display = 'block';
+        elements.checkoutBtn.disabled = true;
 
-          categories.forEach(category => {
-            // Add to visible tabs
-            const tab = document.createElement('button');
-            tab.className = 'tab-btn';
-            tab.textContent = category;
-            tab.dataset.category = category === "Semua" ? "": category;
+        // Check cache only if not expired
+        if (utils.isCacheValid()) {
+          const cachedProducts = dataService.getCachedProducts();
+          if (cachedProducts) {
+            products = cachedProducts;
+            ui.createCategoryTabs();
+            ui.updateBrandMenu();
+            ui.renderProducts();
+          }
+        }
 
-            if (category === "Semua") tab.classList.add('active');
+        try {
+          const rawData = await dataService.fetchPrimaryData();
+          products = rawData || fallbackProducts;
 
-            tab.addEventListener('click', () => {
-              utils.activateMenuButton(tabsContainer, tab.dataset.category);
-              elements.categoryFilter.value = tab.dataset.category;
-              ui.updateBrandMenu();
-              ui.renderProducts();
-            });
+          // Save to cache with timestamp
+          localStorage.setItem('cachedProducts', JSON.stringify(products));
+          localStorage.setItem('lastCacheTime', new Date().getTime());
 
-            tabsContainer.appendChild(tab);
+          ui.createCategoryTabs();
+          ui.updateBrandMenu();
+          ui.renderProducts();
 
-            // Add to hidden filter
-            if (category !== "Semua") {
-              const option = document.createElement('option');
-              option.value = category;
-              option.textContent = category;
-              elements.categoryFilter.appendChild(option);
-            }
+        } catch (error) {
+          console.error('Error loading products:', error);
+          products = fallbackProducts;
+          ui.createCategoryTabs();
+          ui.updateBrandMenu();
+          ui.renderProducts();
+        } finally {
+          document.getElementById('loading-indicator').style.display = 'none';
+          elements.checkoutBtn.disabled = false;
+
+          // Schedule next auto-refresh
+          refreshTimer = setTimeout(dataService.loadProducts, CONFIG.refreshInterval);
+        }
+      },
+
+      startAutoRefresh: () => {
+        if (refreshTimer) clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(() => {
+          ui.showAutoRefreshNotification();
+          dataService.loadProducts();
+        }, CONFIG.refreshInterval);
+      }
+    };
+
+    /**
+    * UI FUNCTIONS
+    */
+    const ui = {
+      createCategoryTabs: () => {
+        const tabsContainer = document.getElementById('category-tabs');
+        tabsContainer.innerHTML = '';
+
+        // Initialize hidden category filter
+        elements.categoryFilter.innerHTML = '<option value="">Semua Kategori</option>';
+
+        // Get all unique categories
+        const categories = ["Semua",
+          ...new Set(products.map(p => p.kategori))];
+
+        categories.forEach(category => {
+          // Add to visible tabs
+          const tab = document.createElement('button');
+          tab.className = 'tab-btn';
+          tab.textContent = category;
+          tab.dataset.category = category === "Semua" ? "" : category;
+
+          if (category === "Semua") tab.classList.add('active');
+
+          tab.addEventListener('click', () => {
+            utils.activateMenuButton(tabsContainer, tab.dataset.category);
+            elements.categoryFilter.value = tab.dataset.category;
+            ui.updateBrandMenu();
+            ui.renderProducts();
           });
-        },
 
-        updateBrandMenu: () => {
-          const brandMenu = document.getElementById('brand-menu');
-          brandMenu.innerHTML = '';
+          tabsContainer.appendChild(tab);
 
-          // Initialize hidden brand filter
-          elements.brandFilter.innerHTML = '<option value="">Semua Brand</option>';
+          // Add to hidden filter
+          if (category !== "Semua") {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            elements.categoryFilter.appendChild(option);
+          }
+        });
+      },
 
-          const selectedCategory = elements.categoryFilter.value;
-          let filteredProducts = selectedCategory
-          ? products.filter(p => p.kategori === selectedCategory): products;
+      updateBrandMenu: () => {
+        const brandMenu = document.getElementById('brand-menu');
+        brandMenu.innerHTML = '';
 
-          const brands = ["Semua", ...new Set(filteredProducts.map(p => p.brand))];
+        // Initialize hidden brand filter
+        elements.brandFilter.innerHTML = '<option value="">Semua Brand</option>';
 
-          brands.forEach(brand => {
-            // Add to visible menu
-            const btn = document.createElement('button');
-            btn.className = 'brand-btn';
-            btn.textContent = brand;
-            btn.dataset.brand = brand === "Semua" ? "": brand;
+        const selectedCategory = elements.categoryFilter.value;
+        let filteredProducts = selectedCategory
+          ? products.filter(p => p.kategori === selectedCategory) : products;
 
-            if (brand === "Semua") btn.classList.add('active');
+        const brands = ["Semua", ...new Set(filteredProducts.map(p => p.brand))];
 
-            btn.addEventListener('click', () => {
-              utils.activateMenuButton(brandMenu, btn.dataset.brand);
-              elements.brandFilter.value = btn.dataset.brand;
-              ui.renderProducts();
-            });
+        brands.forEach(brand => {
+          // Add to visible menu
+          const btn = document.createElement('button');
+          btn.className = 'brand-btn';
+          btn.textContent = brand;
+          btn.dataset.brand = brand === "Semua" ? "" : brand;
 
-            brandMenu.appendChild(btn);
+          if (brand === "Semua") btn.classList.add('active');
 
-            // Add to hidden filter
-            if (brand !== "Semua") {
-              const option = document.createElement('option');
-              option.value = brand;
-              option.textContent = brand;
-              elements.brandFilter.appendChild(option);
-            }
+          btn.addEventListener('click', () => {
+            utils.activateMenuButton(brandMenu, btn.dataset.brand);
+            elements.brandFilter.value = btn.dataset.brand;
+            ui.renderProducts();
           });
-        },
 
-        renderProducts: () => {
-          elements.productGrid.innerHTML = '';
+          brandMenu.appendChild(btn);
 
-          const selectedCategory = elements.categoryFilter.value;
-          const selectedBrand = elements.brandFilter.value;
-          const searchTerm = elements.productFilter.value.toLowerCase();
+          // Add to hidden filter
+          if (brand !== "Semua") {
+            const option = document.createElement('option');
+            option.value = brand;
+            option.textContent = brand;
+            elements.brandFilter.appendChild(option);
+          }
+        });
+      },
 
-          let filteredProducts = products.filter(p => {
-            const matchesCategory = !selectedCategory || p.kategori === selectedCategory;
-            const matchesBrand = !selectedBrand || p.brand === selectedBrand;
-            const matchesSearch = !searchTerm ||
+      renderProducts: () => {
+        elements.productGrid.innerHTML = '';
+
+        const selectedCategory = elements.categoryFilter.value;
+        const selectedBrand = elements.brandFilter.value;
+        const searchTerm = elements.productFilter.value.toLowerCase();
+
+        let filteredProducts = products.filter(p => {
+          const matchesCategory = !selectedCategory || p.kategori === selectedCategory;
+          const matchesBrand = !selectedBrand || p.brand === selectedBrand;
+          const matchesSearch = !searchTerm ||
             p.produk.toLowerCase().includes(searchTerm) ||
             utils.formatProductName(p.produk).toLowerCase().includes(searchTerm) ||
             p.kode.toLowerCase().includes(searchTerm);
 
-            return matchesCategory && matchesBrand && matchesSearch;
-          });
+          return matchesCategory && matchesBrand && matchesSearch;
+        });
 
-          if (filteredProducts.length === 0) {
-            elements.productGrid.innerHTML = `
-            <div style="grid-column:1/-1; text-align:center; padding:20px;">
-            <p>Tidak ada produk yang ditemukan</p>
-            <button onclick="ui.resetFilters()"
-            style="background:#008ca7;color:white;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;margin-top:10px;font-weight:600;">
-            Reset Filter
-            </button>
-            </div>
-            `;
-            return;
-          }
+        if (filteredProducts.length === 0) {
+          elements.productGrid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:20px;">
+      <p>Tidak ada produk yang ditemukan</p>
+      <button onclick="ui.resetFilters()"
+      style="background:#008ca7;color:white;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;margin-top:10px;font-weight:600;">
+      Reset Filter
+      </button>
+      </div>
+      `;
+          return;
+        }
 
-          filteredProducts.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            const productName = utils.formatProductName(product.produk);
-            const hasWholesale = product.harga_grosir !== null && utils.validatePrice(product.harga_grosir);
-            const rule = utils.getWholesaleRule(product.kategori);
-            const isPriceReady = utils.validatePrice(product.harga);
+        filteredProducts.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          const productName = utils.formatProductName(product.produk);
+          const hasWholesale = product.harga_grosir !== null && utils.validatePrice(product.harga_grosir);
+          const rule = utils.getWholesaleRule(product.kategori);
+          const isPriceReady = utils.validatePrice(product.harga);
 
-            card.innerHTML = `
-            <div class="product-image-container">
-            <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
-            alt="${productName}" class="product-image" loading="lazy">
-            <div class="product-watermark">
-            <div>Kode: ${product.kode}</div>
-            ${utils.getShortDescription(product.deskripsi)}
-            </div>
-            </div>
-            <div class="product-details">
-            <div class="product-text">
-            <div class="product-name">${productName}</div>
-            </div>
-            <div class="product-actions">
-            <div class="product-price">
-            ${isPriceReady ? `Rp ${utils.formatCurrency(product.harga)}`:
-            '<span style="color:#EA5455">Memuat harga...</span>'}
-            </div>
-            ${hasWholesale ? `
-            <div class="wholesale-price">${rule.label}:
-            ${utils.validatePrice(product.harga_grosir) ?
-            `Rp ${utils.formatCurrency(product.harga_grosir)}`: 'N/A'}
-            </div>
-            `: ''}
-            <button class="add-to-cart" ${!isPriceReady ? 'disabled': ''}>
-            ${isPriceReady ? '<i class="fas fa-cart-plus"></i> Keranjang': 'Tunggu...'}
-            </button>
-            </div>
-            </div>
-            `;
+          card.innerHTML = `
+      <div class="product-image-container">
+      <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
+      alt="${productName}" class="product-image" loading="lazy">
+      <div class="product-watermark">
+      <div>Kode: ${product.kode}</div>
+      ${utils.getShortDescription(product.deskripsi)}
+      </div>
+      </div>
+      <div class="product-details">
+      <div class="product-text">
+      <div class="product-name">${productName}</div>
+      </div>
+      <div class="product-actions">
+      <div class="product-price">
+      ${isPriceReady ? `Rp ${utils.formatCurrency(product.harga)}` :
+              '<span style="color:#EA5455">Memuat harga...</span>'}
+      </div>
+      ${hasWholesale ? `
+      <div class="wholesale-price">${rule.label}:
+      ${utils.validatePrice(product.harga_grosir) ?
+                `Rp ${utils.formatCurrency(product.harga_grosir)}` : 'N/A'}
+      </div>
+      `: ''}
+      <button class="add-to-cart" ${!isPriceReady ? 'disabled' : ''}>
+      ${isPriceReady ? '<i class="fas fa-cart-plus"></i> Keranjang' : 'Tunggu...'}
+      </button>
+      </div>
+      </div>
+      `;
 
-            const addToCartBtn = card.querySelector('.add-to-cart');
-            addToCartBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              if (!utils.validatePrice(product.harga)) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Harga Belum Siap',
-                  text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar...',
-                  timer: 2000
+          const addToCartBtn = card.querySelector('.add-to-cart');
+          addToCartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!utils.validatePrice(product.harga)) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Harga Belum Siap',
+                text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar...',
+                timer: 2000
               });
               return;
             }
-              selectedProduct = product;
-              ui.showModal();
+            selectedProduct = product;
+            ui.showModal();
+          });
+
+          card.addEventListener('click',
+            () => {
+              ui.showProductDetail(product);
             });
 
-            card.addEventListener('click',
-              () => {
-                ui.showProductDetail(product);
-              });
-
-            elements.productGrid.appendChild(card);
-          });
+          elements.productGrid.appendChild(card);
+        });
       },
 
       resetFilters: () => {
@@ -1454,44 +1483,44 @@
 
       showProductDetail: (product) => {
         const productName = utils.formatProductName(product.produk);
-        const productDesc = product.deskripsi.replace(/(🟡)/g, '\n$1').trim();
+        const productDesc = product.deskripsi.replace(/(▪)/g, '\n$1').trim();
         const hasWholesale = product.harga_grosir !== null && utils.validatePrice(product.harga_grosir);
         const rule = utils.getWholesaleRule(product.kategori);
 
         const detailModal = `
-        <div class="modal visible" id="detail-modal">
-        <div class="modal-content">
-        <h3>${productName}</h3>
-        <p><strong>Kode:</strong> ${product.kode}</p>
-        <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
-        alt="${productName}"
-        style="width:100%;max-height:200px;object-fit:contain;margin:10px 0;border-radius:8px;">
+  <div class="modal visible" id="detail-modal">
+  <div class="modal-content">
+  <h3>${productName}</h3>
+  <p><strong>Kode:</strong> ${product.kode}</p>
+  <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
+  alt="${productName}"
+  style="width:100%;max-height:200px;object-fit:contain;margin:10px 0;border-radius:8px;">
 
-        <div class="detail-grid">
-        <div><strong>Brand:</strong> ${product.brand}</div>
-        <div><strong>Kategori:</strong> ${product.kategori}</div>
-        <div><strong>Harga:</strong> Rp ${utils.validatePrice(product.harga) ? utils.formatCurrency(product.harga): 'Memuat...'}</div>
-        ${hasWholesale ? `
-        <div><strong>${rule.label}:</strong> Rp ${utils.formatCurrency(product.harga_grosir)}</div>
-        `: '<div></div>'}
-        </div>
+  <div class="detail-grid">
+  <div><strong>Brand:</strong> ${product.brand}</div>
+  <div><strong>Kategori:</strong> ${product.kategori}</div>
+  <div><strong>Harga:</strong> Rp ${utils.validatePrice(product.harga) ? utils.formatCurrency(product.harga) : 'Memuat...'}</div>
+  ${hasWholesale ? `
+  <div><strong>${rule.label}:</strong> Rp ${utils.formatCurrency(product.harga_grosir)}</div>
+  `: '<div></div>'}
+  </div>
 
-        <p><strong>Deskripsi:</strong></p>
-        <div class="detail-description">
-        ${productDesc}
-        </div>
+  <p><strong>Deskripsi:</strong></p>
+  <div class="detail-description">
+  ${productDesc}
+  </div>
 
-        <div class="modal-buttons">
-        <button id="add-from-detail" style="background:#008ca7;color:white" ${!utils.validatePrice(product.harga) ? 'disabled': ''}>
-        <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-        </button>
-        <button id="close-detail" style="background:#EA5455;color:white">
-        <i class="fas fa-times"></i> Tutup
-        </button>
-        </div>
-        </div>
-        </div>
-        `;
+  <div class="modal-buttons">
+  <button id="add-from-detail" style="background:#008ca7;color:white" ${!utils.validatePrice(product.harga) ? 'disabled' : ''}>
+  <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+  </button>
+  <button id="close-detail" style="background:#EA5455;color:white">
+  <i class="fas fa-times"></i> Tutup
+  </button>
+  </div>
+  </div>
+  </div>
+  `;
 
         document.body.insertAdjacentHTML('beforeend', detailModal);
 
@@ -1542,14 +1571,14 @@
 
         const total = price * qty;
         elements.priceInfo.innerHTML = `
-        <div><strong>Harga Satuan:</strong> Rp ${utils.formatCurrency(price)} ${isWholesale ? '(Grosir)': ''}</div>
-        <div><strong>Total:</strong> Rp ${utils.formatCurrency(total)}</div>
-        ${selectedProduct.harga_grosir !== null ? `
-        <div style="margin-top:8px;font-size:12px;color:#666;padding:8px;background:#f5f5f5;border-radius:6px;">
-        ${!isWholesale ? `Total ${totalQtyInCart} pcs di keranjang. Beli ${rule.minQty - totalQty} pcs lagi untuk dapat harga grosir!`: ''}
-        </div>
-        `: ''}
-        `;
+  <div><strong>Harga Satuan:</strong> Rp ${utils.formatCurrency(price)} ${isWholesale ? '(Grosir)' : ''}</div>
+  <div><strong>Total:</strong> Rp ${utils.formatCurrency(total)}</div>
+  ${selectedProduct.harga_grosir !== null ? `
+  <div style="margin-top:8px;font-size:12px;color:#666;padding:8px;background:#f5f5f5;border-radius:6px;">
+  ${!isWholesale ? `Total ${totalQtyInCart} pcs di keranjang. Beli ${rule.minQty - totalQty} pcs lagi untuk dapat harga grosir!` : ''}
+  </div>
+  `: ''}
+  `;
       },
 
       hideModal: () => {
@@ -1580,7 +1609,7 @@
 
           cart.forEach(item => {
             if (item.kategori === category && item.harga_grosir !== null) {
-              item.harga = shouldApplyWholesale ? item.harga_grosir: item.harga;
+              item.harga = shouldApplyWholesale ? item.harga_grosir : item.harga;
               item.isWholesale = shouldApplyWholesale;
 
               if (!shouldApplyWholesale) {
@@ -1600,15 +1629,15 @@
           const cartItem = document.createElement('div');
           cartItem.className = 'cart-item';
           cartItem.innerHTML = `
-          <div>
-          <div class="cart-item-name">${utils.formatProductName(item.produk)}</div>
-          <div class="cart-item-price">${item.qty} x Rp ${utils.formatCurrency(item.harga)}</div>
-          ${item.isWholesale ? `<div style="color:#008ca7;font-size:12px;font-weight:600;">(Harga Grosir)</div>`: ''}
-          </div>
-          <button class="cart-item-remove" onclick="app.removeFromCart(${index})">
-          <i class="fas fa-trash-alt"></i> Hapus
-          </button>
-          `;
+    <div>
+    <div class="cart-item-name">${utils.formatProductName(item.produk)}</div>
+    <div class="cart-item-price">${item.qty} x Rp ${utils.formatCurrency(item.harga)}</div>
+    ${item.isWholesale ? `<div style="color:#008ca7;font-size:12px;font-weight:600;">(Harga Grosir)</div>` : ''}
+    </div>
+    <button class="cart-item-remove" onclick="app.removeFromCart(${index})">
+    <i class="fas fa-trash-alt"></i> Hapus
+    </button>
+    `;
           elements.cartItems.appendChild(cartItem);
         });
 
@@ -1666,38 +1695,74 @@
       },
 
       generateOrderMessage: () => {
-        let message = `*PEMESANAN - MDR STORE*\n`;
-        message += `=========================\n\n`;
-        message += `*DATA PELANGGAN*\n`;
-        message += `- Nama: ${customerData.name}\n`;
-        message += `- Alamat: ${customerData.address}\n`;
-        message += `- WhatsApp: ${customerData.phone}\n\n`;
+        // === Generate Invoice ID dengan prefix MDR ===
+        const now = new Date();
+        const yy = String(now.getFullYear()).slice(2);
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const dateKey = `${yy}${mm}${dd}`;
+        const counterKey = `invoice-count-${dateKey}`;
+        const lastCount = parseInt(localStorage.getItem(counterKey) || "0") + 1;
+        localStorage.setItem(counterKey, lastCount);
+        const invoiceId = `MDR-${dateKey}-${String(lastCount).padStart(3, '0')}`;
 
-        message += `*DETAIL PESANAN*\n`;
+        // === Format Tanggal ===
+        const tanggal = now.toLocaleDateString('id-ID', {
+          day: '2-digit', month: 'long', year: 'numeric'
+        });
+
+        // === Format Pesan WhatsApp ===
+        let message = `================================\n`;
+        message += `       MDR STORE - INVOICE      \n`;
+        message += `================================\n\n`;
+
+        message += `Invoice ID : ${invoiceId}\n`;
+        message += `Tanggal    : ${tanggal}\n\n`;
+
+        message += `DATA PELANGGAN:\n`;
+        message += `- Nama     : ${customerData.name}\n`;
+        message += `- Alamat   : ${customerData.address}\n`;
+        message += `- WhatsApp : ${customerData.phone}\n\n`;
+
         const categories = [...new Set(cart.map(item => item.kategori))];
         let totalPayment = 0;
+        let itemCounter = 1;
 
         categories.forEach(category => {
           const categoryItems = cart.filter(item => item.kategori === category);
           const rule = utils.getWholesaleRule(category);
           const totalQty = utils.getTotalQtyByCategory(cart, category);
+          const isWholesale = totalQty >= rule.minQty;
 
-          message += `${category.toUpperCase()} (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ' - HARGA GROSIR': ''})\n`;
-          categoryItems.forEach((item, index) => {
-            message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
-            message += `   • Jumlah: ${item.qty} pcs\n`;
-            message += `   • Harga: Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)': ''}\n`;
-            message += `   • Subtotal: Rp ${utils.formatCurrency(item.qty * item.harga)}\n\n`;
-            totalPayment += item.qty * item.harga;
+          message += `--------------------------------\n`;
+          message += `${category.toUpperCase()} (Total: ${totalQty} pcs${isWholesale ? ' - HARGA GROSIR' : ''})\n`;
+          message += `--------------------------------\n`;
+
+          categoryItems.forEach(item => {
+            const subtotal = item.qty * item.harga;
+            message += `${itemCounter}. ${utils.formatProductName(item.produk)}\n`;
+            message += `- Qty   : ${item.qty} pcs\n`;
+            message += `- Harga : Rp ${utils.formatCurrency(item.harga)}${item.isWholesale ? ' (Grosir)' : ''}\n`;
+            message += `- Total : Rp ${utils.formatCurrency(subtotal)}\n\n`;
+            totalPayment += subtotal;
+            itemCounter++;
           });
         });
 
-        message += `*TOTAL: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
-        message += ` - Mohon berikan nomor rekening untuk pembayaran.\n`;
+        message += `--------------------------------\n`;
+        message += `TOTAL BAYAR : Rp ${utils.formatCurrency(totalPayment)}\n`;
+        message += `--------------------------------\n\n`;
+
+        message += `Silakan transfer ke rekening MDR STORE.\n`;
+        message += `Konfirmasi pembayaran via WhatsApp.\n`;
+        message += `================================\n`;
+        message += `Terima kasih telah berbelanja!\n`;
+        message += `================================`;
 
         return {
           message,
-          total: totalPayment
+          total: totalPayment,
+          invoiceId
         };
       },
 
@@ -1735,7 +1800,7 @@
           const rule = utils.getWholesaleRule(selectedProduct.kategori);
           const totalQtyInCategory = utils.getTotalQtyByCategory(cart, selectedProduct.kategori) + qty;
           const isWholesale = totalQtyInCategory >= rule.minQty && utils.validatePrice(selectedProduct.harga_grosir);
-          const price = isWholesale ? selectedProduct.harga_grosir: selectedProduct.harga;
+          const price = isWholesale ? selectedProduct.harga_grosir : selectedProduct.harga;
 
           const existingItemIndex = cart.findIndex(item =>
             item.produk === selectedProduct.produk &&
@@ -1903,4 +1968,5 @@
     document.addEventListener('DOMContentLoaded', app.init);
   </script>
 </body>
+
 </html>

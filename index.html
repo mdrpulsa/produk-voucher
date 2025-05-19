@@ -287,8 +287,8 @@
 
     .product-badge {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 1px;
+      left: 1px;
       background: #EA5455;
       color: white;
       padding: 3px 8px;
@@ -341,7 +341,7 @@
     }
 
     .product-original-price {
-      text-decoration: line-through;
+      /* text-decoration: line-through; */ /* Coretan dihilangkan di sini */
       color: #999;
       font-size: 13px;
       margin-bottom: 10px;
@@ -1156,7 +1156,7 @@
        getPriceForItem: (item, currentQty) => {
             const rule = utils.getWholesaleRule(item.kategori);
             // Hitung total qty item dari kategori yang sama di seluruh keranjang
-            const totalQtyInCategory = cart.reduce((sum, cartItem) => {
+            const totalQtyInCartForThisProduct = cart.reduce((sum, cartItem) => {
                  if (cartItem.kode === item.kode) { // Hitung hanya item yang SAMA (kode produk sama)
                       return sum + cartItem.qty;
                  }
@@ -1164,7 +1164,7 @@
             }, 0);
 
             // Tentukan harga berdasarkan total qty termasuk item yang sedang ditambahkan/diupdate
-            if (utils.validatePrice(item.harga_grosir) && (totalQtyInCategory + currentQty) >= rule.minQty) {
+            if (utils.validatePrice(item.harga_grosir) && (totalQtyInCartForThisProduct + currentQty) >= rule.minQty) {
                 return item.harga_grosir;
             }
             // Jika harga grosir tidak valid atau total qty belum mencapai minimum, gunakan harga retail
@@ -1987,7 +1987,7 @@
           const totalQty = categoryItems.reduce((sum, item) => sum + item.qty, 0);
 
 
-          message += `*${category.toUpperCase()}* (Total: ${totalQty} pcs${totalQty >= rule.minQty ? ` - Harga ${rule.label}` : ''})\n`;
+          message += `*${category.toUpperCase()}*\n(Total: ${totalQty} pcs${totalQty >= rule.minQty ? ` - Harga ${rule.label}` : ''})\n`;
           categoryItems.forEach((item, index) => {
             // Gunakan harga saat ini yang sudah dihitung di updateCart
             const itemTotal = item.hargaSaatIni * item.qty;

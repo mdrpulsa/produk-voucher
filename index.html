@@ -6,7 +6,7 @@
   <title>Katalog Produk - MDR STORE</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css">
-  <link rel="icon" type="image/png" href="https://mdrpulsadata.wordpress.com/wp-content/uploads/2025/05/logo-favicon-48-x-44-px.png">
+  <link rel="icon" type="image/png" href="https://firebasestorage.googleapis.com/v0/b/mdr-store-45ddc.firebasestorage.app/o/01_Logo_Vertical_Colorful_1%20(1).png?alt=media&token=9afde1d6-423a-4276-8385-ca88eb1a25fc">
   <style>
     /* Glassmorphism & Base Styles */
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600;700&family=Nunito:wght@400;500;600;700&display=swap');
@@ -726,7 +726,7 @@
   <div class="app-container">
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
-  <img src="https://mdrpulsadata.wordpress.com/wp-content/uploads/2025/05/logo-favicon-48-x-44-px.png" alt="Logo MDR STORE" style="width:48px;height:44px;margin-bottom:10px;filter:drop-shadow(0 2px 8px #00cfd355);border-radius:7px;">
+  <img src="https://firebasestorage.googleapis.com/v0/b/mdr-store-45ddc.firebasestorage.app/o/01_Logo_Vertical_Colorful_1%20(1).png?alt=media&token=9afde1d6-423a-4276-8385-ca88eb1a25fc" alt="Logo MDR STORE" style="width:48px;height:44px;margin-bottom:10px;filter:drop-shadow(0 2px 8px #00cfd355);border-radius:7px;">
   <h1>MDR STORE</h1>
   <p>Solusi Belanja Digital Cepat & Terpercaya</p>
   <div class="timestamp" id="timestamp"></div>
@@ -851,1299 +851,1358 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
   <script>
     /**
-* CONFIGURATION - UPDATED WITH AUTO-REFRESH SETTINGS
-*/
-const CONFIG = {
-  webAppUrl: 'https://script.google.com/macros/s/AKfycbwD_mRx7FMyjCSKMNJjsJzzZIl74irM4zyDUlwhAsReCNhPZKyWfOVHi_diJzqtG7M-RA/exec',
-  refreshInterval: 3600000, // 1 hour in milliseconds
-  whatsappNumber: '6288988444888', // Ganti dengan nomor WA Anda
-  cacheExpiry: 3600000 // 1 hour cache validity
-};
+    * CONFIGURATION - UPDATED WITH AUTO-REFRESH SETTINGS
+    */
+    const CONFIG = {
+      primarySheet: {
+        id: '1Qn-UWBFxghJpBfRMXvtayXBxO5I3y5rHk-we0m2J9mU',
+        sheetName: 'Sheet1', // Pastikan ini sesuai dengan nama sheet data produk
+        salesSheet: 'Penjualan', // Pastikan ini sesuai dengan nama sheet penjualan
+        apiKey: 'AIzaSyAKnSVp0gz0TmQ6TUb-eLi6w96fyTtlIW8'
+      },
+      refreshInterval: 3600000, // 1 hour in milliseconds
+      whatsappNumber: '6288988444888', // Ganti dengan nomor WA Anda
+      cacheExpiry: 3600000 // 1 hour cache validity
+    };
 
-/**
-* WHOLESALE RULES
-*/
-const WHOLESALE_RULES = {
-  "Voucher Internet": {
-    minQty: 100,
-    label: "Grosir (≥100)"
-  },
-  "Cable": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Charger": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Earphone": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "TWS Bluetooth": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Bluetooth earphone": { // Perhatikan penamaan kategori harus persis sama dengan di sheet
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Smart Watch": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Universal HUB": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Car Charger": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Power Bank": {
-    minQty: 2,
-    label: "Grosir (≥2)"
-  },
-  "Default": { // Aturan default jika kategori tidak ditemukan di atas
-    minQty: 2,
-    label: "Grosir (≥2)"
-  }
-};
+    /**
+    * WHOLESALE RULES
+    */
+    const WHOLESALE_RULES = {
+      "Voucher Internet": {
+        minQty: 100,
+        label: "Grosir (≥100)"
+      },
+      "Cable": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Charger": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Earphone": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "TWS Bluetooth": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Bluetooth earphone": { // Perhatikan penamaan kategori harus persis sama dengan di sheet
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Smart Watch": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Universal HUB": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Car Charger": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Power Bank": {
+        minQty: 2,
+        label: "Grosir (≥2)"
+      },
+      "Default": { // Aturan default jika kategori tidak ditemukan di atas
+        minQty: 2,
+        label: "Grosir (≥2)"
+      }
+    };
 
-/**
-* FALLBACK PRODUCTS - Digunakan jika data dari Google Sheets gagal dimuat
-*/
-const fallbackProducts = [{
-  kode: "TELKOMSEL-001",
-  brand: "Telkomsel",
-  kategori: "Voucher Internet",
-  produk: "Voucher Telkomsel 10GB",
-  deskripsi: "🟡 Kuota 10GB\n🟡 Masa berlaku 30 Hari\n🟡 Bisa untuk semua jaringan",
-  harga: 50000, // Pastikan harga ini valid (angka)
-  harga_grosir: 45000, // Pastikan harga ini valid (angka)
-  gambar: "https://via.placeholder.com/150?text=Tsel" // Ganti dengan gambar default yang sesuai
-},
-{
-  kode: "XL-001",
-  brand: "XL",
-  kategori: "Voucher Internet",
-  produk: "Voucher XL 5GB",
-  deskripsi: "🟡 Kuota 5GB\n🟡 Masa berlaku 28 Hari\n🟡 Akses 24 jam",
-  harga: 30000, // Pastikan harga ini valid (angka)
-  harga_grosir: 27000, // Pastikan harga ini valid (angka)
-  gambar: "https://via.placeholder.com/150?text=XL" // Ganti dengan gambar default yang sesuai
-}];
+    /**
+    * FALLBACK PRODUCTS - Digunakan jika data dari Google Sheets gagal dimuat
+    */
+    const fallbackProducts = [{
+      kode: "TELKOMSEL-001",
+      brand: "Telkomsel",
+      kategori: "Voucher Internet",
+      produk: "Voucher Telkomsel 10GB",
+      deskripsi: "🟡 Kuota 10GB\n🟡 Masa berlaku 30 Hari\n🟡 Bisa untuk semua jaringan",
+      harga: 50000, // Pastikan harga ini valid (angka)
+      harga_grosir: 45000, // Pastikan harga ini valid (angka)
+      gambar: "https://via.placeholder.com/150?text=Tsel" // Ganti dengan gambar default yang sesuai
+    },
+    {
+      kode: "XL-001",
+      brand: "XL",
+      kategori: "Voucher Internet",
+      produk: "Voucher XL 5GB",
+      deskripsi: "🟡 Kuota 5GB\n🟡 Masa berlaku 28 Hari\n🟡 Akses 24 jam",
+      harga: 30000, // Pastikan harga ini valid (angka)
+      harga_grosir: 27000, // Pastikan harga ini valid (angka)
+      gambar: "https://via.placeholder.com/150?text=XL" // Ganti dengan gambar default yang sesuai
+    }];
 
-/**
-* SYSTEM VARIABLES
-*/
-let products = [];
-let cart = [];
-let selectedProduct = null;
-let customerData = {
-  name: '',
-  address: '',
-  phone: ''
-};
-let refreshTimer = null;
+    /**
+    * SYSTEM VARIABLES
+    */
+    let products = [];
+    let cart = [];
+    let selectedProduct = null;
+    let customerData = {
+      name: '',
+      address: '',
+      phone: ''
+    };
+    let refreshTimer = null;
 
-/**
-* DOM ELEMENTS
-*/
-const elements = {
-  sidebar: document.getElementById('sidebar'),
-  sidebarOverlay: document.getElementById('sidebar-overlay'),
-  mobileMenuBtn: document.getElementById('mobile-menu-btn'),
-  searchInput: document.getElementById('search-input'),
-  cartIcon: document.getElementById('cart-icon'),
-  cartCount: document.getElementById('cart-count'),
-  cartSidebar: document.getElementById('cart-sidebar'),
-  closeCartBtn: document.getElementById('close-cart'),
-  cartItems: document.getElementById('cart-items'),
-  cartSubtotal: document.getElementById('cart-subtotal'),
-  cartTotal: document.getElementById('cart-total'),
-  checkoutBtn: document.getElementById('checkout-btn'),
-  categoryMenu: document.getElementById('category-menu'),
-  brandMenu: document.getElementById('brand-menu'),
-  productGrid: document.getElementById('product-grid'),
-  qtyModal: document.getElementById('qty-modal'),
-  qtyInput: document.getElementById('qty-input'),
-  priceInfo: document.getElementById('price-info'),
-  closeModal: document.getElementById('close-modal'),
-  cancelModal: document.getElementById('cancel-modal'),
-  addToCartBtn: document.getElementById('add-to-cart'),
-  customerModal: document.getElementById('customer-modal'),
-  customerName: document.getElementById('customer-name'),
-  customerPhone: document.getElementById('customer-phone'),
-  customerAddress: document.getElementById('customer-address'),
-  closeCustomerModal: document.getElementById('close-customer-modal'),
-  cancelCustomer: document.getElementById('cancel-customer'),
-  confirmCustomer: document.getElementById('confirm-customer'),
-  loadingIndicator: document.getElementById('loading-indicator'),
-  timestamp: document.getElementById('timestamp')
-};
+    /**
+    * DOM ELEMENTS
+    */
+    const elements = {
+      sidebar: document.getElementById('sidebar'),
+      sidebarOverlay: document.getElementById('sidebar-overlay'),
+      mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+      searchInput: document.getElementById('search-input'),
+      cartIcon: document.getElementById('cart-icon'),
+      cartCount: document.getElementById('cart-count'),
+      cartSidebar: document.getElementById('cart-sidebar'),
+      closeCartBtn: document.getElementById('close-cart'),
+      cartItems: document.getElementById('cart-items'),
+      cartSubtotal: document.getElementById('cart-subtotal'),
+      cartTotal: document.getElementById('cart-total'),
+      checkoutBtn: document.getElementById('checkout-btn'),
+      categoryMenu: document.getElementById('category-menu'),
+      brandMenu: document.getElementById('brand-menu'),
+      // categoryChips: document.getElementById('category-chips'), // Dihapus dari sini
+      productGrid: document.getElementById('product-grid'),
+      qtyModal: document.getElementById('qty-modal'),
+      qtyInput: document.getElementById('qty-input'),
+      priceInfo: document.getElementById('price-info'),
+      closeModal: document.getElementById('close-modal'),
+      cancelModal: document.getElementById('cancel-modal'),
+      addToCartBtn: document.getElementById('add-to-cart'),
+      customerModal: document.getElementById('customer-modal'),
+      customerName: document.getElementById('customer-name'),
+      customerPhone: document.getElementById('customer-phone'),
+      customerAddress: document.getElementById('customer-address'),
+      closeCustomerModal: document.getElementById('close-customer-modal'),
+      cancelCustomer: document.getElementById('cancel-customer'),
+      confirmCustomer: document.getElementById('confirm-customer'),
+      loadingIndicator: document.getElementById('loading-indicator'),
+      timestamp: document.getElementById('timestamp')
+    };
 
-/**
-* UTILITY FUNCTIONS
-*/
-const utils = {
-  getWholesaleRule: (kategori) => WHOLESALE_RULES[kategori] || WHOLESALE_RULES["Default"],
+    /**
+    * UTILITY FUNCTIONS
+    */
+    const utils = {
+      getWholesaleRule: (kategori) => WHOLESALE_RULES[kategori] || WHOLESALE_RULES["Default"],
 
-  getTotalQtyByCategory: (cart, category) => {
-    // Hitung total kuantitas item DENGAN HARGA RETAIL untuk kategori ini
-    // Ini diperlukan untuk menentukan apakah harga grosir harusnya berlaku untuk kategori tersebut secara keseluruhan
-     return cart.reduce((total, item) => {
-        // Hanya hitung item dari kategori yang sama dan belum dalam mode grosir
-        // Atau hitung semua jika ingin total qty di kategori tsb
-         if (item.kategori === category) {
-             return total + item.qty;
-         }
-         return total;
-     }, 0);
-  },
-
-  formatProductName: (name) => {
-    // Membersihkan nama produk jika ada pola tertentu
-    return name
-      .replace(/(Oraimo|Baseus|Telkomsel|XL|Indosat|Tri)\s+/gi, '') // Contoh: hapus brand jika ada di awal
-      .replace(/Model\s+\w+-\w+/i, '') // Contoh: hapus pola "Model XY-12"
-      .replace(/\s+/g, ' ') // Ganti multiple spaces dengan single space
-      .trim(); // Hapus spasi di awal/akhir
-  },
-
-  getShortDescription: (desc) => {
-    const points = desc.split('\n')
-      .filter(line => line.trim().startsWith('🟡')) // Ambil baris yang diawali 🟡
-      .slice(0, 2) // Ambil maksimal 2 poin
-      .map(line => line.replace('🟡', '•').trim()); // Format 🟡 menjadi •
-    return points.length > 0 ? points.join(' | ') : "Produk berkualitas MDR STORE"; // Gabungkan dengan separator
-  },
-
-  formatCurrency: (amount) => {
-    if (isNaN(amount)) return "0";
-    // Pastikan amount adalah angka sebelum diformat
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount)) return "0";
-    return new Intl.NumberFormat('id-ID').format(numAmount);
-  },
-
-  validatePhone: (phone) => {
-    // Memperbolehkan + di awal, dan angka 0-9, minimal 10 digit, maksimal 15 digit
-    const phoneRegex = /^\+?[0-9]{10,15}$/;
-    // Hapus spasi dan strip jika ada sebelum validasi
-    const cleanedPhone = phone.replace(/[\s-]/g, '');
-    return phoneRegex.test(cleanedPhone);
-  },
-
-  isCacheValid: () => {
-    const lastCacheTime = localStorage.getItem('lastCacheTime');
-    if (!lastCacheTime) return false;
-    // Ubah 3600000 ke CONFIG.cacheExpiry
-    return (new Date().getTime() - parseInt(lastCacheTime)) < CONFIG.cacheExpiry;
-  },
-
-  // Helper untuk memvalidasi harga (pastikan angka positif dan bukan NaN)
-  validatePrice: (price) => {
-    return typeof price === 'number' && !isNaN(price) && price >= 0;
-  },
-
-  getCartItemCount: () => {
-    return cart.reduce((total, item) => total + item.qty, 0);
-  },
-
-   // Fungsi untuk mendapatkan harga yang benar berdasarkan total Qty di keranjang untuk kategori tersebut
-   getPriceForItem: (item, currentQty) => {
-        const rule = utils.getWholesaleRule(item.kategori);
-        // Hitung total qty item dari kategori yang sama di seluruh keranjang
-        const totalQtyInCartForThisProduct = cart.reduce((sum, cartItem) => {
-             if (cartItem.kode === item.kode) { // Hitung hanya item yang SAMA (kode produk sama)
-                  return sum + cartItem.qty;
+      getTotalQtyByCategory: (cart, category) => {
+        // Hitung total kuantitas item DENGAN HARGA RETAIL untuk kategori ini
+        // Ini diperlukan untuk menentukan apakah harga grosir harusnya berlaku untuk kategori tersebut secara keseluruhan
+         return cart.reduce((total, item) => {
+            // Hanya hitung item dari kategori yang sama dan belum dalam mode grosir
+            // Atau hitung semua jika ingin total qty di kategori tsb
+             if (item.kategori === category) {
+                 return total + item.qty;
              }
-             return sum;
-        }, 0);
+             return total;
+         }, 0);
+      },
 
-        // Tentukan harga berdasarkan total qty termasuk item yang sedang ditambahkan/diupdate
-        if (utils.validatePrice(item.harga_grosir) && (totalQtyInCartForThisProduct + currentQty) >= rule.minQty) {
-            return item.harga_grosir;
-        }
-        // Jika harga grosir tidak valid atau total qty belum mencapai minimum, gunakan harga retail
-        return utils.validatePrice(item.harga) ? item.harga : 0; // Fallback ke 0 jika harga retail tidak valid
-   }
-};
+      formatProductName: (name) => {
+        // Membersihkan nama produk jika ada pola tertentu
+        return name
+          .replace(/(Oraimo|Baseus|Telkomsel|XL|Indosat|Tri)\s+/gi, '') // Contoh: hapus brand jika ada di awal
+          .replace(/Model\s+\w+-\w+/i, '') // Contoh: hapus pola "Model XY-12"
+          .replace(/\s+/g, ' ') // Ganti multiple spaces dengan single space
+          .trim(); // Hapus spasi di awal/akhir
+      },
 
-/**
-* DATA SERVICE
-*/
-const dataService = {
-  fetchPrimaryData: async () => {
-    elements.loadingIndicator.style.display = 'block';
-    try {
-      const response = await fetch(CONFIG.webAppUrl);
+      getShortDescription: (desc) => {
+        const points = desc.split('\n')
+          .filter(line => line.trim().startsWith('🟡')) // Ambil baris yang diawali 🟡
+          .slice(0, 2) // Ambil maksimal 2 poin
+          .map(line => line.replace('🟡', '•').trim()); // Format 🟡 menjadi •
+        return points.length > 0 ? points.join(' | ') : "Produk berkualitas MDR STORE"; // Gabungkan dengan separator
+      },
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Error dari Google Apps Script:', errorData);
-        throw new Error(`Gagal mengambil data: ${errorData}`);
-      }
+      formatCurrency: (amount) => {
+        if (isNaN(amount)) return "0";
+        // Pastikan amount adalah angka sebelum diformat
+        const numAmount = parseFloat(amount);
+        if (isNaN(numAmount)) return "0";
+        return new Intl.NumberFormat('id-ID').format(numAmount);
+      },
 
-      const data = await response.json();
-      console.log('Data mentah dari Google Apps Script:', data);
+      validatePhone: (phone) => {
+        // Memperbolehkan + di awal, dan angka 0-9, minimal 10 digit, maksimal 15 digit
+        const phoneRegex = /^\+?[0-9]{10,15}$/;
+        // Hapus spasi dan strip jika ada sebelum validasi
+        const cleanedPhone = phone.replace(/[\s-]/g, '');
+        return phoneRegex.test(cleanedPhone);
+      },
 
-      // Ambil array produk dari struktur baru
-      let productsArray = [];
-      if (data && data.data && Array.isArray(data.data)) {
-        productsArray = data.data;
-      } else {
-        console.warn('Struktur data dari Apps Script tidak dikenali. Menggunakan fallback.');
-        return fallbackProducts;
-      }
+      isCacheValid: () => {
+        const lastCacheTime = localStorage.getItem('lastCacheTime');
+        if (!lastCacheTime) return false;
+        // Ubah 3600000 ke CONFIG.cacheExpiry
+        return (new Date().getTime() - parseInt(lastCacheTime)) < CONFIG.cacheExpiry;
+      },
 
-      if (!productsArray.length) {
-        console.warn('Data dari Apps Script kosong. Menggunakan data fallback.');
-        return fallbackProducts;
-      }
+      // Helper untuk memvalidasi harga (pastikan angka positif dan bukan NaN)
+      validatePrice: (price) => {
+        return typeof price === 'number' && !isNaN(price) && price >= 0;
+      },
 
-      // Mapping agar struktur data konsisten dengan aplikasi
-      const processedData = productsArray.map(item => {
-        return {
-          kode: item.kode_produk || '',
-          brand: item.brand || '',
-          kategori: item.nama_kategori || 'Lainnya',
-          produk: item.nama_produk || 'Produk Tanpa Nama',
-          deskripsi: item.deskripsi || '-',
-          harga: parseInt((item.harga_retail || '0').toString().replace(/\D/g, '')) || 0,
-          harga_grosir: item.harga_grosir !== undefined && item.harga_grosir !== null ? parseInt((item.harga_grosir || '0').toString().replace(/\D/g, '')) : null,
-          gambar: item.gambar_url || ''
-        };
-      }).filter(item => item.produk !== 'Produk Tanpa Nama' && item.harga > 0);
+      getCartItemCount: () => {
+        return cart.reduce((total, item) => total + item.qty, 0);
+      },
 
-      if (processedData.length === 0) {
-        console.warn('Data dari Apps Script kosong setelah filtering. Menggunakan fallback Products.');
-        return fallbackProducts;
-      }
+       // Fungsi untuk mendapatkan harga yang benar berdasarkan total Qty di keranjang untuk kategori tersebut
+       getPriceForItem: (item, currentQty) => {
+            const rule = utils.getWholesaleRule(item.kategori);
+            // Hitung total qty item dari kategori yang sama di seluruh keranjang
+            const totalQtyInCartForThisProduct = cart.reduce((sum, cartItem) => {
+                 if (cartItem.kode === item.kode) { // Hitung hanya item yang SAMA (kode produk sama)
+                      return sum + cartItem.qty;
+                 }
+                 return sum;
+            }, 0);
 
-      localStorage.setItem('cachedProducts', JSON.stringify(processedData));
-      localStorage.setItem('lastCacheTime', new Date().getTime());
-      return processedData;
-
-    } catch (error) {
-      console.error('Error dalam fetchPrimaryData:', error);
-      const cached = dataService.getCachedProducts();
-      if (cached) {
-        console.log('Menggunakan data dari cache karena fetch gagal.');
-        return cached;
-      }
-      console.error('Gagal mengambil data dan cache kosong. Menggunakan data fallback.');
-      return fallbackProducts;
-    } finally {
-      elements.loadingIndicator.style.display = 'none';
-    }
-  },
-
-  logTransaction: async (customer, items, total) => {
-    try {
-      const timestamp = new Date().toISOString();
-      const transactionData = [
-        timestamp,
-        customer.name,
-        customer.phone,
-        customer.address,
-        JSON.stringify(items.map(item => ({ // Simpan item dalam format yang lebih ringkas
-            kode: item.kode,
-            produk: item.produk,
-            qty: item.qty,
-            hargaSatuan: item.harga, // Harga saat checkout
-            isGrosir: item.isWholesale
-        }))),
-        total,
-        'Pending' // Status awal transaksi
-      ];
-
-      // Kirim data ke Google Apps Script web app
-      const response = await fetch(CONFIG.webAppUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          action: 'log_transaction',
-          data: transactionData
-        })
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        console.error('Gagal menyimpan transaksi:', error);
-        return false;
-      }
-
-      console.log('Transaksi berhasil dicatat');
-      return true;
-
-    } catch (error) {
-      console.error('Error saat mencatat transaksi:', error);
-      return false;
-    }
-  },
-
-  getCachedProducts: () => {
-    // Perbaiki logika cache validity
-    const lastCacheTimeString = localStorage.getItem('lastCacheTime');
-    if (!lastCacheTimeString) return null;
-
-    const lastCacheTime = parseInt(lastCacheTimeString, 10);
-    const now = new Date().getTime();
-
-    if (now - lastCacheTime > CONFIG.cacheExpiry) {
-         console.log('Cache expired.');
-         return null; // Cache expired
-    }
-
-    const cachedData = localStorage.getItem('cachedProducts');
-    if (cachedData) {
-      try {
-        const parsedData = JSON.parse(cachedData);
-        console.log('Using cached products.');
-         // Pastikan data dari cache juga divalidasi harganya
-         return parsedData.map(item => {
-             if (!utils.validatePrice(item.harga)) item.harga = 0;
-             if (item.harga_grosir !== null && !utils.validatePrice(item.harga_grosir)) item.harga_grosir = null;
-             return item;
-         }).filter(item => item.produk !== 'Produk Tanpa Nama' && item.harga > 0); // Filter item invalid dari cache
-      } catch (e) {
-        console.error('Error parsing cached products', e);
-        localStorage.removeItem('cachedProducts'); // Hapus cache yang rusak
-        localStorage.removeItem('lastCacheTime');
-        return null;
-      }
-    }
-    return null; // No cache found
-  },
-
-  loadProducts: async () => {
-    const cachedProducts = dataService.getCachedProducts();
-    if (cachedProducts) {
-        products = cachedProducts;
-        // Render UI from cache immediately
-        ui.createCategoryMenu();
-        ui.createBrandMenu();
-        ui.renderProducts();
-        // Continue fetching in background to update cache
-        console.log('Fetching fresh data in background...');
-        try {
-            const freshData = await dataService.fetchPrimaryData();
-            if (JSON.stringify(freshData) !== JSON.stringify(cachedProducts)) {
-                 products = freshData;
-                 console.log('Data updated from sheet. Re-rendering UI.');
-                 // Re-render UI if data changed significantly (optional, can be done on next visit too)
-                 ui.createCategoryMenu();
-                 ui.createBrandMenu();
-                 ui.renderProducts(); // Re-render with fresh data
-            } else {
-                 console.log('Fresh data is the same as cached data.');
+            // Tentukan harga berdasarkan total qty termasuk item yang sedang ditambahkan/diupdate
+            if (utils.validatePrice(item.harga_grosir) && (totalQtyInCartForThisProduct + currentQty) >= rule.minQty) {
+                return item.harga_grosir;
             }
-        } catch (error) {
-            console.warn('Background fetch failed:', error);
-        } finally {
-             // Schedule next auto-refresh regardless of background fetch success
-             dataService.startAutoRefresh();
-        }
+            // Jika harga grosir tidak valid atau total qty belum mencapai minimum, gunakan harga retail
+            return utils.validatePrice(item.harga) ? item.harga : 0; // Fallback ke 0 jika harga retail tidak valid
+       }
+    };
 
-    } else {
-        // No valid cache, fetch and render
-        console.log('No valid cache. Fetching data from sheet.');
+    /**
+    * DATA SERVICE
+    */
+    const dataService = {
+      fetchPrimaryData: async () => {
+        elements.loadingIndicator.style.display = 'block';
         try {
-          const rawData = await dataService.fetchPrimaryData();
-          products = rawData || fallbackProducts;
+          // Pastikan sheetName di URL sesuai CONFIG
+          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.sheetName}!A1:K1000?key=${CONFIG.primarySheet.apiKey}`;
 
-          ui.createCategoryMenu();
-          ui.createBrandMenu();
-          ui.renderProducts();
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error dari Google Sheets API:', errorData.error.message);
+            throw new Error(`Gagal mengambil data: ${errorData.error.message}`);
+          }
+
+          const data = await response.json();
+          console.log('Data mentah dari Google Sheets:', data);
+
+          if (!data.values || !Array.isArray(data.values) || data.values.length < 2) {
+             console.warn('Data dari Sheets kosong atau hanya header. Menggunakan data fallback.');
+            return fallbackProducts; // Gunakan fallback jika tidak ada data produk
+          }
+
+          const headers = data.values[0];
+          // Pastikan indeks kolom sesuai dengan header
+          const headersMap = {};
+          headers.forEach((header, index) => {
+              headersMap[header.trim()] = index;
+          });
+
+          const processedData = data.values.slice(1).map(row => {
+            const item = {};
+            // Ambil data berdasarkan mapping header, bukan indeks tetap
+            item.kode = row[headersMap['Kode Produk']] || '';
+            item.brand = row[headersMap['Brand']] || '';
+            item.kategori = row[headersMap['Nama Kategori']] || 'Lainnya'; // Default kategori jika kosong
+            item.produk = row[headersMap['Nama Produk']] || 'Produk Tanpa Nama'; // Default nama jika kosong
+            item.deskripsi = row[headersMap['Deskripsi']] || '-';
+            // Konversi harga menjadi angka dan validasi
+            item.harga = parseInt((row[headersMap['Harga Retail']] || '0').replace(/\D/g, '')) || 0;
+            item.harga_grosir = parseInt((row[headersMap['Harga Grosir']] || '0').replace(/\D/g, '')) || null; // Biarkan null jika kosong/0
+
+            item.gambar = row[headersMap['Gambar URL']] || ''; // URL gambar
+
+            // Validasi akhir harga setelah parsing
+            if (!utils.validatePrice(item.harga)) item.harga = 0;
+            if (item.harga_grosir !== null && !utils.validatePrice(item.harga_grosir)) item.harga_grosir = null;
+
+
+            // Filter produk yang tidak valid (misalnya tanpa nama produk atau harga retail)
+            if (item.produk === 'Produk Tanpa Nama' || item.harga === 0) {
+                 console.warn('Melewatkan produk dengan data tidak lengkap:', row);
+                 return null; // Abaikan item yang tidak lengkap
+            }
+
+            return item;
+          }).filter(item => item !== null); // Hapus item yang null (diabaikan)
+
+          // Jika data berhasil diambil tapi kosong setelah filtering, gunakan fallback
+           if (processedData.length === 0) {
+             console.warn('Data dari Sheets kosong setelah filtering. Menggunakan data fallback.');
+             return fallbackProducts;
+           }
+
+          localStorage.setItem('cachedProducts', JSON.stringify(processedData));
+          localStorage.setItem('lastCacheTime', new Date().getTime());
+          return processedData;
 
         } catch (error) {
-          console.error('Initial load failed:', error);
-          products = fallbackProducts;
-          ui.createCategoryMenu();
-          ui.createBrandMenu();
-          ui.renderProducts();
+          console.error('Error dalam fetchPrimaryData:', error);
+          // Jika terjadi error fetch, coba ambil dari cache
+          const cached = dataService.getCachedProducts();
+          if (cached) {
+            console.log('Menggunakan data dari cache karena fetch gagal.');
+            return cached;
+          }
+          console.error('Gagal mengambil data dan cache kosong. Menggunakan data fallback.');
+          return fallbackProducts; // Gunakan fallback jika fetch dan cache gagal
         } finally {
-          elements.checkoutBtn.disabled = false; // Enable checkout after products are loaded
-          // Schedule next auto-refresh
-          dataService.startAutoRefresh();
+             elements.loadingIndicator.style.display = 'none'; // Sembunyikan loading di sini
         }
-    }
-  },
+      },
 
-  startAutoRefresh: () => {
-    if (refreshTimer) clearTimeout(refreshTimer);
-    refreshTimer = setTimeout(() => {
-      ui.showAutoRefreshNotification();
-      // Just call loadProducts, it handles caching and background fetching
-      dataService.loadProducts();
-    }, CONFIG.refreshInterval);
-  }
-};
+      logTransaction: async (customer, items, total) => {
+        try {
+          const timestamp = new Date().toISOString();
+          const transactionData = [
+            timestamp,
+            customer.name,
+            customer.phone,
+            customer.address,
+            JSON.stringify(items.map(item => ({ // Simpan item dalam format yang lebih ringkas
+                kode: item.kode,
+                produk: item.produk,
+                qty: item.qty,
+                hargaSatuan: item.harga, // Harga saat checkout
+                isGrosir: item.isWholesale
+            }))),
+            total,
+            'Pending' // Status awal transaksi
+          ];
 
-/**
-* UI FUNCTIONS
-*/
-const ui = {
-  createCategoryMenu: () => {
-    elements.categoryMenu.innerHTML = '';
+          // Pastikan salesSheet di URL sesuai CONFIG
+          const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.primarySheet.id}/values/${CONFIG.primarySheet.salesSheet}:append?valueInputOption=USER_ENTERED&key=${CONFIG.primarySheet.apiKey}`;
 
-    // Add "All Categories" option
-    const allItem = document.createElement('div');
-    allItem.className = 'menu-item active'; // Set active by default
-    allItem.dataset.category = '';
-    allItem.innerHTML = '<i class="fas fa-layer-group"></i> Semua Kategori';
-    allItem.addEventListener('click', () => {
-      document.querySelectorAll('#category-menu .menu-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      allItem.classList.add('active');
-      // Trigger product render on category select
-      ui.renderProducts();
-       // Close sidebar on mobile after selecting category
-       if (window.innerWidth <= 992) {
-           ui.toggleSidebar();
-       }
-    });
-    elements.categoryMenu.appendChild(allItem);
-
-    // Get all unique categories and sort them alphabetically
-    const categories = [...new Set(products.map(p => p.kategori))].sort();
-
-    categories.forEach(category => {
-      if (!category || category.trim() === '') return; // Skip empty categories
-      const item = document.createElement('div');
-      item.className = 'menu-item';
-      item.dataset.category = category;
-      item.innerHTML = `<i class="fas fa-folder"></i> ${category}`;
-
-      item.addEventListener('click', () => {
-        document.querySelectorAll('#category-menu .menu-item').forEach(item => {
-          item.classList.remove('active');
-        });
-        item.classList.add('active');
-         // Trigger product render on category select
-        ui.renderProducts();
-         // Close sidebar on mobile after selecting category
-         if (window.innerWidth <= 992) {
-             ui.toggleSidebar();
-         }
-      });
-
-      elements.categoryMenu.appendChild(item);
-    });
-  },
-
-  createBrandMenu: () => {
-    elements.brandMenu.innerHTML = '';
-
-    // Add "All Brands" option
-    const allItem = document.createElement('div');
-    allItem.className = 'menu-item active'; // Set active by default
-    allItem.dataset.brand = '';
-    allItem.innerHTML = '<i class="fas fa-tags"></i> Semua Brand';
-    allItem.addEventListener('click', () => {
-      document.querySelectorAll('#brand-menu .menu-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      allItem.classList.add('active');
-      // Trigger product render on brand select
-      ui.renderProducts();
-       // Close sidebar on mobile after selecting brand
-       if (window.innerWidth <= 992) {
-           ui.toggleSidebar();
-       }
-    });
-    elements.brandMenu.appendChild(allItem);
-
-    // Get all unique brands and sort them alphabetically
-    const brands = [...new Set(products.map(p => p.brand))].sort();
-
-    brands.forEach(brand => {
-      if (!brand || brand.trim() === '') return; // Skip empty brands
-      const item = document.createElement('div');
-      item.className = 'menu-item';
-      item.dataset.brand = brand;
-      item.innerHTML = `<i class="fas fa-tag"></i> ${brand}`;
-
-      item.addEventListener('click', () => {
-        document.querySelectorAll('#brand-menu .menu-item').forEach(item => {
-          item.classList.remove('active');
-        });
-        item.classList.add('active');
-        // Trigger product render on brand select
-        ui.renderProducts();
-         // Close sidebar on mobile after selecting brand
-         if (window.innerWidth <= 992) {
-             ui.toggleSidebar();
-         }
-      });
-
-      elements.brandMenu.appendChild(item);
-    });
-  },
-
-  renderProducts: () => {
-    elements.productGrid.innerHTML = '';
-
-    // Ambil kategori dan brand yang aktif dari menu sidebar
-    const activeCategoryMenuItem = document.querySelector('#category-menu .menu-item.active');
-    const selectedCategory = activeCategoryMenuItem ? activeCategoryMenuItem.dataset.category : ''; // Default ke '' jika tidak ada yang aktif
-
-    const activeBrandMenuItem = document.querySelector('#brand-menu .menu-item.active');
-    const selectedBrand = activeBrandMenuItem ? activeBrandMenuItem.dataset.brand : ''; // Default ke '' jika tidak ada yang aktif
-
-    const searchTerm = elements.searchInput.value.toLowerCase();
-
-    let filteredProducts = products.filter(p => {
-      // Pastikan p dan propertinya ada dan valid
-      if (!p || !p.produk || !utils.validatePrice(p.harga)) return false;
-
-      const matchesCategory = !selectedCategory || p.kategori === selectedCategory;
-      const matchesBrand = !selectedBrand || p.brand === selectedBrand;
-
-      // Tambahkan filter pencarian
-      const productName = utils.formatProductName(p.produk).toLowerCase();
-      const productCode = (p.kode || '').toLowerCase(); // Pastikan kode ada sebelum toLowerCase
-      const productBrand = (p.brand || '').toLowerCase();
-      const productCategory = (p.kategori || '').toLowerCase();
-
-      const matchesSearch = !searchTerm ||
-        productName.includes(searchTerm) ||
-        productCode.includes(searchTerm) ||
-        productBrand.includes(searchTerm) ||
-        productCategory.includes(searchTerm); // Cari juga di brand dan kategori
-
-      return matchesCategory && matchesBrand && matchesSearch;
-    });
-
-    if (filteredProducts.length === 0) {
-      elements.productGrid.innerHTML = `
-        <div style="grid-column:1/-1; text-align:center; padding:40px 20px;">
-          <i class="fas fa-box-open" style="font-size:40px;color:#ccc;margin-bottom:15px;"></i>
-          <p style="color:#888;margin-bottom:15px;">Tidak ada produk yang ditemukan.</p>
-          <button onclick="ui.resetFilters()"
-            style="background:#008ca7;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">
-            Reset Filter
-          </button>
-        </div>
-      `;
-      return;
-    }
-
-    filteredProducts.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      const productName = utils.formatProductName(product.produk);
-      const hasWholesale = utils.validatePrice(product.harga_grosir); // Cek apakah harga grosir valid
-      const isPriceReady = utils.validatePrice(product.harga); // Cek apakah harga retail valid
-
-      card.innerHTML = `
-        ${hasWholesale ? `<div class="product-badge">Grosir Tersedia</div>` : ''}
-        <div class="product-image-container">
-          <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
-               alt="${productName}" class="product-image" loading="lazy">
-        </div>
-        <div class="product-details">
-          <div class="product-name">${productName}</div>
-          <div class="product-price">
-            Rp ${isPriceReady ? utils.formatCurrency(product.harga) : 'Memuat...'}
-          </div>
-          ${hasWholesale ? `
-            <div class="product-original-price">
-              Rp ${utils.formatCurrency(product.harga_grosir)}
-              <span class="product-discount">Grosir</span>
-            </div>
-          ` : ''}
-          <button class="add-to-cart" ${!isPriceReady ? 'disabled' : ''}>
-            <i class="fas fa-cart-plus"></i> Keranjang
-          </button>
-        </div>
-      `;
-
-      const addToCartBtn = card.querySelector('.add-to-cart');
-      addToCartBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!utils.validatePrice(product.harga)) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Harga Belum Siap',
-            text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar atau segarkan halaman.',
-            timer: 2000
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              values: [transactionData]
+            })
           });
+
+          if (!response.ok) {
+            const error = await response.json();
+            console.error('Gagal menyimpan transaksi:', error);
+            return false;
+          }
+
+          console.log('Transaksi berhasil dicatat');
+          return true;
+
+        } catch (error) {
+          console.error('Error saat mencatat transaksi:', error);
+          return false;
+        }
+      },
+
+      getCachedProducts: () => {
+        // Perbaiki logika cache validity
+        const lastCacheTimeString = localStorage.getItem('lastCacheTime');
+        if (!lastCacheTimeString) return null;
+
+        const lastCacheTime = parseInt(lastCacheTimeString, 10);
+        const now = new Date().getTime();
+
+        if (now - lastCacheTime > CONFIG.cacheExpiry) {
+             console.log('Cache expired.');
+             return null; // Cache expired
+        }
+
+        const cachedData = localStorage.getItem('cachedProducts');
+        if (cachedData) {
+          try {
+            const parsedData = JSON.parse(cachedData);
+            console.log('Using cached products.');
+             // Pastikan data dari cache juga divalidasi harganya
+             return parsedData.map(item => {
+                 if (!utils.validatePrice(item.harga)) item.harga = 0;
+                 if (item.harga_grosir !== null && !utils.validatePrice(item.harga_grosir)) item.harga_grosir = null;
+                 return item;
+             }).filter(item => item.produk !== 'Produk Tanpa Nama' && item.harga > 0); // Filter item invalid dari cache
+          } catch (e) {
+            console.error('Error parsing cached products', e);
+            localStorage.removeItem('cachedProducts'); // Hapus cache yang rusak
+            localStorage.removeItem('lastCacheTime');
+            return null;
+          }
+        }
+        return null; // No cache found
+      },
+
+      loadProducts: async () => {
+        //elements.loadingIndicator.style.display = 'block'; // Loading indicator sudah di fetchPrimaryData
+
+        const cachedProducts = dataService.getCachedProducts();
+        if (cachedProducts) {
+            products = cachedProducts;
+            // Render UI from cache immediately
+            ui.createCategoryMenu();
+            ui.createBrandMenu();
+            // ui.createCategoryChips(); // Removed
+            ui.renderProducts();
+            // Continue fetching in background to update cache
+            console.log('Fetching fresh data in background...');
+            try {
+                const freshData = await dataService.fetchPrimaryData();
+                if (JSON.stringify(freshData) !== JSON.stringify(cachedProducts)) {
+                     products = freshData;
+                     console.log('Data updated from sheet. Re-rendering UI.');
+                     // Re-render UI if data changed significantly (optional, can be done on next visit too)
+                     ui.createCategoryMenu();
+                     ui.createBrandMenu();
+                     ui.renderProducts(); // Re-render with fresh data
+                } else {
+                     console.log('Fresh data is the same as cached data.');
+                }
+            } catch (error) {
+                console.warn('Background fetch failed:', error);
+            } finally {
+                 // Schedule next auto-refresh regardless of background fetch success
+                 dataService.startAutoRefresh();
+            }
+
+        } else {
+            // No valid cache, fetch and render
+            console.log('No valid cache. Fetching data from sheet.');
+            try {
+              const rawData = await dataService.fetchPrimaryData();
+              products = rawData || fallbackProducts;
+
+              // Save to cache with timestamp - this is already inside fetchPrimaryData on success
+              // localStorage.setItem('cachedProducts', JSON.stringify(products));
+              // localStorage.setItem('lastCacheTime', new Date().getTime());
+
+              ui.createCategoryMenu();
+              ui.createBrandMenu();
+              // ui.createCategoryChips(); // Removed
+              ui.renderProducts();
+
+            } catch (error) {
+              console.error('Initial load failed:', error);
+              products = fallbackProducts; // Fallback already handled inside fetchPrimaryData if it throws
+              ui.createCategoryMenu();
+              ui.createBrandMenu();
+              // ui.createCategoryChips(); // Removed
+              ui.renderProducts();
+            } finally {
+              // elements.loadingIndicator.style.display = 'none'; // Loading indicator already inside fetchPrimaryData
+              elements.checkoutBtn.disabled = false; // Enable checkout after products are loaded
+              // Schedule next auto-refresh
+              dataService.startAutoRefresh();
+            }
+        }
+      },
+
+      startAutoRefresh: () => {
+        if (refreshTimer) clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(() => {
+          ui.showAutoRefreshNotification();
+          // Just call loadProducts, it handles caching and background fetching
+          dataService.loadProducts();
+        }, CONFIG.refreshInterval);
+      }
+    };
+
+    /**
+    * UI FUNCTIONS
+    */
+    const ui = {
+      createCategoryMenu: () => {
+        elements.categoryMenu.innerHTML = '';
+
+        // Add "All Categories" option
+        const allItem = document.createElement('div');
+        allItem.className = 'menu-item active'; // Set active by default
+        allItem.dataset.category = '';
+        allItem.innerHTML = '<i class="fas fa-layer-group"></i> Semua Kategori';
+        allItem.addEventListener('click', () => {
+          document.querySelectorAll('#category-menu .menu-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          allItem.classList.add('active');
+          // Trigger product render on category select
+          ui.renderProducts();
+           // Close sidebar on mobile after selecting category
+           if (window.innerWidth <= 992) {
+               ui.toggleSidebar();
+           }
+        });
+        elements.categoryMenu.appendChild(allItem);
+
+        // Get all unique categories and sort them alphabetically
+        const categories = [...new Set(products.map(p => p.kategori))].sort();
+
+        categories.forEach(category => {
+          if (!category || category.trim() === '') return; // Skip empty categories
+          const item = document.createElement('div');
+          item.className = 'menu-item';
+          item.dataset.category = category;
+          item.innerHTML = `<i class="fas fa-folder"></i> ${category}`;
+
+          item.addEventListener('click', () => {
+            document.querySelectorAll('#category-menu .menu-item').forEach(item => {
+              item.classList.remove('active');
+            });
+            item.classList.add('active');
+             // Trigger product render on category select
+            ui.renderProducts();
+             // Close sidebar on mobile after selecting category
+             if (window.innerWidth <= 992) {
+                 ui.toggleSidebar();
+             }
+          });
+
+          elements.categoryMenu.appendChild(item);
+        });
+      },
+
+      createBrandMenu: () => {
+        elements.brandMenu.innerHTML = '';
+
+        // Add "All Brands" option
+        const allItem = document.createElement('div');
+        allItem.className = 'menu-item active'; // Set active by default
+        allItem.dataset.brand = '';
+        allItem.innerHTML = '<i class="fas fa-tags"></i> Semua Brand';
+        allItem.addEventListener('click', () => {
+          document.querySelectorAll('#brand-menu .menu-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          allItem.classList.add('active');
+          // Trigger product render on brand select
+          ui.renderProducts();
+           // Close sidebar on mobile after selecting brand
+           if (window.innerWidth <= 992) {
+               ui.toggleSidebar();
+           }
+        });
+        elements.brandMenu.appendChild(allItem);
+
+        // Get all unique brands and sort them alphabetically
+        const brands = [...new Set(products.map(p => p.brand))].sort();
+
+        brands.forEach(brand => {
+          if (!brand || brand.trim() === '') return; // Skip empty brands
+          const item = document.createElement('div');
+          item.className = 'menu-item';
+          item.dataset.brand = brand;
+          item.innerHTML = `<i class="fas fa-tag"></i> ${brand}`;
+
+          item.addEventListener('click', () => {
+            document.querySelectorAll('#brand-menu .menu-item').forEach(item => {
+              item.classList.remove('active');
+            });
+            item.classList.add('active');
+            // Trigger product render on brand select
+            ui.renderProducts();
+             // Close sidebar on mobile after selecting brand
+             if (window.innerWidth <= 992) {
+                 ui.toggleSidebar();
+             }
+          });
+
+          elements.brandMenu.appendChild(item);
+        });
+      },
+
+      // createCategoryChips: () => { // Fungsi ini tidak diperlukan lagi karena chip filter dihapus
+      //   // ... (kode lama untuk membuat chip filter)
+      // },
+
+      renderProducts: () => {
+        elements.productGrid.innerHTML = '';
+
+        // Ambil kategori dan brand yang aktif dari menu sidebar
+        const activeCategoryMenuItem = document.querySelector('#category-menu .menu-item.active');
+        const selectedCategory = activeCategoryMenuItem ? activeCategoryMenuItem.dataset.category : ''; // Default ke '' jika tidak ada yang aktif
+
+        const activeBrandMenuItem = document.querySelector('#brand-menu .menu-item.active');
+        const selectedBrand = activeBrandMenuItem ? activeBrandMenuItem.dataset.brand : ''; // Default ke '' jika tidak ada yang aktif
+
+        const searchTerm = elements.searchInput.value.toLowerCase();
+
+        let filteredProducts = products.filter(p => {
+          // Pastikan p dan propertinya ada dan valid
+          if (!p || !p.produk || !utils.validatePrice(p.harga)) return false;
+
+          const matchesCategory = !selectedCategory || p.kategori === selectedCategory;
+          const matchesBrand = !selectedBrand || p.brand === selectedBrand;
+
+          // Tambahkan filter pencarian
+          const productName = utils.formatProductName(p.produk).toLowerCase();
+          const productCode = (p.kode || '').toLowerCase(); // Pastikan kode ada sebelum toLowerCase
+          const productBrand = (p.brand || '').toLowerCase();
+          const productCategory = (p.kategori || '').toLowerCase();
+
+          const matchesSearch = !searchTerm ||
+            productName.includes(searchTerm) ||
+            productCode.includes(searchTerm) ||
+            productBrand.includes(searchTerm) ||
+            productCategory.includes(searchTerm); // Cari juga di brand dan kategori
+
+          return matchesCategory && matchesBrand && matchesSearch;
+        });
+
+        if (filteredProducts.length === 0) {
+          elements.productGrid.innerHTML = `
+            <div style="grid-column:1/-1; text-align:center; padding:40px 20px;">
+              <i class="fas fa-box-open" style="font-size:40px;color:#ccc;margin-bottom:15px;"></i>
+              <p style="color:#888;margin-bottom:15px;">Tidak ada produk yang ditemukan.</p>
+              <button onclick="ui.resetFilters()"
+                style="background:#008ca7;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">
+                Reset Filter
+              </button>
+            </div>
+          `;
           return;
         }
-        selectedProduct = product;
-        ui.showModal();
-      });
 
-      card.addEventListener('click', () => {
-        ui.showProductDetail(product);
-      });
+        filteredProducts.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          const productName = utils.formatProductName(product.produk);
+          const hasWholesale = utils.validatePrice(product.harga_grosir); // Cek apakah harga grosir valid
+          const isPriceReady = utils.validatePrice(product.harga); // Cek apakah harga retail valid
 
-      elements.productGrid.appendChild(card);
-    });
-  },
-
-  resetFilters: () => {
-    // Reset category filter di sidebar
-    const allCategoryMenuItem = document.querySelector('#category-menu .menu-item[data-category=""]');
-    if (allCategoryMenuItem) {
-        document.querySelectorAll('#category-menu .menu-item').forEach(item => item.classList.remove('active'));
-        allCategoryMenuItem.classList.add('active');
-    }
-
-    // Reset brand filter di sidebar
-     const allBrandMenuItem = document.querySelector('#brand-menu .menu-item[data-brand=""]');
-     if (allBrandMenuItem) {
-         document.querySelectorAll('#brand-menu .menu-item').forEach(item => item.classList.remove('active'));
-         allBrandMenuItem.classList.add('active');
-     }
-
-    // Reset search input
-    elements.searchInput.value = '';
-
-    // Render products dengan filter yang sudah di-reset
-    ui.renderProducts();
-  },
-
-  showProductDetail: (product) => {
-    const productName = utils.formatProductName(product.produk);
-     // Ganti 🟡 dengan bullet point dan tambahkan <br> untuk setiap baris baru
-    const productDesc = product.deskripsi
-        .split('\n') // Pisahkan per baris
-        .map(line => line.trim()) // Hapus spasi di awal/akhir baris
-        .filter(line => line !== '') // Hapus baris kosong
-        .map(line => line.replace('🟡', '• ').replace(':', ': <br>')) // Ganti 🟡 dan format :
-        .join('<br>'); // Gabungkan kembali dengan <br>
-
-    const hasWholesale = utils.validatePrice(product.harga_grosir);
-    const isPriceReady = utils.validatePrice(product.harga);
-
-    const detailModalHTML = `
-      <div class="modal-overlay active" id="detail-modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>${productName}</h3>
-            <button class="modal-close" id="close-detail">&times;</button>
-          </div>
-          <div class="modal-body">
-            <div style="text-align:center;margin-bottom:15px;">
+          card.innerHTML = `
+            ${hasWholesale ? `<div class="product-badge">Grosir Tersedia</div>` : ''}
+            <div class="product-image-container">
               <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
-                   alt="${productName}"
-                   style="max-width:100%;max-height:200px;border-radius:6px;object-fit: contain;">
+                   alt="${productName}" class="product-image" loading="lazy">
             </div>
-
-            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:10px;margin-bottom:15px;font-size:14px;">
-              <div><strong>Kode:</strong> ${product.kode}</div>
-              <div><strong>Brand:</strong> ${product.brand}</div>
-              <div><strong>Kategori:</strong> ${product.kategori}</div>
-              <div><strong>Harga:</strong> Rp ${isPriceReady ? utils.formatCurrency(product.harga) : 'Memuat...'}</div>
+            <div class="product-details">
+              <div class="product-name">${productName}</div>
+              <div class="product-price">
+                Rp ${isPriceReady ? utils.formatCurrency(product.harga) : 'Memuat...'}
+              </div>
               ${hasWholesale ? `
-                <div><strong>Harga Grosir:</strong> Rp ${utils.formatCurrency(product.harga_grosir)}</div>
+                <div class="product-original-price">
+                  Rp ${utils.formatCurrency(product.harga_grosir)}
+                  <span class="product-discount">Grosir</span>
+                </div>
               ` : ''}
+              <button class="add-to-cart" ${!isPriceReady ? 'disabled' : ''}>
+                <i class="fas fa-cart-plus"></i> Keranjang
+              </button>
             </div>
+          `;
 
-            <div style="margin-bottom:15px;">
-              <strong>Deskripsi:</strong>
-              <div style="max-height:200px;overflow-y:auto;padding:10px;background:#f8f8f8;border-radius:6px;margin-top:5px;font-size:14px;">
-                ${productDesc || 'Tidak ada deskripsi.'}
+          const addToCartBtn = card.querySelector('.add-to-cart');
+          addToCartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!utils.validatePrice(product.harga)) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Harga Belum Siap',
+                text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar atau segarkan halaman.',
+                timer: 2000
+              });
+              return;
+            }
+            selectedProduct = product;
+            ui.showModal();
+          });
+
+          card.addEventListener('click', () => {
+            ui.showProductDetail(product);
+          });
+
+          elements.productGrid.appendChild(card);
+        });
+      },
+
+      resetFilters: () => {
+        // Reset category filter di sidebar
+        const allCategoryMenuItem = document.querySelector('#category-menu .menu-item[data-category=""]');
+        if (allCategoryMenuItem) {
+            document.querySelectorAll('#category-menu .menu-item').forEach(item => item.classList.remove('active'));
+            allCategoryMenuItem.classList.add('active');
+        }
+
+        // Reset brand filter di sidebar
+         const allBrandMenuItem = document.querySelector('#brand-menu .menu-item[data-brand=""]');
+         if (allBrandMenuItem) {
+             document.querySelectorAll('#brand-menu .menu-item').forEach(item => item.classList.remove('active'));
+             allBrandMenuItem.classList.add('active');
+         }
+
+        // Reset search input
+        elements.searchInput.value = '';
+
+        // Render products dengan filter yang sudah di-reset
+        ui.renderProducts();
+      },
+
+      showProductDetail: (product) => {
+        const productName = utils.formatProductName(product.produk);
+         // Ganti 🟡 dengan bullet point dan tambahkan <br> untuk setiap baris baru
+        const productDesc = product.deskripsi
+            .split('\n') // Pisahkan per baris
+            .map(line => line.trim()) // Hapus spasi di awal/akhir baris
+            .filter(line => line !== '') // Hapus baris kosong
+            .map(line => line.replace('🟡', '• ').replace(':', ': <br>')) // Ganti 🟡 dan format :
+            .join('<br>'); // Gabungkan kembali dengan <br>
+
+        const hasWholesale = utils.validatePrice(product.harga_grosir);
+        const isPriceReady = utils.validatePrice(product.harga);
+
+        const detailModalHTML = `
+          <div class="modal-overlay active" id="detail-modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>${productName}</h3>
+                <button class="modal-close" id="close-detail">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div style="text-align:center;margin-bottom:15px;">
+                  <img src="${product.gambar || 'https://via.placeholder.com/150?text=No+Image'}"
+                       alt="${productName}"
+                       style="max-width:100%;max-height:200px;border-radius:6px;object-fit: contain;">
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:10px;margin-bottom:15px;font-size:14px;">
+                  <div><strong>Kode:</strong> ${product.kode}</div>
+                  <div><strong>Brand:</strong> ${product.brand}</div>
+                  <div><strong>Kategori:</strong> ${product.kategori}</div>
+                  <div><strong>Harga:</strong> Rp ${isPriceReady ? utils.formatCurrency(product.harga) : 'Memuat...'}</div>
+                  ${hasWholesale ? `
+                    <div><strong>Harga Grosir:</strong> Rp ${utils.formatCurrency(product.harga_grosir)}</div>
+                  ` : ''}
+                </div>
+
+                <div style="margin-bottom:15px;">
+                  <strong>Deskripsi:</strong>
+                  <div style="max-height:200px;overflow-y:auto;padding:10px;background:#f8f8f8;border-radius:6px;margin-top:5px;font-size:14px;">
+                    ${productDesc || 'Tidak ada deskripsi.'}
+                  </div>
+                </div>
+
+                <button class="add-to-cart" style="width:100%;padding:10px;" ${!isPriceReady ? 'disabled' : ''}>
+                  <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                </button>
               </div>
             </div>
-
-            <button class="add-to-cart" style="width:100%;padding:10px;" ${!isPriceReady ? 'disabled' : ''}>
-              <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-            </button>
           </div>
-        </div>
-      </div>
-    `;
+        `;
 
-    // Check if detail modal already exists to prevent duplicates
-    if (document.getElementById('detail-modal')) {
-        document.getElementById('detail-modal').remove();
-    }
+        // Check if detail modal already exists to prevent duplicates
+        if (document.getElementById('detail-modal')) {
+            document.getElementById('detail-modal').remove();
+        }
 
-    document.body.insertAdjacentHTML('beforeend', detailModalHTML);
+        document.body.insertAdjacentHTML('beforeend', detailModalHTML);
 
-    // Add event listener to the newly created close button
-    const closeDetailBtn = document.getElementById('close-detail');
-    if (closeDetailBtn) {
-        closeDetailBtn.addEventListener('click', () => {
-          const detailModal = document.getElementById('detail-modal');
-          if(detailModal) detailModal.remove();
+        // Add event listener to the newly created close button
+        const closeDetailBtn = document.getElementById('close-detail');
+        if (closeDetailBtn) {
+            closeDetailBtn.addEventListener('click', () => {
+              const detailModal = document.getElementById('detail-modal');
+              if(detailModal) detailModal.remove();
+            });
+        }
+
+        // Add event listener to the new add to cart button inside modal
+        const addFromDetailBtn = document.querySelector('#detail-modal .add-to-cart');
+        if (addFromDetailBtn) {
+          addFromDetailBtn.addEventListener('click', () => {
+            if (!utils.validatePrice(product.harga)) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Harga Belum Siap',
+                text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar atau segarkan halaman.',
+                timer: 2000
+              });
+              return;
+            }
+            selectedProduct = product;
+            // Remove detail modal before showing quantity modal
+            const detailModal = document.getElementById('detail-modal');
+            if(detailModal) detailModal.remove();
+            ui.showModal();
+          });
+        }
+
+         // Close modal when clicking outside overlay
+         const detailModalOverlay = document.getElementById('detail-modal');
+         if (detailModalOverlay) {
+             detailModalOverlay.addEventListener('click', (e) => {
+                 if (e.target === detailModalOverlay) {
+                     detailModalOverlay.remove();
+                 }
+             });
+         }
+      },
+
+      showModal: () => {
+        // Reset qty input and price info before showing modal
+        elements.qtyInput.value = 1;
+        ui.updatePriceInfo();
+        elements.qtyModal.classList.add('active');
+        // Add event listener only when modal is shown
+        elements.qtyInput.addEventListener('input', ui.updatePriceInfo);
+         elements.qtyInput.focus(); // Fokuskan input quantity
+      },
+
+      hideModal: () => {
+        elements.qtyModal.classList.remove('active');
+        // Remove event listener when modal is hidden
+        elements.qtyInput.removeEventListener('input', ui.updatePriceInfo);
+        selectedProduct = null; // Reset selected product
+      },
+
+      updatePriceInfo: () => {
+        if (!selectedProduct) return; // Pastikan ada produk yang dipilih
+
+        const qty = parseInt(elements.qtyInput.value) || 1;
+        // Pastikan qty tidak kurang dari 1
+         if (qty < 1) {
+             elements.qtyInput.value = 1;
+             return; // Stop here to prevent calculations with invalid qty
+         }
+
+        // Gunakan fungsi helper getPriceForItem
+        const price = utils.getPriceForItem(selectedProduct, qty);
+
+        // Tentukan apakah harga grosir diterapkan berdasarkan total qty saat ini (termasuk item yang mau ditambah)
+        const rule = utils.getWholesaleRule(selectedProduct.kategori);
+        const totalQtyInCartForThisProduct = cart.reduce((sum, cartItem) => {
+            return cartItem.kode === selectedProduct.kode ? sum + cartItem.qty : sum;
+        }, 0);
+         const totalQtyIncludingModal = totalQtyInCartForThisProduct + qty;
+         const isWholesale = utils.validatePrice(selectedProduct.harga_grosir) && totalQtyIncludingModal >= rule.minQty;
+         const priceUsed = isWholesale ? selectedProduct.harga_grosir : (utils.validatePrice(selectedProduct.harga) ? selectedProduct.harga : 0); // Gunakan harga retail jika bukan grosir dan valid
+
+        const total = priceUsed * qty;
+
+        elements.priceInfo.innerHTML = `
+          <div style="margin-bottom:10px;font-size:14px;">
+            <strong>Harga Satuan:</strong> Rp ${utils.formatCurrency(priceUsed)} ${isWholesale ? '(Grosir)' : ''}
+          </div>
+          <div style="font-weight:600;color:#008ca7;font-size:16px;">
+            <strong>Total:</strong> Rp ${utils.formatCurrency(total)}
+          </div>
+          ${utils.validatePrice(selectedProduct.harga_grosir) ? `
+            <div style="margin-top:10px;font-size:13px;color:#666;padding:8px;background:#f5f5f5;border-radius:6px;">
+              ${!isWholesale && totalQtyIncludingModal < rule.minQty ?
+                `Total ${totalQtyIncludingModal} pcs di keranjang (${totalQtyInCartForThisProduct} sudah ada + ${qty} ini). Beli ${rule.minQty - totalQtyIncludingModal} pcs lagi untuk dapat harga grosir!`
+                : (isWholesale ? `Harga grosir diterapkan karena total pembelian >= ${rule.minQty} pcs` : '')
+               }
+            </div>
+          ` : ''}
+           ${!utils.validatePrice(selectedProduct.harga) ? `<div style="color:red;font-size:12px;margin-top:5px;">Harga produk tidak valid.</div>` : ''}
+        `;
+
+         // Disable add to cart if price is invalid
+         elements.addToCartBtn.disabled = !utils.validatePrice(selectedProduct.harga);
+      },
+
+
+      updateCart: () => {
+        elements.cartItems.innerHTML = '';
+
+        if (cart.length === 0) {
+          elements.cartCount.textContent = '0';
+          // elements.cartSidebar.classList.remove('open'); // Don't auto-close, user might re-open it
+          elements.cartSubtotal.textContent = utils.formatCurrency(0);
+          elements.cartTotal.textContent = utils.formatCurrency(0);
+          elements.checkoutBtn.disabled = true; // Disable checkout if cart is empty
+          return;
+        }
+
+        let subtotal = 0; // This might not be needed if we calculate total directly
+        let total = 0;
+
+        // Recalculate prices in cart based on current total quantities BEFORE rendering
+        const categoriesInCart = [...new Set(cart.map(item => item.kategori))];
+         const totalQtyPerCategory = {};
+         cart.forEach(item => {
+             totalQtyPerCategory[item.kategori] = (totalQtyPerCategory[item.kategori] || 0) + item.qty;
+         });
+
+         cart.forEach(item => {
+              const rule = utils.getWholesaleRule(item.kategori);
+              const totalQty = totalQtyPerCategory[item.kategori] || 0;
+              const shouldApplyWholesale = utils.validatePrice(item.harga_grosir) && totalQty >= rule.minQty;
+
+               // Update item's price and wholesale status based on the *current* total qty in the cart
+               item.hargaSaatIni = shouldApplyWholesale ? item.harga_grosir : item.harga;
+               item.isWholesale = shouldApplyWholesale;
+
+               // Calculate total using the current price
+               total += (item.hargaSaatIni * item.qty);
+         });
+
+
+        cart.forEach((item, index) => {
+          const cartItem = document.createElement('div');
+          cartItem.className = 'cart-item';
+          cartItem.innerHTML = `
+            <div class="cart-item-image">
+              <img src="${item.gambar || 'https://via.placeholder.com/100?text=No+Image'}" alt="${utils.formatProductName(item.produk)}">
+            </div>
+            <div class="cart-item-details">
+              <div class="cart-item-name">${utils.formatProductName(item.produk)}</div>
+              <div class="cart-item-price">Rp ${utils.formatCurrency(item.hargaSaatIni)} ${item.isWholesale ? '(Grosir)' : ''}</div>
+              <div class="cart-item-qty">
+                <button class="qty-btn" data-index="${index}" data-change="-1">-</button>
+                <input type="number" class="qty-input" value="${item.qty}" min="1" readonly>
+                <button class="qty-btn" data-index="${index}" data-change="1">+</button>
+              </div>
+            </div>
+            <div class="cart-item-remove" data-index="${index}">
+              <i class="fas fa-trash"></i>
+            </div>
+          `;
+          elements.cartItems.appendChild(cartItem);
         });
-    }
 
-    // Add event listener to the new add to cart button inside modal
-    const addFromDetailBtn = document.querySelector('#detail-modal .add-to-cart');
-    if (addFromDetailBtn) {
-      addFromDetailBtn.addEventListener('click', () => {
-        if (!utils.validatePrice(product.harga)) {
+         // Add event listeners to the newly created buttons
+         elements.cartItems.querySelectorAll('.qty-btn').forEach(button => {
+             button.addEventListener('click', (e) => {
+                 const index = parseInt(e.target.dataset.index, 10);
+                 const change = parseInt(e.target.dataset.change, 10);
+                 app.updateCartItemQty(index, change);
+             });
+         });
+         elements.cartItems.querySelectorAll('.cart-item-remove').forEach(button => {
+             button.addEventListener('click', (e) => {
+                 const index = parseInt(e.target.closest('.cart-item-remove').dataset.index, 10);
+                 app.removeFromCart(index);
+             });
+         });
+
+
+        // elements.cartSubtotal.textContent = utils.formatCurrency(subtotal); // Subtotal might be confusing with wholesale
+        elements.cartSubtotal.textContent = utils.formatCurrency(total); // Tampilkan total di subtotal juga
+        elements.cartTotal.textContent = utils.formatCurrency(total);
+        elements.cartCount.textContent = utils.getCartItemCount();
+        elements.checkoutBtn.disabled = cart.length === 0; // Enable checkout if cart is not empty
+      },
+
+
+      toggleCart: () => {
+        elements.cartSidebar.classList.toggle('open');
+         // Close sidebar overlay if cart is opened on mobile
+         if (elements.cartSidebar.classList.contains('open') && window.innerWidth <= 992) {
+             elements.sidebarOverlay.style.display = 'none'; // Hide sidebar overlay if cart is open
+             elements.sidebar.classList.remove('open'); // Close sidebar if cart is opened
+         }
+      },
+
+      closeCart: () => {
+        elements.cartSidebar.classList.remove('open');
+      },
+
+      toggleSidebar: () => {
+        elements.sidebar.classList.toggle('open');
+        elements.sidebarOverlay.style.display = elements.sidebar.classList.contains('open') ? 'block' : 'none';
+         // Close cart if sidebar is opened on mobile
+         if (elements.sidebar.classList.contains('open') && window.innerWidth <= 992) {
+              elements.cartSidebar.classList.remove('open'); // Close cart if sidebar is open
+         }
+      },
+
+      checkout: () => {
+        if (cart.length === 0) {
           Swal.fire({
             icon: 'error',
-            title: 'Harga Belum Siap',
-            text: 'Produk ini belum dapat dipesan. Harap tunggu sebentar atau segarkan halaman.',
-            timer: 2000
+            title: 'Keranjang Kosong',
+            text: 'Silahkan tambahkan produk terlebih dahulu',
+            timer: 1500,
+            showConfirmButton: false
           });
           return;
         }
-        selectedProduct = product;
-        // Remove detail modal before showing quantity modal
-        const detailModal = document.getElementById('detail-modal');
-        if(detailModal) detailModal.remove();
-        ui.showModal();
-      });
-    }
 
-     // Close modal when clicking outside overlay
-     const detailModalOverlay = document.getElementById('detail-modal');
-     if (detailModalOverlay) {
-         detailModalOverlay.addEventListener('click', (e) => {
-             if (e.target === detailModalOverlay) {
-                 detailModalOverlay.remove();
-             }
-         });
-     }
-  },
-
-  showModal: () => {
-    // Reset qty input and price info before showing modal
-    elements.qtyInput.value = 1;
-    ui.updatePriceInfo();
-    elements.qtyModal.classList.add('active');
-    // Add event listener only when modal is shown
-    elements.qtyInput.addEventListener('input', ui.updatePriceInfo);
-     elements.qtyInput.focus(); // Fokuskan input quantity
-  },
-
-  hideModal: () => {
-    elements.qtyModal.classList.remove('active');
-    // Remove event listener when modal is hidden
-    elements.qtyInput.removeEventListener('input', ui.updatePriceInfo);
-    selectedProduct = null; // Reset selected product
-  },
-
-  updatePriceInfo: () => {
-    if (!selectedProduct) return; // Pastikan ada produk yang dipilih
-
-    const qty = parseInt(elements.qtyInput.value) || 1;
-    // Pastikan qty tidak kurang dari 1
-     if (qty < 1) {
-         elements.qtyInput.value = 1;
-         return; // Stop here to prevent calculations with invalid qty
-     }
-
-    // Gunakan fungsi helper getPriceForItem
-    const price = utils.getPriceForItem(selectedProduct, qty);
-
-    // Tentukan apakah harga grosir diterapkan berdasarkan total qty saat ini (termasuk item yang mau ditambah)
-    const rule = utils.getWholesaleRule(selectedProduct.kategori);
-    const totalQtyInCartForThisProduct = cart.reduce((sum, cartItem) => {
-        return cartItem.kode === selectedProduct.kode ? sum + cartItem.qty : sum;
-    }, 0);
-     const totalQtyIncludingModal = totalQtyInCartForThisProduct + qty;
-     const isWholesale = utils.validatePrice(selectedProduct.harga_grosir) && totalQtyIncludingModal >= rule.minQty;
-     const priceUsed = isWholesale ? selectedProduct.harga_grosir : (utils.validatePrice(selectedProduct.harga) ? selectedProduct.harga : 0); // Gunakan harga retail jika bukan grosir dan valid
-
-    const total = priceUsed * qty;
-
-    elements.priceInfo.innerHTML = `
-      <div style="margin-bottom:10px;font-size:14px;">
-        <strong>Harga Satuan:</strong> Rp ${utils.formatCurrency(priceUsed)} ${isWholesale ? '(Grosir)' : ''}
-      </div>
-      <div style="font-weight:600;color:#008ca7;font-size:16px;">
-        <strong>Total:</strong> Rp ${utils.formatCurrency(total)}
-      </div>
-      ${utils.validatePrice(selectedProduct.harga_grosir) ? `
-        <div style="margin-top:10px;font-size:13px;color:#666;padding:8px;background:#f5f5f5;border-radius:6px;">
-          ${!isWholesale && totalQtyIncludingModal < rule.minQty ?
-            `Total ${totalQtyIncludingModal} pcs di keranjang (${totalQtyInCartForThisProduct} sudah ada + ${qty} ini). Beli ${rule.minQty - totalQtyIncludingModal} pcs lagi untuk dapat harga grosir!`
-            : (isWholesale ? `Harga grosir diterapkan karena total pembelian >= ${rule.minQty} pcs` : '')
-           }
-        </div>
-      ` : ''}
-       ${!utils.validatePrice(selectedProduct.harga) ? `<div style="color:red;font-size:12px;margin-top:5px;">Harga produk tidak valid.</div>` : ''}
-    `;
-
-     // Disable add to cart if price is invalid
-     elements.addToCartBtn.disabled = !utils.validatePrice(selectedProduct.harga);
-  },
-
-
-  updateCart: () => {
-    elements.cartItems.innerHTML = '';
-
-    if (cart.length === 0) {
-      elements.cartCount.textContent = '0';
-      elements.cartSubtotal.textContent = utils.formatCurrency(0);
-      elements.cartTotal.textContent = utils.formatCurrency(0);
-      elements.checkoutBtn.disabled = true; // Disable checkout if cart is empty
-      return;
-    }
-
-    let subtotal = 0; // This might not be needed if we calculate total directly
-    let total = 0;
-
-    // Recalculate prices in cart based on current total quantities BEFORE rendering
-    const categoriesInCart = [...new Set(cart.map(item => item.kategori))];
-     const totalQtyPerCategory = {};
-     cart.forEach(item => {
-         totalQtyPerCategory[item.kategori] = (totalQtyPerCategory[item.kategori] || 0) + item.qty;
-     });
-
-     cart.forEach(item => {
-          const rule = utils.getWholesaleRule(item.kategori);
-          const totalQty = totalQtyPerCategory[item.kategori] || 0;
-          const shouldApplyWholesale = utils.validatePrice(item.harga_grosir) && totalQty >= rule.minQty;
-
-           // Update item's price and wholesale status based on the *current* total qty in the cart
-           item.hargaSaatIni = shouldApplyWholesale ? item.harga_grosir : item.harga;
-           item.isWholesale = shouldApplyWholesale;
-
-           // Calculate total using the current price
-           total += (item.hargaSaatIni * item.qty);
-     });
-
-
-    cart.forEach((item, index) => {
-      const cartItem = document.createElement('div');
-      cartItem.className = 'cart-item';
-      cartItem.innerHTML = `
-        <div class="cart-item-image">
-          <img src="${item.gambar || 'https://via.placeholder.com/100?text=No+Image'}" alt="${utils.formatProductName(item.produk)}">
-        </div>
-        <div class="cart-item-details">
-          <div class="cart-item-name">${utils.formatProductName(item.produk)}</div>
-          <div class="cart-item-price">Rp ${utils.formatCurrency(item.hargaSaatIni)} ${item.isWholesale ? '(Grosir)' : ''}</div>
-          <div class="cart-item-qty">
-            <button class="qty-btn" data-index="${index}" data-change="-1">-</button>
-            <input type="number" class="qty-input" value="${item.qty}" min="1" readonly>
-            <button class="qty-btn" data-index="${index}" data-change="1">+</button>
-          </div>
-        </div>
-        <div class="cart-item-remove" data-index="${index}">
-          <i class="fas fa-trash"></i>
-        </div>
-      `;
-      elements.cartItems.appendChild(cartItem);
-    });
-
-     // Add event listeners to the newly created buttons
-     elements.cartItems.querySelectorAll('.qty-btn').forEach(button => {
-         button.addEventListener('click', (e) => {
-             const index = parseInt(e.target.dataset.index, 10);
-             const change = parseInt(e.target.dataset.change, 10);
-             app.updateCartItemQty(index, change);
-         });
-     });
-     elements.cartItems.querySelectorAll('.cart-item-remove').forEach(button => {
-         button.addEventListener('click', (e) => {
-             const index = parseInt(e.target.closest('.cart-item-remove').dataset.index, 10);
-             app.removeFromCart(index);
-         });
-     });
-
-
-    elements.cartSubtotal.textContent = utils.formatCurrency(total); // Tampilkan total di subtotal juga
-    elements.cartTotal.textContent = utils.formatCurrency(total);
-    elements.cartCount.textContent = utils.getCartItemCount();
-    elements.checkoutBtn.disabled = cart.length === 0; // Enable checkout if cart is not empty
-  },
-
-
-  toggleCart: () => {
-    elements.cartSidebar.classList.toggle('open');
-     // Close sidebar overlay if cart is opened on mobile
-     if (elements.cartSidebar.classList.contains('open') && window.innerWidth <= 992) {
-         elements.sidebarOverlay.style.display = 'none'; // Hide sidebar overlay if cart is open
-         elements.sidebar.classList.remove('open'); // Close sidebar if cart is opened
-     }
-  },
-
-  closeCart: () => {
-    elements.cartSidebar.classList.remove('open');
-  },
-
-  toggleSidebar: () => {
-    elements.sidebar.classList.toggle('open');
-    elements.sidebarOverlay.style.display = elements.sidebar.classList.contains('open') ? 'block' : 'none';
-     // Close cart if sidebar is opened on mobile
-     if (elements.sidebar.classList.contains('open') && window.innerWidth <= 992) {
-          elements.cartSidebar.classList.remove('open'); // Close cart if sidebar is open
-     }
-  },
-
-  checkout: () => {
-    if (cart.length === 0) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Keranjang Kosong',
-        text: 'Silahkan tambahkan produk terlebih dahulu',
-        timer: 1500,
-        showConfirmButton: false
-      });
-      return;
-    }
-
-    // Re-validate prices in cart before checkout
-    const hasInvalidPrice = cart.some(item => !utils.validatePrice(item.hargaSaatIni)); // Check the currently calculated price
-    if (hasInvalidPrice) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Harga Tidak Valid',
-        text: 'Ada produk dengan harga tidak valid di keranjang. Harap segarkan halaman dan coba lagi.',
-        timer: 3000
-      });
-      return;
-    }
-
-    ui.showCustomerModal();
-  },
-
-  showCustomerModal: () => {
-    // Load saved data if exists
-    elements.customerName.value = localStorage.getItem('customerName') || '';
-    elements.customerPhone.value = localStorage.getItem('customerPhone') || '';
-    elements.customerAddress.value = localStorage.getItem('customerAddress') || '';
-    elements.customerModal.classList.add('active');
-     elements.customerName.focus(); // Fokuskan input nama
-  },
-
-  generateOrderMessage: () => {
-    let message = `*PEMESANAN - MDR STORE*\n`;
-    message += `=========================\n\n`;
-
-    // Ambil data pelanggan dari input form saat generate pesan
-     const name = elements.customerName.value.trim();
-     const address = elements.customerAddress.value.trim();
-     const phone = elements.customerPhone.value.trim();
-     customerData = { name, address, phone }; // Update customerData global variable
-
-    message += `*DATA PELANGGAN*\n`;
-    message += `- Nama: ${customerData.name || '-'}\n`;
-    message += `- Alamat: ${customerData.address || '-'}\n`;
-    message += `- WhatsApp: ${customerData.phone || '-'}\n\n`;
-
-    message += `*DETAIL PESANAN*\n`;
-    // Kelompokkan item berdasarkan kategori untuk tampilan yang lebih rapi
-    const groupedItems = cart.reduce((acc, item) => {
-        const category = item.kategori || 'Lainnya';
-        if (!acc[category]) {
-            acc[category] = [];
+        // Re-validate prices in cart before checkout
+        const hasInvalidPrice = cart.some(item => !utils.validatePrice(item.hargaSaatIni)); // Check the currently calculated price
+        if (hasInvalidPrice) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Harga Tidak Valid',
+            text: 'Ada produk dengan harga tidak valid di keranjang. Harap segarkan halaman dan coba lagi.',
+            timer: 3000
+          });
+          return;
         }
-        acc[category].push(item);
-        return acc;
-    }, {});
+
+        ui.showCustomerModal();
+      },
+
+      showCustomerModal: () => {
+        // Load saved data if exists
+        elements.customerName.value = localStorage.getItem('customerName') || '';
+        elements.customerPhone.value = localStorage.getItem('customerPhone') || '';
+        elements.customerAddress.value = localStorage.getItem('customerAddress') || '';
+        elements.customerModal.classList.add('active');
+         elements.customerName.focus(); // Fokuskan input nama
+      },
+
+      generateOrderMessage: () => {
+        let message = `*PEMESANAN - MDR STORE*\n`;
+        message += `=========================\n\n`;
+
+        // Ambil data pelanggan dari input form saat generate pesan
+         const name = elements.customerName.value.trim();
+         const address = elements.customerAddress.value.trim();
+         const phone = elements.customerPhone.value.trim();
+         customerData = { name, address, phone }; // Update customerData global variable
+
+        message += `*DATA PELANGGAN*\n`;
+        message += `- Nama: ${customerData.name || '-'}\n`;
+        message += `- Alamat: ${customerData.address || '-'}\n`;
+        message += `- WhatsApp: ${customerData.phone || '-'}\n\n`;
+
+        message += `*DETAIL PESANAN*\n`;
+        // Kelompokkan item berdasarkan kategori untuk tampilan yang lebih rapi
+        const groupedItems = cart.reduce((acc, item) => {
+            const category = item.kategori || 'Lainnya';
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+            acc[category].push(item);
+            return acc;
+        }, {});
 
 
-    let totalPayment = 0;
+        let totalPayment = 0;
 
-    // Urutkan kategori secara alfabetis
-    const sortedCategories = Object.keys(groupedItems).sort();
+        // Urutkan kategori secara alfabetis
+        const sortedCategories = Object.keys(groupedItems).sort();
 
-    sortedCategories.forEach(category => {
-      const categoryItems = groupedItems[category];
-      const rule = utils.getWholesaleRule(category);
-      // Hitung total qty per kategori lagi di sini untuk pesan checkout
-      const totalQty = categoryItems.reduce((sum, item) => sum + item.qty, 0);
+        sortedCategories.forEach(category => {
+          const categoryItems = groupedItems[category];
+          const rule = utils.getWholesaleRule(category);
+          // Hitung total qty per kategori lagi di sini untuk pesan checkout
+          const totalQty = categoryItems.reduce((sum, item) => sum + item.qty, 0);
 
 
-      message += `*${category.toUpperCase()}*\n(Total: ${totalQty} pcs${totalQty >= rule.minQty ? ` - Harga ${rule.label}` : ''})\n`;
-      categoryItems.forEach((item, index) => {
-        // Gunakan harga saat ini yang sudah dihitung di updateCart
-        const itemTotal = item.hargaSaatIni * item.qty;
-        totalPayment += itemTotal;
+          message += `*${category.toUpperCase()}*\n(Total: ${totalQty} pcs${totalQty >= rule.minQty ? ` - Harga ${rule.label}` : ''})\n`;
+          categoryItems.forEach((item, index) => {
+            // Gunakan harga saat ini yang sudah dihitung di updateCart
+            const itemTotal = item.hargaSaatIni * item.qty;
+            totalPayment += itemTotal;
 
-        message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
-        message += `   • Jumlah: ${item.qty} pcs\n`;
-        message += `   • Harga Satuan: Rp ${utils.formatCurrency(item.hargaSaatIni)}${item.isWholesale ? ' (Grosir)' : ''}\n`;
-        message += `\n`;
-      });
-       message += `\n`; // Tambahkan baris kosong antar kategori
-    });
+            message += `${index + 1}. ${utils.formatProductName(item.produk)}\n`;
+            message += `   • Jumlah: ${item.qty} pcs\n`;
+            message += `   • Harga Satuan: Rp ${utils.formatCurrency(item.hargaSaatIni)}${item.isWholesale ? ' (Grosir)' : ''}\n`;
+            // Jangan tampilkan subtotal per item jika harga grosir berlaku di tingkat kategori
+             // message += `   • Subtotal Item: Rp ${utils.formatCurrency(itemTotal)}\n\n`; // Mungkin membingungkan jika harga grosir per item beda
+             message += `\n`;
+          });
+           // message += `Subtotal Kategori: Rp ${utils.formatCurrency(categoryItems.reduce((sum, item) => sum + (item.hargaSaatIni * item.qty), 0))}\n\n`; // Bisa ditambahkan subtotal per kategori
+           message += `\n`; // Tambahkan baris kosong antar kategori
+        });
 
-    message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
-    message += `Mohon konfirmasi total di atas dan berikan nomor rekening tujuan pembayaran.`;
+        message += `*TOTAL PEMBAYARAN: Rp ${utils.formatCurrency(totalPayment)}*\n\n`;
+        message += `Mohon konfirmasi total di atas dan berikan nomor rekening tujuan pembayaran.`;
 
-    return {
-      message,
-      total: totalPayment
-    };
-  },
+        return {
+          message,
+          total: totalPayment
+        };
+      },
 
-  showAutoRefreshNotification: () => {
-    // Prevent multiple notifications
-    if (document.querySelector('.refresh-notification')) return;
+      showAutoRefreshNotification: () => {
+        // Prevent multiple notifications
+        if (document.querySelector('.refresh-notification')) return;
 
-    const notif = document.createElement('div');
-    notif.className = 'refresh-notification';
-    notif.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Memperbarui data produk...';
-    document.body.appendChild(notif);
+        const notif = document.createElement('div');
+        notif.className = 'refresh-notification';
+        notif.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Memperbarui data produk...';
+        document.body.appendChild(notif);
 
-    // Remove after a delay
-    setTimeout(() => {
-      notif.style.opacity = '0';
-      setTimeout(() => {
-         if(notif.parentNode) notif.parentNode.removeChild(notif);
-      }, 500); // Match CSS transition duration
-    }, 2000); // Show for 2 seconds
-  }
-};
-
-/**
-* CORE APPLICATION
-*/
-const app = {
-  addToCart: () => {
-    const qty = parseInt(elements.qtyInput.value) || 1;
-
-     if (!selectedProduct || !utils.validatePrice(selectedProduct.harga)) {
-         Swal.fire({
-             icon: 'error',
-             title: 'Produk Tidak Valid',
-             text: 'Terjadi kesalahan pada produk. Silakan coba lagi atau segarkan halaman.',
-             timer: 2000
-         });
-         return;
-     }
-
-    if (qty > 0) {
-      const itemToAdd = {
-          ...selectedProduct, // Copy all original properties
-          qty: qty,
-          hargaSaatIni: 0, // Placeholder, will be set in updateCart
-          isWholesale: false // Placeholder, will be set in updateCart
-      };
-
-      // Check if the exact product (by kode) is already in the cart
-      const existingItemIndex = cart.findIndex(item => item.kode === selectedProduct.kode);
-
-      if (existingItemIndex >= 0) {
-        cart[existingItemIndex].qty += qty;
-      } else {
-        cart.push(itemToAdd);
+        // Remove after a delay
+        setTimeout(() => {
+          notif.style.opacity = '0';
+          setTimeout(() => {
+             if(notif.parentNode) notif.parentNode.removeChild(notif);
+          }, 500); // Match CSS transition duration
+        }, 2000); // Show for 2 seconds
       }
+    };
 
-      ui.updateCart(); // This will calculate the correct prices for all items
-      ui.hideModal();
+    /**
+    * CORE APPLICATION
+    */
+    const app = {
+      addToCart: () => {
+        const qty = parseInt(elements.qtyInput.value) || 1;
 
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
+         if (!selectedProduct || !utils.validatePrice(selectedProduct.harga)) {
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Produk Tidak Valid',
+                 text: 'Terjadi kesalahan pada produk. Silakan coba lagi atau segarkan halaman.',
+                 timer: 2000
+             });
+             return;
+         }
+
+        if (qty > 0) {
+          // When adding to cart, we add the item with its *original* retail and wholesale prices.
+          // The actual price used (hargaSaatIni) and isWholesale status will be calculated
+          // in ui.updateCart() based on the *total* quantity of that item in the cart.
+          const itemToAdd = {
+              ...selectedProduct, // Copy all original properties
+              qty: qty,
+              // harga and harga_grosir are original values from sheet
+              // hargaSaatIni and isWholesale will be calculated in ui.updateCart
+              hargaSaatIni: 0, // Placeholder, will be set in updateCart
+              isWholesale: false // Placeholder, will be set in updateCart
+          };
+
+          // Check if the exact product (by kode) is already in the cart
+          const existingItemIndex = cart.findIndex(item => item.kode === selectedProduct.kode);
+
+          if (existingItemIndex >= 0) {
+            cart[existingItemIndex].qty += qty;
+          } else {
+            cart.push(itemToAdd);
+          }
+
+          ui.updateCart(); // This will calculate the correct prices for all items
+          ui.hideModal();
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          });
+
+          Toast.fire({
+            icon: 'success',
+            title: `Ditambahkan ke keranjang (${qty})`
+          });
+        } else {
+             Swal.fire({
+                icon: 'warning',
+                title: 'Jumlah Tidak Valid',
+                text: 'Jumlah pembelian minimal 1.',
+                timer: 1500
+             });
         }
-      });
+      },
 
-      Toast.fire({
-        icon: 'success',
-        title: `Ditambahkan ke keranjang (${qty})`
-      });
-    } else {
-         Swal.fire({
+      updateCartItemQty: (index, change) => {
+        if (index < 0 || index >= cart.length) return; // Validate index
+
+        const item = cart[index];
+        const newQty = item.qty + change;
+
+        if (newQty > 0) {
+          cart[index].qty = newQty;
+        } else {
+          // If new quantity is 0 or less, remove the item
+          cart.splice(index, 1);
+        }
+        ui.updateCart(); // Re-render and recalculate prices
+      },
+
+      removeFromCart: (index) => {
+         if (index < 0 || index >= cart.length) return; // Validate index
+
+        cart.splice(index, 1);
+        ui.updateCart(); // Re-render and recalculate prices
+        Swal.fire({
+           icon: 'success',
+           title: 'Item Dihapus',
+           text: 'Produk berhasil dihapus dari keranjang.',
+           timer: 1000,
+           showConfirmButton: false
+        });
+      },
+
+      processCheckout: async () => {
+        const name = elements.customerName.value.trim();
+        const address = elements.customerAddress.value.trim();
+        const phone = elements.customerPhone.value.trim();
+
+        if (!name || !address || !phone) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Harap lengkapi semua data pemesan!',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          return;
+        }
+
+        if (!utils.validatePhone(phone)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Nomor WhatsApp tidak valid! Harap masukkan 10-15 digit nomor.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          return;
+        }
+
+        // Save customer data to localStorage
+        localStorage.setItem('customerName', name);
+        localStorage.setItem('customerAddress', address);
+        localStorage.setItem('customerPhone', phone);
+
+        // Generate the WhatsApp message and get the total
+        const { message, total } = ui.generateOrderMessage();
+
+        // Log transaction to Google Sheets BEFORE opening WhatsApp
+        // Show a loading indicator or disable button while logging
+         elements.confirmCustomer.disabled = true;
+         elements.confirmCustomer.textContent = 'Memproses...';
+
+
+        const logSuccess = await dataService.logTransaction(customerData, cart, total);
+
+        // Re-enable button and update text regardless of log success
+         elements.confirmCustomer.disabled = false;
+         elements.confirmCustomer.textContent = 'Lanjutkan Checkout';
+
+        if (!logSuccess) {
+          // Show a warning if logging failed, but still proceed with WhatsApp
+          console.warn('Failed to log transaction to Google Sheets.');
+          Swal.fire({
             icon: 'warning',
-            title: 'Jumlah Tidak Valid',
-            text: 'Jumlah pembelian minimal 1.',
-            timer: 1500
-         });
-    }
-  },
-
-  updateCartItemQty: (index, change) => {
-    if (index < 0 || index >= cart.length) return; // Validate index
-
-    const item = cart[index];
-    const newQty = item.qty + change;
-
-    if (newQty > 0) {
-      cart[index].qty = newQty;
-    } else {
-      // If new quantity is 0 or less, remove the item
-      cart.splice(index, 1);
-    }
-    ui.updateCart(); // Re-render and recalculate prices
-  },
-
-  removeFromCart: (index) => {
-     if (index < 0 || index >= cart.length) return; // Validate index
-
-    cart.splice(index, 1);
-    ui.updateCart(); // Re-render and recalculate prices
-    Swal.fire({
-       icon: 'success',
-       title: 'Item Dihapus',
-       text: 'Produk berhasil dihapus dari keranjang.',
-       timer: 1000,
-       showConfirmButton: false
-    });
-  },
-
-  processCheckout: async () => {
-    const name = elements.customerName.value.trim();
-    const address = elements.customerAddress.value.trim();
-    const phone = elements.customerPhone.value.trim();
-
-    if (!name || !address || !phone) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Harap lengkapi semua data pemesan!',
-        timer: 2000,
-        showConfirmButton: false
-      });
-      return;
-    }
-
-    if (!utils.validatePhone(phone)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Nomor WhatsApp tidak valid! Harap masukkan 10-15 digit nomor.',
-        timer: 2000,
-        showConfirmButton: false
-      });
-      return;
-    }
-
-    // Save customer data to localStorage
-    localStorage.setItem('customerName', name);
-    localStorage.setItem('customerAddress', address);
-    localStorage.setItem('customerPhone', phone);
-
-    // Generate the WhatsApp message and get the total
-    const { message, total } = ui.generateOrderMessage();
-
-    // Log transaction to Google Apps Script web app
-     elements.confirmCustomer.disabled = true;
-     elements.confirmCustomer.textContent = 'Memproses...';
-
-
-    const logSuccess = await dataService.logTransaction(customerData, cart, total);
-
-    // Re-enable button and update text regardless of log success
-     elements.confirmCustomer.disabled = false;
-     elements.confirmCustomer.textContent = 'Lanjutkan Checkout';
-
-    if (!logSuccess) {
-      // Show a warning if logging failed, but still proceed with WhatsApp
-      console.warn('Failed to log transaction to Google Sheets.');
-      Swal.fire({
-        icon: 'warning',
-        title: 'Peringatan',
-        text: 'Checkout berhasil tapi data transaksi gagal disimpan di database. Harap informasikan admin via WhatsApp.',
-        timer: 5000
-      });
-       // Give user time to read the warning before opening WA
-       setTimeout(() => {
+            title: 'Peringatan',
+            text: 'Checkout berhasil tapi data transaksi gagal disimpan di database. Harap informasikan admin via WhatsApp.',
+            timer: 5000
+          });
+           // Give user time to read the warning before opening WA
+           setTimeout(() => {
+               const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+               window.open(whatsappUrl, '_blank');
+               // Clear cart and close modals after WhatsApp is opened
+               cart = [];
+               ui.updateCart();
+               elements.customerModal.classList.remove('active');
+           }, 3000); // Wait 3 seconds after warning
+        } else {
+           // If logging was successful, open WhatsApp immediately
            const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
            window.open(whatsappUrl, '_blank');
-           // Clear cart and close modals after WhatsApp is opened
+            // Clear cart and close modals after WhatsApp is opened
            cart = [];
            ui.updateCart();
            elements.customerModal.classList.remove('active');
-       }, 3000); // Wait 3 seconds after warning
-    } else {
-       // If logging was successful, open WhatsApp immediately
-       const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
-       window.open(whatsappUrl, '_blank');
-        // Clear cart and close modals after WhatsApp is opened
-       cart = [];
-       ui.updateCart();
-       elements.customerModal.classList.remove('active');
 
-       Swal.fire({
-         icon: 'success',
-         title: 'Berhasil!',
-         text: 'Pesanan berhasil dibuat! Silahkan lanjutkan pembayaran via WhatsApp.',
-         confirmButtonText: 'Oke',
-         confirmButtonColor: '#008ca7'
-       });
-    }
-  },
-
-  init: () => {
-    // Set timestamp
-    const now = new Date();
-    const timestamp = `${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID')}`;
-    elements.timestamp.innerText = `Terakhir diperbarui: ${timestamp}`;
-
-    // Set up event listeners
-    elements.mobileMenuBtn.addEventListener('click', ui.toggleSidebar);
-    elements.sidebarOverlay.addEventListener('click', ui.toggleSidebar);
-
-    elements.searchInput.addEventListener('input', () => {
-      ui.renderProducts(); // Render products on search input
-    });
-
-    elements.cartIcon.addEventListener('click', ui.toggleCart);
-    elements.closeCartBtn.addEventListener('click', ui.closeCart);
-
-    elements.addToCartBtn.addEventListener('click', app.addToCart);
-    elements.closeModal.addEventListener('click', ui.hideModal);
-    elements.cancelModal.addEventListener('click', ui.hideModal);
-
-    elements.checkoutBtn.addEventListener('click', ui.checkout);
-    elements.confirmCustomer.addEventListener('click', app.processCheckout);
-    elements.cancelCustomer.addEventListener('click', () => {
-      elements.customerModal.classList.remove('active');
-    });
-    elements.closeCustomerModal.addEventListener('click', () => {
-      elements.customerModal.classList.remove('active');
-    });
-
-    // Close modals when clicking outside
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
-           // Hide specific modals
-           if (modal.id === 'qty-modal') ui.hideModal();
-           if (modal.id === 'customer-modal') elements.customerModal.classList.remove('active');
-           if (modal.id === 'detail-modal') {
-                const detailModal = document.getElementById('detail-modal');
-                if(detailModal) detailModal.remove();
-           }
+           Swal.fire({
+             icon: 'success',
+             title: 'Berhasil!',
+             text: 'Pesanan berhasil dibuat! Silahkan lanjutkan pembayaran via WhatsApp.',
+             confirmButtonText: 'Oke',
+             confirmButtonColor: '#008ca7'
+           });
         }
-      });
-    });
+      },
 
-     // Handle Escape key to close modals/sidebar/cart
-     document.addEventListener('keydown', (e) => {
-         if (e.key === 'Escape') {
-             if (elements.qtyModal.classList.contains('active')) {
-                 ui.hideModal();
-             } else if (elements.customerModal.classList.contains('active')) {
-                 elements.customerModal.classList.remove('active');
-             } else if (document.getElementById('detail-modal')) {
-                 document.getElementById('detail-modal').remove();
-             } else if (elements.cartSidebar.classList.contains('open')) {
-                 ui.closeCart();
-             } else if (elements.sidebar.classList.contains('open')) {
-                 ui.toggleSidebar(); // This will also hide the overlay
+      init: () => {
+        // Set timestamp
+        const now = new Date();
+        const timestamp = `${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID')}`;
+        elements.timestamp.innerText = `Terakhir diperbarui: ${timestamp}`;
+
+        // Set up event listeners
+        elements.mobileMenuBtn.addEventListener('click', ui.toggleSidebar);
+        elements.sidebarOverlay.addEventListener('click', ui.toggleSidebar);
+
+        elements.searchInput.addEventListener('input', () => {
+          ui.renderProducts(); // Render products on search input
+        });
+
+        elements.cartIcon.addEventListener('click', ui.toggleCart);
+        elements.closeCartBtn.addEventListener('click', ui.closeCart);
+
+        elements.addToCartBtn.addEventListener('click', app.addToCart);
+        elements.closeModal.addEventListener('click', ui.hideModal);
+        elements.cancelModal.addEventListener('click', ui.hideModal);
+
+        elements.checkoutBtn.addEventListener('click', ui.checkout);
+        elements.confirmCustomer.addEventListener('click', app.processCheckout);
+        elements.cancelCustomer.addEventListener('click', () => {
+          elements.customerModal.classList.remove('active');
+        });
+        elements.closeCustomerModal.addEventListener('click', () => {
+          elements.customerModal.classList.remove('active');
+        });
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              modal.classList.remove('active');
+               // Hide specific modals
+               if (modal.id === 'qty-modal') ui.hideModal();
+               if (modal.id === 'customer-modal') elements.customerModal.classList.remove('active');
+               if (modal.id === 'detail-modal') {
+                    const detailModal = document.getElementById('detail-modal');
+                    if(detailModal) detailModal.remove();
+               }
+            }
+          });
+        });
+
+         // Handle Escape key to close modals/sidebar/cart
+         document.addEventListener('keydown', (e) => {
+             if (e.key === 'Escape') {
+                 if (elements.qtyModal.classList.contains('active')) {
+                     ui.hideModal();
+                 } else if (elements.customerModal.classList.contains('active')) {
+                     elements.customerModal.classList.remove('active');
+                 } else if (document.getElementById('detail-modal')) {
+                     document.getElementById('detail-modal').remove();
+                 } else if (elements.cartSidebar.classList.contains('open')) {
+                     ui.closeCart();
+                 } else if (elements.sidebar.classList.contains('open')) {
+                     ui.toggleSidebar(); // This will also hide the overlay
+                 }
              }
-         }
-     });
+         });
 
 
-    // Load products and start auto-refresh
-    dataService.loadProducts();
+        // Load products and start auto-refresh
+        dataService.loadProducts();
+        // dataService.startAutoRefresh(); // Start auto-refresh is called at the end of dataService.loadProducts
 
-    // Initial cart update (will show 0 if empty)
-    ui.updateCart();
-    elements.checkoutBtn.disabled = cart.length === 0; // Disable checkout initially if cart is empty
-  }
-};
+        // Load saved customer data if exists (already done in showCustomerModal)
+        // You might want to load it here too if you use customerData elsewhere on load
+        // const savedName = localStorage.getItem('customerName');
+        // if (savedName) customerData.name = savedName;
+        // const savedPhone = localStorage.getItem('customerPhone');
+        // if (savedPhone) customerData.phone = savedPhone;
+        // const savedAddress = localStorage.getItem('customerAddress');
+        // if (savedAddress) customerData.address = savedAddress;
 
-// Start the application when DOM is ready
-document.addEventListener('DOMContentLoaded', app.init);
+         // Initial cart update (will show 0 if empty)
+         ui.updateCart();
+         elements.checkoutBtn.disabled = cart.length === 0; // Disable checkout initially if cart is empty
+      }
+    };
+
+    // Start the application when DOM is ready
+    document.addEventListener('DOMContentLoaded', app.init);
   </script>
 </body>
 </html>
